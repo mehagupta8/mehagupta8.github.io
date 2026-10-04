@@ -1,6 +1,6 @@
 /**
  * Pocket Akshat - Interactive Logic & Audio Engine
- * Made with love by Meha for Akshat ❤️
+ * Made with love by Meha for Akshat (Akku) ❤️
  */
 
 (function () {
@@ -47,13 +47,11 @@
 
       osc.start();
       osc.stop(audioCtx.currentTime + 0.06);
-    } catch (e) {
-      // Audio fallback silent
-    }
+    } catch (e) {}
   }
 
   // Gentle calming chime / singing bowl tone
-  function playChime(freq = 528) {
+  function playChime(freq = 528, duration = 1.6) {
     if (!isSoundEnabled) return;
     initAudio();
     if (!audioCtx) return;
@@ -66,13 +64,13 @@
       osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
 
       gain.gain.setValueAtTime(0.18, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.6);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
 
       osc.connect(gain);
       gain.connect(audioCtx.destination);
 
       osc.start();
-      osc.stop(audioCtx.currentTime + 1.6);
+      osc.stop(audioCtx.currentTime + duration);
     } catch (e) {}
   }
 
@@ -83,7 +81,6 @@
     if (!audioCtx) return;
 
     try {
-      // Noise burst for whoosh
       const bufferSize = audioCtx.sampleRate * 0.2;
       const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
       const data = buffer.getChannelData(0);
@@ -125,14 +122,14 @@
   // 2. Mini Akshat Dialogues & Character Interactions
   // ==========================================================================
   const akshatDialogues = [
-    "Akshat, I'm so proud of how hard you work. Now take one slow breath!",
+    "Akku, I'm so proud of how hard you work. Now take one slow breath!",
     "Drop your shoulders, unclench your jaw. You're doing amazing, my love.",
     "Hey handsome! Leave your curls alone for a bit—pet my digital curls instead! 🥰",
     "Hands off the nails! Your hands deserve rest and gentleness today. ✨",
     "You are 5'10 of pure brilliance, but even strong guys need a pause.",
     "Whenever everything feels overwhelming, remember: Meha loves you endlessly.",
     "Drink a sip of water, shake out your hands, and smile. You've got this.",
-    "Is your mind racing? Tap the '60s Urge Surfer' below and ride the wave with me.",
+    "Is your mind racing? Check out the Feelings Wheel below to name what your body is feeling.",
     "Don't carry the whole world on your broad shoulders today. One step at a time.",
     "You are safe, you are loved, and today's stress is only temporary."
   ];
@@ -154,12 +151,10 @@
     speechBubble.offsetHeight; // trigger reflow
     speechBubble.style.animation = 'bubblePopIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
 
-    // Trigger happy face reaction
     avatarEyes.style.display = 'none';
     avatarHappyEyes.style.display = 'block';
     leftBlush.style.opacity = '0.85';
     rightBlush.style.opacity = '0.85';
-
     avatarStage.classList.add('happy-bounce');
 
     setTimeout(() => {
@@ -188,7 +183,6 @@
     setTimeout(() => heart.remove(), 1400);
   }
 
-  // Tapping Mini Akshat
   avatarStage.addEventListener('click', (e) => {
     initAudio();
     playChime(660);
@@ -197,7 +191,6 @@
     showAkshatDialogue();
   });
 
-  // Pet My Curls button
   document.getElementById('patHeadBtn').addEventListener('click', () => {
     initAudio();
     playChime(780);
@@ -207,7 +200,6 @@
     showAkshatDialogue("Mmm, thank you for petting my curls! Keep your hands right here instead of rolling yours! 💆‍♂️❤️");
   });
 
-  // Hug Meha button
   document.getElementById('hugBtn').addEventListener('click', () => {
     initAudio();
     playChime(528);
@@ -219,7 +211,6 @@
     triggerConfetti();
   });
 
-  // SOS Hands Button
   document.getElementById('sosHandsBtn').addEventListener('click', () => {
     initAudio();
     playChime(440);
@@ -230,10 +221,603 @@
   });
 
   // ==========================================================================
-  // 3. Busy Hands Sensory Sanctuary (Tactile Bubble Wrap, Surfer, Worry Stone)
+  // 3. NEAR-HERO: "What Are You Anxious About Today?" (ADHD Proven Research)
   // ==========================================================================
-  
-  // Tab switching
+  const adhdAnxietyData = {
+    assignments: {
+      icon: "📚",
+      title: "Assignments & Executive Dysfunction Paralysis",
+      citation: "Clinical Research: Dr. Russell Barkley (Executive Function Point-of-Performance Scaffolding)",
+      neuro: "Your prefrontal cortex is experiencing low tonic dopamine, creating 'Task Initiation Paralysis'. The brain treats looking at the entire assignment as a cognitive threat, triggering avoidance (scrolling, hair-rolling).",
+      steps: [
+        {
+          title: "1. The 2-Minute Micro-Step (Lower Activation Energy)",
+          desc: "Do not try to finish the assignment. Open the document, write your name and the title, and format 1 heading. That's all. Breaking the activation threshold is 80% of the battle."
+        },
+        {
+          title: "2. Stimulus Pairing / Dopamine Bridge",
+          desc: "Pair this boring task with sensory pleasure: put on low-frequency brown noise or video game soundtracks, get an ice-cold beverage, and use a timer."
+        },
+        {
+          title: "3. Body Doubling (Social Mirroring)",
+          desc: "ADHD brains focus 400% better in the presence of another calm human. Mini Akshat is sitting right here with you as your digital body double."
+        }
+      ],
+      actionHtml: `
+        <button id="bodyDoubleBtn" class="pill-btn primary-pill">
+          🧸 Start 15-Min Body-Double Study Session with Mini Akshat
+        </button>
+      `
+    },
+    tony: {
+      icon: "💼",
+      title: "Tony (Manager) & Workplace RSD Protocol",
+      citation: "Clinical Research: Dr. William Dodson (Rejection Sensitive Dysphoria in Adult ADHD)",
+      neuro: "Adults with ADHD possess an ultra-sensitive neurological response to perceived evaluation or criticism (RSD). Neutral messages like 'let's chat' trigger a flood of fight-or-flight adrenaline, misinterpreting ambiguity as danger.",
+      steps: [
+        {
+          title: "1. Fact vs. Threat Reality Check (Cognitive Grounding)",
+          desc: "Ask yourself: 'What verifiable facts do I have right now?' Tony sent a standard message. He has his own deadlines, stress, and communication habits that have nothing to do with your worth."
+        },
+        {
+          title: "2. The 3-Minute Amygdala Cool-Down",
+          desc: "Do not respond while your nervous system is in tachycardia. Drop your shoulders, unstick your tongue from the roof of your mouth, and do 2 physiological sighs."
+        },
+        {
+          title: "3. Professional Low-Friction Scripting",
+          desc: "Use a clear, concise, neutral response to regain control over the interaction without over-explaining."
+        }
+      ],
+      actionHtml: `
+        <div class="script-box">
+          <strong>📋 Low-Stress Slack/Email Template for Tony:</strong>
+          <p id="tonyScriptText">"Hi Tony, working through XYZ today. I'm wrapping up a section now—let's touch base at [time] or let me know what you need in bullets!"</p>
+          <button id="copyScriptBtn" class="pill-btn">📋 Copy Script to Clipboard</button>
+        </div>
+      `
+    },
+    year_ending: {
+      icon: "⏳",
+      title: "2026 is Ending & ADHD 'Time Blindness'",
+      citation: "Clinical Research: Dr. Thomas E. Brown (ADHD Temporal Discounting & Horizon Compression)",
+      neuro: "ADHD brains experience time in only two modes: 'NOW' and 'NOT NOW'. As calendar milestones approach, 'NOT NOW' suddenly collapses into panic, creating existential grief about unfinished goals.",
+      steps: [
+        {
+          title: "1. The Reverse Bucket List",
+          desc: "Instead of obsessing over what you didn't finish, write down 3 massive challenges, projects, or personal obstacles you survived this year that your ADHD brain erased from memory."
+        },
+        {
+          title: "2. Shrink Your Horizon to 24 Hours",
+          desc: "You cannot live the rest of 2026 today. Focus only on what you need for the next 24 hours. Your nervous system only needs to carry today."
+        },
+        {
+          title: "3. Non-Linear Growth Acceptance",
+          desc: "Neurodivergent progress happens in bursts and creative leaps, not steady corporate lines. You are progressing even when you are resting."
+        }
+      ],
+      actionHtml: `
+        <button id="celebrateWinsBtn" class="pill-btn primary-pill">
+          🎉 Celebrate 2026 Survival Wins (Click for Confetti!)
+        </button>
+      `
+    },
+    missing_girlfriend: {
+      icon: "🥺",
+      title: "Missing My Girlfriend (Meha) & Emotional Anchoring",
+      citation: "Clinical Research: Dr. Kristin Neff (Co-Regulation & Mindful Self-Compassion)",
+      neuro: "ADHD brains experience deep emotional hyperfocus and object-permanence longing when separated from their primary secure attachment. Physical touch and voice are your nervous system's regulatory anchors.",
+      steps: [
+        {
+          title: "1. Somatic Co-Regulation",
+          desc: "Place your right hand over your heart and your left hand on your belly. Imagine Meha's arms wrapped tightly around your broad shoulders. You are tethered and deeply loved."
+        },
+        {
+          title: "2. The 30-Second Micro-Tether",
+          desc: "You don't need an hour-long call to reconnect. Send a quick 10-second voice note, a cute picture of your coffee, or an emoji to feel tethered in real-time."
+        },
+        {
+          title: "3. Meha's Love is Constant",
+          desc: "Meha loves you unconditionally—when you're crushing work, when you're overwhelmed, and when you're just resting."
+        }
+      ],
+      actionHtml: `
+        <button id="sendLoveHeartbeatBtn" class="pill-btn urgent-btn">
+          💓 Send Love Heartbeat to Meha
+        </button>
+      `
+    },
+    clean_house: {
+      icon: "🧹",
+      title: "House Cleaning Paralysis & Visual Working Memory Overwhelm",
+      citation: "Clinical Research: Executive Function Research on Visual Working Memory Saturation",
+      neuro: "When you look at a messy room, your ADHD visual working memory processes every single item as an open cognitive demand. 50 items = 50 simultaneous tasks = total shutdown.",
+      steps: [
+        {
+          title: "1. 'Junebugging' Protocol (Stay at the Anchor)",
+          desc: "Pick ONE tiny anchor zone (e.g. just your desk surface). Clean ONLY that spot. If you pick up a cup and walk into the kitchen, immediately return to the anchor. Do not start cleaning the kitchen!"
+        },
+        {
+          title: "2. The 5-Minute Trash-Only Sprint",
+          desc: "Do not organize. Grab a single trash bag, set a 5-minute timer, and ONLY throw away visible rubbish. When the timer dings, you are done."
+        },
+        {
+          title: "3. The 1-Category Rule",
+          desc: "Collect all cups and dishes first. Completely ignore laundry and papers until the dishes are in the sink."
+        }
+      ],
+      actionHtml: `
+        <button id="startJunebugBtn" class="pill-btn primary-pill">
+          ⏱️ Start 5-Minute 'Trash Only' Sprint Timer
+        </button>
+      `
+    }
+  };
+
+  const anxietyButtons = document.querySelectorAll('.anxiety-trigger-btn');
+  const anxietyActionDrawer = document.getElementById('anxietyActionDrawer');
+  const drawerIcon = document.getElementById('drawerIcon');
+  const drawerTitle = document.getElementById('drawerTitle');
+  const drawerResearchCitation = document.getElementById('drawerResearchCitation');
+  const drawerNeuroExplanation = document.getElementById('drawerNeuroExplanation');
+  const drawerStepsList = document.getElementById('drawerStepsList');
+  const drawerInteractiveAction = document.getElementById('drawerInteractiveAction');
+  const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+
+  anxietyButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      initAudio();
+      playChime(620);
+      triggerHaptic(30);
+
+      anxietyButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const triggerKey = btn.dataset.trigger;
+      const data = adhdAnxietyData[triggerKey];
+      if (!data) return;
+
+      drawerIcon.textContent = data.icon;
+      drawerTitle.textContent = data.title;
+      drawerResearchCitation.textContent = data.citation;
+      drawerNeuroExplanation.textContent = data.neuro;
+
+      drawerStepsList.innerHTML = data.steps.map(s => `
+        <div class="step-card">
+          <strong>${s.title}</strong>
+          <p>${s.desc}</p>
+        </div>
+      `).join('');
+
+      drawerInteractiveAction.innerHTML = data.actionHtml;
+      anxietyActionDrawer.style.display = 'block';
+      anxietyActionDrawer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      // Attach internal action listeners
+      if (triggerKey === 'assignments') {
+        const bb = document.getElementById('bodyDoubleBtn');
+        if (bb) {
+          bb.addEventListener('click', () => {
+            initAudio();
+            playChime(720);
+            triggerConfetti();
+            showAkshatDialogue("I'm sitting right beside you, Akku. Pull up that doc, let's write 1 sentence together! 🧸📚");
+          });
+        }
+      } else if (triggerKey === 'tony') {
+        const cb = document.getElementById('copyScriptBtn');
+        if (cb) {
+          cb.addEventListener('click', () => {
+            const script = document.getElementById('tonyScriptText').textContent;
+            navigator.clipboard.writeText(script);
+            cb.textContent = '✓ Copied to Clipboard!';
+            playChime(800);
+            triggerHaptic(40);
+            showAkshatDialogue("Script copied! Paste it in, take a breath, and remember you're doing great.");
+          });
+        }
+      } else if (triggerKey === 'year_ending') {
+        const cwb = document.getElementById('celebrateWinsBtn');
+        if (cwb) {
+          cwb.addEventListener('click', () => {
+            initAudio();
+            playChime(880);
+            triggerConfetti();
+            showAkshatDialogue("Look at how much you overcame this year! You are stronger and smarter than any deadline. 🏆");
+          });
+        }
+      } else if (triggerKey === 'missing_girlfriend') {
+        const hb = document.getElementById('sendLoveHeartbeatBtn');
+        if (hb) {
+          hb.addEventListener('click', () => {
+            initAudio();
+            playChime(660);
+            triggerHaptic(50);
+            for (let i = 0; i < 5; i++) {
+              setTimeout(spawnHeart, i * 120);
+            }
+            showAkshatDialogue("Heartbeat sent to Meha! She loves you with all her heart, Akku. ❤️");
+          });
+        }
+      } else if (triggerKey === 'clean_house') {
+        const jb = document.getElementById('startJunebugBtn');
+        if (jb) {
+          jb.addEventListener('click', () => {
+            const timersSec = document.getElementById('calmingTimersSection');
+            timersSec.scrollIntoView({ behavior: 'smooth' });
+            showAkshatDialogue("Grab 1 bag, 5 minutes only! Let's do this! 🧹");
+          });
+        }
+      }
+    });
+  });
+
+  closeDrawerBtn.addEventListener('click', () => {
+    anxietyActionDrawer.style.display = 'none';
+    anxietyButtons.forEach(b => b.classList.remove('active'));
+  });
+
+  // ==========================================================================
+  // 4. FEELINGS WHEEL: "Feel It, Don't Overthink It" (UCLA Affect Labeling)
+  // ==========================================================================
+  const feelingsWheelData = {
+    anxious: {
+      subEmotions: ["Imposter Syndrome", "Dread of Failing", "Hyper-Alert", "Pressured to Perform", "Fear of Letting People Down"],
+      somaticAdvice: "Anxiety triggers sympathetic adrenaline. Focus on lengthening your exhales to activate your vagal brake."
+    },
+    overwhelmed: {
+      subEmotions: ["Sensory Overload", "Too Many Choices", "Brain Fog", "Swamped by Details", "Executive Freeze"],
+      somaticAdvice: "Overwhelm means working memory saturation. Stop analyzing thoughts—physically close 5 browser tabs or step outside for 60 seconds."
+    },
+    lonely: {
+      subEmotions: ["Missing Meha's Hugs", "Emotionally Disconnected", "Isolated in My Head", "Unanchored", "Longing for Comfort"],
+      somaticAdvice: "Loneliness activates physical pain receptors in the anterior cingulate cortex. Place a warm hand on your chest and wrap yourself in your cozy sweater."
+    },
+    depleted: {
+      subEmotions: ["Low Dopamine Battery", "Burnout", "Physically Drained", "Emotionally Numb", "Needing Sleep"],
+      somaticAdvice: "Depletion cannot be solved by willpower. Drink an electrolyte beverage, close your eyes for 10 minutes, and stop demanding perfection."
+    },
+    frustrated: {
+      subEmotions: ["Stuck on a Problem", "Impatient with Myself", "Self-Critical", "Misunderstood", "Restless Physical Tension"],
+      somaticAdvice: "Frustration is thwarted forward motion. Stand up, shake your hands out vigorously, and do 10 jumping jacks to metabolize the cortisol."
+    },
+    tender: {
+      subEmotions: ["Needing Reassurance", "Quiet & Reflective", "Soft & Vulnerable", "Grateful but Tired", "Sensitive"],
+      somaticAdvice: "Tenderness is a sign of your beautiful emotional depth. Give yourself unconditional permission to move slowly today."
+    }
+  };
+
+  const coreFeelBtns = document.querySelectorAll('.core-feel-btn');
+  const subFeelingsBox = document.getElementById('subFeelingsBox');
+  const subFeelingsPills = document.getElementById('subFeelingsPills');
+  const somaticBox = document.getElementById('somaticBox');
+  const somaticPills = document.querySelectorAll('.somatic-pill');
+  const somaticResultBox = document.getElementById('somaticResultBox');
+  const somaticResultTitle = document.getElementById('somaticResultTitle');
+  const somaticResultDesc = document.getElementById('somaticResultDesc');
+  const jumpToTimerBtn = document.getElementById('jumpToTimerBtn');
+
+  let selectedCore = null;
+  let selectedSub = null;
+  let selectedSomatic = null;
+
+  coreFeelBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      initAudio();
+      playChime(580);
+      coreFeelBtns.forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+
+      selectedCore = btn.dataset.core;
+      selectedSub = null;
+      selectedSomatic = null;
+      somaticResultBox.style.display = 'none';
+
+      const data = feelingsWheelData[selectedCore];
+      if (!data) return;
+
+      subFeelingsPills.innerHTML = data.subEmotions.map(sub => `
+        <button class="sub-pill" data-sub="${sub}">${sub}</button>
+      `).join('');
+
+      subFeelingsBox.style.display = 'block';
+      somaticBox.style.display = 'block';
+
+      // Attach sub-pill listeners
+      const pills = subFeelingsPills.querySelectorAll('.sub-pill');
+      pills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          initAudio();
+          playChime(660);
+          pills.forEach(p => p.classList.remove('selected'));
+          pill.classList.add('selected');
+          selectedSub = pill.dataset.sub;
+          updateSomaticPrescription();
+        });
+      });
+    });
+  });
+
+  somaticPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      initAudio();
+      playChime(640);
+      triggerHaptic(20);
+      somaticPills.forEach(p => p.classList.remove('selected'));
+      pill.classList.add('selected');
+      selectedSomatic = pill.textContent;
+      updateSomaticPrescription();
+    });
+  });
+
+  function updateSomaticPrescription() {
+    if (!selectedCore) return;
+    const coreData = feelingsWheelData[selectedCore];
+    const subText = selectedSub || "intense emotion";
+    const bodyText = selectedSomatic ? `held as "${selectedSomatic}"` : "in your body";
+
+    somaticResultTitle.textContent = `You are feeling ${subText} ${bodyText}.`;
+    somaticResultDesc.textContent = `${coreData.somaticAdvice} You don't have to figure out all your thoughts right now. Reset your physical state first!`;
+    somaticResultBox.style.display = 'block';
+    somaticResultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    showAkshatDialogue(`Named it! You're feeling ${subText}. Stop overthinking—let's do a 1-minute body reset.`);
+  }
+
+  jumpToTimerBtn.addEventListener('click', () => {
+    const timersSec = document.getElementById('calmingTimersSection');
+    timersSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    startSighTimer();
+  });
+
+  // ==========================================================================
+  // 5. CALMING TIMERS HUB (1-Min Physiological Sigh, 3-Min Reset, 5-Min Meditation)
+  // ==========================================================================
+  const timerTabs = document.querySelectorAll('.timer-tab');
+  const timerScienceCitation = document.getElementById('timerScienceCitation');
+  const timerVisualCircle = document.getElementById('timerVisualCircle');
+  const timerPhaseText = document.getElementById('timerPhaseText');
+  const timerClockDigits = document.getElementById('timerClockDigits');
+  const timerInstructionSubtitle = document.getElementById('timerInstructionSubtitle');
+  const startCalmingTimerBtn = document.getElementById('startCalmingTimerBtn');
+  const resetCalmingTimerBtn = document.getElementById('resetCalmingTimerBtn');
+
+  let activeTimerMode = 'sigh';
+  let activeTimerInterval = null;
+  let activeTimerSeconds = 60;
+  let cycleTimerTimeout = null;
+
+  const timerModeConfigs = {
+    sigh: {
+      citation: "Stanford Medicine (Huberman / Spiegel): 2 Inhales + 1 Long Exhale",
+      seconds: 60,
+      subGuide: "Fastest proven physiological method to reduce autonomic arousal in real-time.",
+      btnText: "Begin 1-Min Physiological Sigh 🫁"
+    },
+    adhd_reset: {
+      citation: "Clinical ADHD Framework: 3-Min Sensory Shift & Prefrontal Reboot",
+      seconds: 180,
+      subGuide: "Reboots working memory by alternating physical movement, sensory grounding, and slow breath.",
+      btnText: "Begin 3-Min ADHD Reboot ⏱️"
+    },
+    self_compassion: {
+      citation: "Dr. Kristin Neff: Mindful Self-Compassion for Neurodivergent Burnout",
+      seconds: 300,
+      subGuide: "A gentle 5-minute break to soften inner self-criticism and rest without guilt.",
+      btnText: "Begin 5-Min Compassion Break 🧘"
+    }
+  };
+
+  timerTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      initAudio();
+      playChime(560);
+      stopCalmingTimer();
+
+      timerTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      activeTimerMode = tab.dataset.timertype;
+      const config = timerModeConfigs[activeTimerMode];
+      timerScienceCitation.textContent = config.citation;
+      timerInstructionSubtitle.textContent = config.subGuide;
+      startCalmingTimerBtn.textContent = config.btnText;
+
+      activeTimerSeconds = config.seconds;
+      updateTimerDisplay(activeTimerSeconds);
+      timerPhaseText.textContent = "Ready";
+    });
+  });
+
+  function updateTimerDisplay(sec) {
+    const m = String(Math.floor(sec / 60)).padStart(2, '0');
+    const s = String(sec % 60).padStart(2, '0');
+    timerClockDigits.textContent = `${m}:${s}`;
+  }
+
+  function startSighTimer() {
+    initAudio();
+    stopCalmingTimer();
+    activeTimerSeconds = 60;
+    updateTimerDisplay(activeTimerSeconds);
+    resetCalmingTimerBtn.style.display = 'inline-block';
+    startCalmingTimerBtn.textContent = "Pause Reset";
+
+    function runSighCycle() {
+      // Inhale 1 (through nose) - 2s
+      timerPhaseText.textContent = "Inhale Nose";
+      timerVisualCircle.className = "timer-circle inhale-1";
+      playChime(420, 1.2);
+
+      cycleTimerTimeout = setTimeout(() => {
+        // Inhale 2 (top-off through nose) - 1.5s
+        timerPhaseText.textContent = "Top-off Inhale";
+        timerVisualCircle.className = "timer-circle inhale-2";
+        playChime(540, 1.0);
+
+        cycleTimerTimeout = setTimeout(() => {
+          // Long Exhale Sigh (through mouth) - 5s
+          timerPhaseText.textContent = "Long Exhale Sigh...";
+          timerVisualCircle.className = "timer-circle exhale-sigh";
+          playChime(320, 3.0);
+
+          cycleTimerTimeout = setTimeout(() => {
+            if (activeTimerSeconds > 0) {
+              runSighCycle();
+            }
+          }, 4500);
+        }, 1500);
+      }, 2000);
+    }
+
+    runSighCycle();
+
+    activeTimerInterval = setInterval(() => {
+      activeTimerSeconds--;
+      updateTimerDisplay(activeTimerSeconds);
+
+      if (activeTimerSeconds <= 0) {
+        stopCalmingTimer();
+        playChime(880, 2.5);
+        triggerConfetti();
+        showAkshatDialogue("1-minute physiological sigh complete! Your heart rate and nervous system are reset. 🫁✨");
+      }
+    }, 1000);
+  }
+
+  function startAdhdResetTimer() {
+    initAudio();
+    stopCalmingTimer();
+    activeTimerSeconds = 180;
+    updateTimerDisplay(activeTimerSeconds);
+    resetCalmingTimerBtn.style.display = 'inline-block';
+    startCalmingTimerBtn.textContent = "Pause Reset";
+
+    activeTimerInterval = setInterval(() => {
+      activeTimerSeconds--;
+      updateTimerDisplay(activeTimerSeconds);
+
+      if (activeTimerSeconds > 135) {
+        timerPhaseText.textContent = "Physical Shakeout";
+        timerVisualCircle.className = "timer-circle inhale-1";
+      } else if (activeTimerSeconds > 90) {
+        timerPhaseText.textContent = "Look Around (5 items)";
+        timerVisualCircle.className = "timer-circle inhale-2";
+      } else if (activeTimerSeconds > 45) {
+        timerPhaseText.textContent = "Slow Box Breathing";
+        timerVisualCircle.className = "timer-circle exhale-sigh";
+      } else {
+        timerPhaseText.textContent = "Rest & Affirmation";
+      }
+
+      if (activeTimerSeconds <= 0) {
+        stopCalmingTimer();
+        playChime(880, 2.5);
+        triggerConfetti();
+        showAkshatDialogue("3-minute ADHD reset complete! Prefrontal cortex rebooted. You're ready for 1 micro-task!");
+      }
+    }, 1000);
+  }
+
+  function startCompassionTimer() {
+    initAudio();
+    stopCalmingTimer();
+    activeTimerSeconds = 300;
+    updateTimerDisplay(activeTimerSeconds);
+    resetCalmingTimerBtn.style.display = 'inline-block';
+    startCalmingTimerBtn.textContent = "Pause Break";
+
+    activeTimerInterval = setInterval(() => {
+      activeTimerSeconds--;
+      updateTimerDisplay(activeTimerSeconds);
+
+      if (activeTimerSeconds % 8 === 0) {
+        timerPhaseText.textContent = "Breathe In Kindness";
+        timerVisualCircle.className = "timer-circle inhale-2";
+        playChime(480, 1.8);
+      } else if (activeTimerSeconds % 8 === 4) {
+        timerPhaseText.textContent = "Exhale Self-Doubt";
+        timerVisualCircle.className = "timer-circle exhale-sigh";
+        playChime(360, 2.0);
+      }
+
+      if (activeTimerSeconds <= 0) {
+        stopCalmingTimer();
+        playChime(880, 2.5);
+        triggerConfetti();
+        showAkshatDialogue("5 minutes of pure self-compassion. You are worthy and loved, Akku.");
+      }
+    }, 1000);
+  }
+
+  function stopCalmingTimer() {
+    clearInterval(activeTimerInterval);
+    clearTimeout(cycleTimerTimeout);
+    activeTimerInterval = null;
+    timerVisualCircle.className = "timer-circle";
+    timerPhaseText.textContent = "Ready";
+    const config = timerModeConfigs[activeTimerMode];
+    startCalmingTimerBtn.textContent = config.btnText;
+    resetCalmingTimerBtn.style.display = 'none';
+  }
+
+  startCalmingTimerBtn.addEventListener('click', () => {
+    if (activeTimerInterval) {
+      stopCalmingTimer();
+      return;
+    }
+
+    if (activeTimerMode === 'sigh') {
+      startSighTimer();
+    } else if (activeTimerMode === 'adhd_reset') {
+      startAdhdResetTimer();
+    } else {
+      startCompassionTimer();
+    }
+  });
+
+  resetCalmingTimerBtn.addEventListener('click', stopCalmingTimer);
+
+  // Evidence-Based ADHD Affirmations Engine
+  const adhdAffirmations = [
+    {
+      quote: "Executive dysfunction is a neurological dopamine shortage, not a lack of willpower or moral discipline. You are doing the best you can with the brain chemistry you have today.",
+      author: "Dr. Russell Barkley, ADHD Clinical Neuropsychologist"
+    },
+    {
+      quote: "You don't need to finish the whole project today; you only need to touch it for 2 minutes. Lowering the bar is the smartest cognitive strategy.",
+      author: "Executive Function Behavioral Research"
+    },
+    {
+      quote: "Tony is just another busy human in his own day. Neutral messages are not emergency sirens. Your nervous system is safe.",
+      author: "Rejection Sensitive Dysphoria Protocol"
+    },
+    {
+      quote: "Cleaning for 5 minutes is 100% better than cleaning for 0 minutes. Any progress is infinite progress compared to paralysis.",
+      author: "Neurodivergent Behavioral Psychology"
+    },
+    {
+      quote: "Meha loves you unconditionally—on your high-dopamine productive days and on your overwhelmed, tired days.",
+      author: "Forever Yours, Meha ❤️"
+    }
+  ];
+
+  let currentAffirmationIdx = 0;
+  const affirmationQuote = document.getElementById('affirmationQuote');
+  const affirmationAuthor = document.getElementById('affirmationAuthor');
+  const nextAffirmationBtn = document.getElementById('nextAffirmationBtn');
+
+  nextAffirmationBtn.addEventListener('click', () => {
+    initAudio();
+    playChime(640);
+    currentAffirmationIdx = (currentAffirmationIdx + 1) % adhdAffirmations.length;
+    const item = adhdAffirmations[currentAffirmationIdx];
+    affirmationQuote.textContent = `"${item.quote}"`;
+    affirmationAuthor.textContent = `— ${item.author}`;
+  });
+
+  // ==========================================================================
+  // 6. BUSY HANDS SENSORY SANCTUARY (Bubble Wrap, Surfer, Worry Stone)
+  // ==========================================================================
   const tabBtns = document.querySelectorAll('.tab-btn');
   const tabContents = {
     bubbleWrap: document.getElementById('tabBubbleWrap'),
@@ -254,7 +838,6 @@
     });
   });
 
-  // Urge Streak Management
   let urgeStreak = parseInt(localStorage.getItem('akshat_urge_streak') || '0', 10);
   const streakDisplay = document.getElementById('streakCount');
   streakDisplay.textContent = urgeStreak;
@@ -285,7 +868,6 @@
           playBubblePop();
           triggerHaptic(20);
 
-          // Check if all popped
           const popped = bubbleGrid.querySelectorAll('.bubble-item.popped').length;
           if (popped === TOTAL_BUBBLES) {
             playChime(587);
@@ -332,7 +914,7 @@
     { at: 45, title: "The wave is rising 🌊", desc: "Notice the urge without acting on it. It’s just electricity in your brain looking for release. Let it pass through." },
     { at: 30, title: "Peak reached! Surfing down 🏄‍♂️", desc: "Halfway there! Your hands are doing incredible. Exhale fully, letting your chest soften." },
     { at: 15, title: "The wave is dissolving ✨", desc: "Almost finished. Your hair and nails are safe and untouched. You have total mastery over this moment." },
-    { at: 0, title: "You surfed the urge! 🏆", desc: "Way to go, Akshat! You successfully outlasted the urge. You kept your hands safe!" }
+    { at: 0, title: "You surfed the urge! 🏆", desc: "Way to go, Akku! You successfully outlasted the urge. You kept your hands safe!" }
   ];
 
   function updateSurferText(sec) {
@@ -348,7 +930,6 @@
   startSurferBtn.addEventListener('click', () => {
     initAudio();
     if (surferTimer) {
-      // Pause
       clearInterval(surferTimer);
       surferTimer = null;
       startSurferBtn.textContent = 'Resume Surfing 🌊';
@@ -401,7 +982,7 @@
   let rubCount = 0;
   let lastRubTime = 0;
 
-  function handleStoneRub(e) {
+  function handleStoneRub() {
     const now = Date.now();
     if (now - lastRubTime > 180) {
       rubCount++;
@@ -420,190 +1001,10 @@
   worryStone.addEventListener('touchmove', handleStoneRub, { passive: true });
 
   // ==========================================================================
-  // 4. Gentle Therapy Check-In
-  // ==========================================================================
-  const moodResponses = {
-    restless: {
-      emoji: "🌪️",
-      title: "Restless energy needs a gentle exit.",
-      subtitle: "When your fingers want to twirl hair or pick, it's just stress trying to move.",
-      prompt: "Can we let your hands do something kind right now? Pop 10 bubbles above, or rub the worry stone for 30 seconds."
-    },
-    overwhelmed: {
-      emoji: "🌧️",
-      title: "Everything feels urgent, but it doesn't have to be.",
-      subtitle: "You're trying to solve 10 things at once. Let's make it 1.",
-      prompt: "What is the single thing on your to-do list that actually matters today? The rest can wait until tomorrow."
-    },
-    tired: {
-      emoji: "🔋",
-      title: "Your battery is low, and that's okay.",
-      subtitle: "You don't have to be 100% productive every hour of the day.",
-      prompt: "Can you take a 10-minute horizontal break or close your eyes? Rest is productive too."
-    },
-    anxious: {
-      emoji: "☁️",
-      title: "Anxiety is living in the tomorrow. Let's come back to right now.",
-      subtitle: "In this exact moment, in your chair, you are safe.",
-      prompt: "Look around you right now: name 3 things that are completely stable and still."
-    },
-    good: {
-      emoji: "☀️",
-      title: "I'm so happy you're feeling good!",
-      subtitle: "Take a moment to absorb this peaceful feeling.",
-      prompt: "What was one sweet thing that happened today? Hold onto that warmth!"
-    }
-  };
-
-  const moodButtons = document.querySelectorAll('.mood-btn');
-  const therapyResponseCard = document.getElementById('therapyResponseCard');
-  const responseMoodEmoji = document.getElementById('responseMoodEmoji');
-  const responseTitle = document.getElementById('responseTitle');
-  const responseSubtitle = document.getElementById('responseSubtitle');
-  const responsePromptText = document.getElementById('responsePromptText');
-  const reflectionInput = document.getElementById('reflectionInput');
-  const releaseThoughtBtn = document.getElementById('releaseThoughtBtn');
-
-  moodButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      initAudio();
-      playChime(580);
-      moodButtons.forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-
-      const moodKey = btn.dataset.mood;
-      const data = moodResponses[moodKey];
-      if (data) {
-        responseMoodEmoji.textContent = data.emoji;
-        responseTitle.textContent = data.title;
-        responseSubtitle.textContent = data.subtitle;
-        responsePromptText.textContent = data.prompt;
-        therapyResponseCard.style.display = 'block';
-        therapyResponseCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        showAkshatDialogue(`I'm listening, Akshat. Let's take care of this ${data.emoji} feeling together.`);
-      }
-    });
-  });
-
-  releaseThoughtBtn.addEventListener('click', () => {
-    if (!reflectionInput.value.trim()) {
-      showAkshatDialogue("Write something down first, even just one word, so we can let it go.");
-      return;
-    }
-    initAudio();
-    playChime(720);
-    triggerHaptic(40);
-    reflectionInput.style.transition = 'all 0.6s ease';
-    reflectionInput.style.transform = 'translateY(-20px)';
-    reflectionInput.style.opacity = '0';
-
-    setTimeout(() => {
-      reflectionInput.value = '';
-      reflectionInput.style.transform = 'translateY(0)';
-      reflectionInput.style.opacity = '1';
-      showAkshatDialogue("Thought released into the air 🍃 You don't have to carry that anymore.");
-      triggerConfetti();
-    }, 600);
-  });
-
-  // ==========================================================================
-  // 5. Cozy Self-Care Quests (Breathing, Candle, Mom, Love Notes)
+  // 7. COZY SELF-CARE QUESTS (Candle, Mom, Love Notes)
   // ==========================================================================
 
-  // --- Quest 1: 5-Min Calming Breathing ---
-  const openBreathingBtn = document.getElementById('openBreathingBtn');
-  const breathingModal = document.getElementById('breathingModal');
-  const toggleBreatheBtn = document.getElementById('toggleBreatheBtn');
-  const closeBreatheBtn = document.getElementById('closeBreatheBtn');
-  const breatheCircle = document.getElementById('breatheCircle');
-  const breatheInstruction = document.getElementById('breatheInstruction');
-  const breatheCountdown = document.getElementById('breatheCountdown');
-
-  let breatheActive = false;
-  let breatheTimer = null;
-  let breatheSeconds = 300; // 5 minutes
-  let breathCycleTimer = null;
-
-  openBreathingBtn.addEventListener('click', () => {
-    breathingModal.style.display = 'flex';
-    openBreathingBtn.style.display = 'none';
-  });
-
-  closeBreatheBtn.addEventListener('click', () => {
-    stopBreathing();
-    breathingModal.style.display = 'none';
-    openBreathingBtn.style.display = 'inline-block';
-  });
-
-  function startBreathing() {
-    breatheActive = true;
-    toggleBreatheBtn.textContent = 'Pause Session';
-
-    function runCycle() {
-      if (!breatheActive) return;
-      // Inhale 4s
-      breatheInstruction.textContent = 'Inhale';
-      breatheCircle.className = 'breathe-circle inhale';
-      playChime(440);
-
-      breathCycleTimer = setTimeout(() => {
-        if (!breatheActive) return;
-        // Hold 4s
-        breatheInstruction.textContent = 'Hold';
-        
-        breathCycleTimer = setTimeout(() => {
-          if (!breatheActive) return;
-          // Exhale 4s
-          breatheInstruction.textContent = 'Exhale';
-          breatheCircle.className = 'breathe-circle exhale';
-          playChime(380);
-
-          breathCycleTimer = setTimeout(() => {
-            if (!breatheActive) return;
-            // Hold 2s
-            breatheInstruction.textContent = 'Rest';
-            breathCycleTimer = setTimeout(runCycle, 2000);
-          }, 4000);
-        }, 4000);
-      }, 4000);
-    }
-
-    runCycle();
-
-    breatheTimer = setInterval(() => {
-      breatheSeconds--;
-      const m = String(Math.floor(breatheSeconds / 60)).padStart(2, '0');
-      const s = String(breatheSeconds % 60).padStart(2, '0');
-      breatheCountdown.textContent = `${m}:${s}`;
-
-      if (breatheSeconds <= 0) {
-        stopBreathing();
-        playChime(880);
-        triggerConfetti();
-        showAkshatDialogue("5 minutes of peaceful meditation complete! Your lungs and heart thank you. 🫁✨");
-      }
-    }, 1000);
-  }
-
-  function stopBreathing() {
-    breatheActive = false;
-    toggleBreatheBtn.textContent = 'Begin Breathwork';
-    clearInterval(breatheTimer);
-    clearTimeout(breathCycleTimer);
-    breatheCircle.className = 'breathe-circle';
-    breatheInstruction.textContent = 'Ready';
-  }
-
-  toggleBreatheBtn.addEventListener('click', () => {
-    initAudio();
-    if (breatheActive) {
-      stopBreathing();
-    } else {
-      startBreathing();
-    }
-  });
-
-  // --- Quest 2: Virtual Candle ---
+  // Virtual Candle
   const lightCandleBtn = document.getElementById('lightCandleBtn');
   const candleFlame = document.getElementById('candleFlame');
   const candleGlow = document.getElementById('candleGlow');
@@ -628,7 +1029,7 @@
     }
   });
 
-  // --- Quest 3: Call Mom ---
+  // Call Mom
   const momDoneBtn = document.getElementById('momDoneBtn');
   momDoneBtn.addEventListener('click', () => {
     initAudio();
@@ -639,9 +1040,9 @@
     showAkshatDialogue("Moms always make everything a little softer. Proud of you for calling her! 📞");
   });
 
-  // --- Quest 4: Secret Love Notes from Meha ---
+  // Secret Love Notes from Meha
   const loveNotes = [
-    "Akshat, you don't have to carry the whole world today. Take it one gentle step at a time. I love you so much and believe in you always! ❤️",
+    "Akku, you don't have to carry the whole world today. Take it one gentle step at a time. I love you so much and believe in you always! ❤️",
     "You are the most resilient, hardworking, handsome human I know. Give your hair a break and give yourself some grace today!",
     "No matter how heavy today feels, it is just one chapter, not the whole book. I'm in your corner forever and ever.",
     "Whenever you want to bite your nails or twirl your hair, imagine my hand holding yours instead. You are doing so well, my love.",
@@ -671,7 +1072,7 @@
   });
 
   // ==========================================================================
-  // 6. Navigation Controls (Sound Toggle & Night Mode)
+  // 8. Navigation Controls (Sound Toggle & Night Mode)
   // ==========================================================================
   const soundToggle = document.getElementById('soundToggle');
   const nightToggle = document.getElementById('nightToggle');
@@ -692,7 +1093,7 @@
   });
 
   // ==========================================================================
-  // 7. Lightweight Canvas Confetti Engine
+  // 9. Lightweight Canvas Confetti Engine
   // ==========================================================================
   const canvas = document.getElementById('confettiCanvas');
   const ctx = canvas.getContext('2d');

@@ -1255,3 +1255,636 @@ body.night-mode .envelope {
     height: 220px;
   }
 }
+
+/* ==========================================================================
+   Near-Hero: "What Are You Anxious About Today?" (ADHD Evidence-Based Support)
+   ========================================================================== */
+
+.anxious-near-hero {
+  width: 100%;
+  margin-top: 1.5rem;
+  padding-top: 1.2rem;
+  border-top: 1px dashed var(--card-border);
+}
+
+.near-hero-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.near-hero-header h3 {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-top: 0.35rem;
+}
+
+.near-hero-desc {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+}
+
+.badge-adhd {
+  background: var(--accent-lavender-light);
+  color: var(--accent-lavender);
+}
+
+.anxiety-buttons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+}
+
+.anxiety-trigger-btn {
+  background: #FFFFFF;
+  border: 1.5px solid var(--card-border);
+  border-radius: var(--radius-md);
+  padding: 0.8rem 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-smooth);
+}
+
+body.night-mode .anxiety-trigger-btn {
+  background: #252834;
+  border-color: #383E50;
+}
+
+.anxiety-trigger-btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-lavender);
+  box-shadow: var(--shadow-md);
+}
+
+.anxiety-trigger-btn.active {
+  background: var(--accent-lavender-light);
+  border-color: var(--accent-lavender);
+  box-shadow: 0 0 0 2px rgba(142, 124, 195, 0.25);
+}
+
+.trigger-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.trigger-meta strong {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.2;
+}
+
+.trigger-meta small {
+  display: block;
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+/* Action Drawer */
+.anxiety-action-drawer {
+  background: #FFFFFF;
+  border: 1.5px solid var(--card-border);
+  border-radius: var(--radius-md);
+  padding: 1.3rem;
+  margin-top: 0.8rem;
+  box-shadow: var(--shadow-md);
+  animation: slideDown 0.35s ease;
+}
+
+body.night-mode .anxiety-action-drawer {
+  background: #232733;
+  border-color: #3B4154;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.drawer-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.drawer-big-icon {
+  font-size: 2rem;
+}
+
+.drawer-title-group h4 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.drawer-cite {
+  display: block;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--accent-sage);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.close-drawer-btn {
+  background: var(--bg-secondary);
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+
+.science-callout {
+  background: var(--accent-sage-light);
+  border-radius: var(--radius-sm);
+  padding: 0.8rem 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.science-callout p {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.45;
+}
+
+.adhd-protocol-box h5 {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--accent-rose);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.6rem;
+}
+
+.protocol-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1.2rem;
+}
+
+.step-card {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 0.9rem;
+  border-left: 3px solid var(--accent-sage);
+}
+
+body.night-mode .step-card {
+  background: #2C303E;
+}
+
+.step-card strong {
+  display: block;
+  font-size: 0.86rem;
+  color: var(--text-main);
+  margin-bottom: 0.2rem;
+}
+
+.step-card p {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.drawer-interactive-action {
+  padding-top: 0.8rem;
+  border-top: 1px dashed var(--card-border);
+}
+
+.script-box {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  padding: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.script-box p {
+  font-family: monospace;
+  font-size: 0.84rem;
+  color: var(--text-main);
+  background: #FFFFFF;
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid var(--card-border);
+  margin-bottom: 0.5rem;
+}
+
+body.night-mode .script-box p {
+  background: #1F222C;
+  color: #E2DFD9;
+}
+
+/* ==========================================================================
+   Feelings Wheel: "Feel It, Don't Overthink It"
+   ========================================================================== */
+
+.badge-feelings {
+  background: var(--accent-rose-light);
+  color: var(--accent-rose);
+}
+
+.feelings-step-box {
+  margin-bottom: 1.2rem;
+}
+
+.step-label {
+  display: block;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 0.6rem;
+}
+
+.feelings-core-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.6rem;
+}
+
+.core-feel-btn {
+  background: var(--bg-secondary);
+  border: 2px solid transparent;
+  border-radius: var(--radius-md);
+  padding: 0.9rem 0.6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+body.night-mode .core-feel-btn {
+  background: #252834;
+}
+
+.core-feel-btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--feel-color);
+  background: #FFFFFF;
+}
+
+.core-feel-btn.selected {
+  background: #FFFFFF;
+  border-color: var(--feel-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: scale(1.03);
+}
+
+body.night-mode .core-feel-btn.selected {
+  background: #2F3444;
+}
+
+.feel-icon {
+  font-size: 1.8rem;
+}
+
+.feel-label {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--text-main);
+  text-align: center;
+}
+
+.feelings-sub-box {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--card-border);
+  animation: fadeIn 0.3s ease;
+}
+
+.sub-feelings-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.sub-pill {
+  background: var(--bg-secondary);
+  border: 1.5px solid var(--card-border);
+  padding: 0.45rem 0.9rem;
+  border-radius: 50px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+body.night-mode .sub-pill {
+  background: #2A2E3B;
+  border-color: #404658;
+}
+
+.sub-pill:hover {
+  border-color: var(--accent-rose);
+  transform: scale(1.04);
+}
+
+.sub-pill.selected {
+  background: var(--accent-rose-light);
+  color: var(--accent-rose);
+  border-color: var(--accent-rose);
+  box-shadow: var(--shadow-sm);
+}
+
+.somatic-body-box {
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--card-border);
+  animation: fadeIn 0.3s ease;
+}
+
+.body-scan-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.somatic-pill {
+  background: var(--bg-secondary);
+  border: 1.5px solid var(--card-border);
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--text-main);
+  text-align: left;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+body.night-mode .somatic-pill {
+  background: #252834;
+  border-color: #3C4254;
+}
+
+.somatic-pill:hover {
+  border-color: var(--accent-sage);
+  background: #FFFFFF;
+}
+
+.somatic-pill.selected {
+  background: var(--accent-sage-light);
+  color: var(--accent-sage);
+  border-color: var(--accent-sage);
+  font-weight: 800;
+}
+
+.somatic-result-box {
+  margin-top: 1.2rem;
+  background: #FFFFFF;
+  border: 1.5px solid var(--accent-sage);
+  border-radius: var(--radius-md);
+  padding: 1.2rem;
+  box-shadow: var(--shadow-md);
+  animation: bubblePopIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+body.night-mode .somatic-result-box {
+  background: #232733;
+}
+
+.result-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--accent-sage);
+  background: var(--accent-sage-light);
+  padding: 0.2rem 0.6rem;
+  border-radius: 50px;
+  margin-bottom: 0.4rem;
+}
+
+.result-bubble h4 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 0.4rem;
+}
+
+.result-bubble p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  line-height: 1.45;
+}
+
+.primary-pill {
+  background: var(--accent-sage);
+  color: #FFFFFF;
+  border: none;
+}
+
+.primary-pill:hover {
+  background: #4E6E52;
+}
+
+/* ==========================================================================
+   Calming Timers & Affirmations Hub
+   ========================================================================== */
+
+.timer-mode-selector {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.timer-tab {
+  flex: 1;
+  min-width: 140px;
+  background: var(--bg-secondary);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 0.6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+body.night-mode .timer-tab {
+  background: #272B38;
+}
+
+.timer-tab-time {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--accent-rose);
+}
+
+.timer-tab-name {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 0.2rem;
+}
+
+.timer-tab:hover {
+  background: #FFFFFF;
+  border-color: var(--card-border);
+}
+
+.timer-tab.active {
+  background: #FFFFFF;
+  border-color: var(--accent-rose);
+  box-shadow: var(--shadow-sm);
+}
+
+body.night-mode .timer-tab.active {
+  background: #2E3342;
+  border-color: var(--accent-rose);
+}
+
+.active-timer-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 1rem;
+  margin-bottom: 1.2rem;
+}
+
+body.night-mode .active-timer-display {
+  background: #222632;
+}
+
+.timer-science-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent-sage);
+  background: var(--accent-sage-light);
+  padding: 0.25rem 0.8rem;
+  border-radius: 50px;
+  margin-bottom: 1rem;
+}
+
+.breathing-circle-wrapper {
+  width: 180px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.timer-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #E2847A 0%, #C05850 100%);
+  box-shadow: 0 0 30px rgba(226, 132, 122, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  transition: transform 3s ease-in-out, background 0.5s ease;
+}
+
+.timer-circle.inhale-1 {
+  transform: scale(1.4);
+}
+
+.timer-circle.inhale-2 {
+  transform: scale(1.75);
+}
+
+.timer-circle.exhale-sigh {
+  transform: scale(1);
+}
+
+.circle-inner-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.phase-text {
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.clock-digits {
+  font-size: 1.35rem;
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.timer-sub-guide {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  max-width: 380px;
+  margin-bottom: 1rem;
+}
+
+.timer-action-buttons {
+  display: flex;
+  gap: 0.6rem;
+}
+
+/* Affirmations Box */
+.adhd-affirmations-box {
+  background: var(--accent-honey-light);
+  border: 1.5px solid rgba(233, 163, 72, 0.4);
+  border-radius: var(--radius-md);
+  padding: 1.2rem;
+}
+
+.affirmation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.affirmation-quote {
+  font-size: 0.94rem;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.5;
+  margin-bottom: 0.6rem;
+}
+
+.affirmation-author {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent-honey);
+  text-align: right;
+}
