@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Pocket Akshat 🧸 | Your Cozy Space</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧸</text></svg>">
+</head>
+<body>
+  <!-- Ambient Background Glows -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <!-- Top Header Navigation -->
+  <header class="top-nav">
+    <div class="nav-brand">
+      <span class="heart-pulse">❤️</span>
+      <span>For Akshat, with love from Meha</span>
+    </div>
+    <div class="nav-controls">
+      <button id="soundToggle" class="icon-btn" title="Toggle Sound" aria-label="Toggle Sound">
+        <span class="icon">🔊</span>
+      </button>
+      <button id="nightToggle" class="icon-btn" title="Cozy Night Mode" aria-label="Cozy Night Mode">
+        <span class="icon">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="app-container">
+    
+    <!-- Hero: Interactive Mini Akshat -->
+    <section class="avatar-hero-card">
+      <div class="speech-bubble-wrapper">
+        <div id="speechBubble" class="speech-bubble">
+          <p id="speechText">Hey Akshat! Tap me anytime you need a breath. I'm always right here with you.</p>
+          <div class="bubble-arrow"></div>
+        </div>
+      </div>
+
+      <!-- Mini Akshat Chibi Avatar -->
+      <div class="avatar-stage" id="avatarStage" role="button" tabindex="0" title="Tap to interact with Mini Akshat!">
+        <div class="floating-hearts" id="floatingHearts"></div>
+
+        <svg id="akshatAvatar" viewBox="0 0 240 280" class="chibi-svg" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- Skin Gradient -->
+            <radialGradient id="skinGrad" cx="50%" cy="40%" r="60%">
+              <stop offset="0%" stop-color="#FFF3EB" />
+              <stop offset="100%" stop-color="#FCDDCB" />
+            </radialGradient>
+            <!-- Brown Hair Gradient -->
+            <linearGradient id="hairGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#5A3825" />
+              <stop offset="60%" stop-color="#422515" />
+              <stop offset="100%" stop-color="#2D170A" />
+            </linearGradient>
+            <!-- Cozy Knit Sweater Gradient (Warm Sage/Forest Green) -->
+            <linearGradient id="sweaterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#6F8F72" />
+              <stop offset="100%" stop-color="#4E6E52" />
+            </linearGradient>
+            <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+              <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.12"/>
+            </filter>
+          </defs>
+
+          <!-- Shadow underneath -->
+          <ellipse cx="120" cy="265" rx="55" ry="10" fill="#3A3845" opacity="0.15" class="ground-shadow" />
+
+          <!-- Broad Shoulders & Cozy Sweater -->
+          <g class="body-group">
+            <!-- Broad Sweater Body -->
+            <path d="M 60 178 C 50 195, 42 225, 46 260 L 194 260 C 198 225, 190 195, 180 178 C 160 168, 80 168, 60 178 Z" fill="url(#sweaterGrad)" />
+            <!-- Sweater Collar / Mock Neck -->
+            <path d="M 90 172 Q 120 184 150 172 Q 138 192 102 192 Z" fill="#446147" />
+            <path d="M 94 175 Q 120 186 146 175" stroke="#37523A" stroke-width="2" fill="none" stroke-linecap="round" />
+            
+            <!-- Cozy Sweater Knit Texture subtle details -->
+            <line x1="120" y1="195" x2="120" y2="255" stroke="#5A7D5E" stroke-width="3" stroke-dasharray="3,4" stroke-linecap="round" />
+            <line x1="95" y1="205" x2="95" y2="255" stroke="#5A7D5E" stroke-width="2.5" stroke-dasharray="3,4" stroke-linecap="round" />
+            <line x1="145" y1="205" x2="145" y2="255" stroke="#5A7D5E" stroke-width="2.5" stroke-dasharray="3,4" stroke-linecap="round" />
+
+            <!-- Cute Sleeves / Arms resting cozily -->
+            <path d="M 58 185 Q 40 215 52 245" stroke="#446147" stroke-width="14" stroke-linecap="round" fill="none" />
+            <path d="M 182 185 Q 200 215 188 245" stroke="#446147" stroke-width="14" stroke-linecap="round" fill="none" />
+
+            <!-- Little hands resting safely -->
+            <circle cx="55" cy="246" r="8" fill="url(#skinGrad)" />
+            <circle cx="185" cy="246" r="8" fill="url(#skinGrad)" />
+          </g>
+
+          <!-- Head Group (Square Jawline + Fair Skin) -->
+          <g class="head-group" id="headGroup">
+            <!-- Square Face Shape (Chibi with gentle square jaw) -->
+            <rect x="66" y="80" width="108" height="96" rx="28" fill="url(#skinGrad)" filter="url(#softShadow)" />
+
+            <!-- Ears -->
+            <circle cx="62" cy="126" r="11" fill="url(#skinGrad)" />
+            <circle cx="178" cy="126" r="11" fill="url(#skinGrad)" />
+            <circle cx="62" cy="126" r="6" fill="#F4C7B5" opacity="0.6" />
+            <circle cx="178" cy="126" r="6" fill="#F4C7B5" opacity="0.6" />
+
+            <!-- Cute Blush Cheeks -->
+            <ellipse cx="84" cy="138" rx="10" ry="6" fill="#FF9A9E" opacity="0.45" class="blush" id="leftBlush" />
+            <ellipse cx="156" cy="138" rx="10" ry="6" fill="#FF9A9E" opacity="0.45" class="blush" id="rightBlush" />
+
+            <!-- Brown Eyes -->
+            <g class="eyes" id="avatarEyes">
+              <!-- Left Eye -->
+              <ellipse cx="92" cy="122" rx="7" ry="8" fill="#4B2C1A" />
+              <circle cx="90" cy="119" r="3" fill="#FFFFFF" />
+              <circle cx="95" cy="124" r="1.5" fill="#FFFFFF" />
+              <!-- Right Eye -->
+              <ellipse cx="148" cy="122" rx="7" ry="8" fill="#4B2C1A" />
+              <circle cx="146" cy="119" r="3" fill="#FFFFFF" />
+              <circle cx="151" cy="124" r="1.5" fill="#FFFFFF" />
+            </g>
+
+            <!-- Happy Squinting Eyes (Toggled on happy/pet) -->
+            <g class="eyes-happy" id="avatarHappyEyes" style="display: none;">
+              <path d="M 85 124 Q 92 116 99 124" stroke="#4B2C1A" stroke-width="3.5" stroke-linecap="round" fill="none" />
+              <path d="M 141 124 Q 148 116 155 124" stroke="#4B2C1A" stroke-width="3.5" stroke-linecap="round" fill="none" />
+            </g>
+
+            <!-- Black Square Glasses -->
+            <g class="glasses" id="glassesGroup">
+              <!-- Left Lens Frame -->
+              <rect x="76" y="106" width="34" height="28" rx="7" fill="rgba(255,255,255,0.18)" stroke="#1F2421" stroke-width="4.5" />
+              <!-- Right Lens Frame -->
+              <rect x="130" y="106" width="34" height="28" rx="7" fill="rgba(255,255,255,0.18)" stroke="#1F2421" stroke-width="4.5" />
+              <!-- Bridge -->
+              <line x1="110" y1="118" x2="130" y2="118" stroke="#1F2421" stroke-width="4.5" stroke-linecap="round" />
+              <!-- Frame Temples -->
+              <line x1="76" y1="116" x2="62" y2="120" stroke="#1F2421" stroke-width="3.5" stroke-linecap="round" />
+              <line x1="164" y1="116" x2="178" y2="120" stroke="#1F2421" stroke-width="3.5" stroke-linecap="round" />
+              <!-- Lens Glare -->
+              <line x1="82" y1="111" x2="90" y2="111" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.75" />
+              <line x1="136" y1="111" x2="144" y2="111" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.75" />
+            </g>
+
+            <!-- Eyebrows (Strong, gentle) -->
+            <path d="M 80 102 Q 94 99 104 102" stroke="#422515" stroke-width="3.5" stroke-linecap="round" fill="none" />
+            <path d="M 136 102 Q 146 99 160 102" stroke="#422515" stroke-width="3.5" stroke-linecap="round" fill="none" />
+
+            <!-- Cute Nose -->
+            <path d="M 118 128 Q 120 132 123 132" stroke="#DDA892" stroke-width="2.5" stroke-linecap="round" fill="none" />
+
+            <!-- Smile / Mouth -->
+            <path id="avatarMouth" d="M 112 144 Q 120 152 128 144" stroke="#4B2C1A" stroke-width="3" stroke-linecap="round" fill="none" />
+
+            <!-- Curly Brown Hair (Fluffy, bouncing curls) -->
+            <g class="curls-group" id="curlsGroup">
+              <!-- Base Volume -->
+              <path d="M 64 96 C 54 82, 60 52, 85 45 C 105 39, 135 39, 155 45 C 180 52, 186 82, 176 96 C 172 82, 162 72, 150 72 C 136 72, 130 80, 120 78 C 110 80, 104 72, 90 72 C 78 72, 68 82, 64 96 Z" fill="url(#hairGrad)" />
+
+              <!-- Curly Curls Clustered Top & Sides -->
+              <!-- Left curls -->
+              <circle cx="68" cy="74" r="16" fill="url(#hairGrad)" />
+              <circle cx="58" cy="94" r="13" fill="url(#hairGrad)" />
+              <circle cx="75" cy="56" r="17" fill="url(#hairGrad)" />
+              <!-- Top curls -->
+              <circle cx="95" cy="46" r="18" fill="url(#hairGrad)" />
+              <circle cx="120" cy="42" r="19" fill="url(#hairGrad)" />
+              <circle cx="145" cy="46" r="18" fill="url(#hairGrad)" />
+              <!-- Right curls -->
+              <circle cx="165" cy="56" r="17" fill="url(#hairGrad)" />
+              <circle cx="172" cy="74" r="16" fill="url(#hairGrad)" />
+              <circle cx="182" cy="94" r="13" fill="url(#hairGrad)" />
+              <!-- Forehead Curls / Fringe -->
+              <circle cx="92" cy="72" r="13" fill="url(#hairGrad)" />
+              <circle cx="114" cy="71" r="14" fill="url(#hairGrad)" />
+              <circle cx="138" cy="72" r="13" fill="url(#hairGrad)" />
+              <circle cx="156" cy="76" r="11" fill="url(#hairGrad)" />
+              <circle cx="80" cy="78" r="11" fill="url(#hairGrad)" />
+
+              <!-- Cute curl spiral accents -->
+              <path d="M 94 48 A 6 6 0 1 1 98 54" stroke="#6F4832" stroke-width="2.5" fill="none" stroke-linecap="round" />
+              <path d="M 120 44 A 7 7 0 1 1 125 51" stroke="#6F4832" stroke-width="2.5" fill="none" stroke-linecap="round" />
+              <path d="M 144 48 A 6 6 0 1 1 148 54" stroke="#6F4832" stroke-width="2.5" fill="none" stroke-linecap="round" />
+              <path d="M 112 68 A 4 4 0 1 1 116 72" stroke="#6F4832" stroke-width="2" fill="none" stroke-linecap="round" />
+            </g>
+          </g>
+        </svg>
+
+        <!-- Tap Hint -->
+        <div class="tap-hint">
+          <span>✨ Tap Mini Akshat for love & reminders</span>
+        </div>
+      </div>
+
+      <!-- Quick Action Buttons under Avatar -->
+      <div class="quick-reaction-bar">
+        <button class="pill-btn" id="patHeadBtn">
+          <span>💆‍♂️ Pet my curls</span>
+        </button>
+        <button class="pill-btn" id="hugBtn">
+          <span>🤗 Hug Meha</span>
+        </button>
+        <button class="pill-btn urgent-btn" id="sosHandsBtn">
+          <span>🛡️ Urge to roll hair / bite nails?</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- SECTION 1: SOS BUSY HANDS SHIELD (Hero sensory tool) -->
+    <section class="card fidget-card" id="busyHandsSection">
+      <div class="card-header">
+        <div class="card-title-group">
+          <span class="badge badge-sos">Busy Hands Sanctuary</span>
+          <h2>Give Your Hands Something Else to Do</h2>
+        </div>
+        <div class="hands-streak-badge">
+          <span class="streak-icon">🛡️</span>
+          <span id="streakCount">0</span> urges resisted
+        </div>
+      </div>
+
+      <p class="section-desc">
+        When restless energy hits, twirling hair or biting nails is just your brain asking for a distraction. Let’s protect your hair and nails with these cozy tactile toys instead!
+      </p>
+
+      <!-- Fidget Tabs -->
+      <div class="fidget-tabs">
+        <button class="tab-btn active" data-tab="bubbleWrap">🫧 Bubble Popper</button>
+        <button class="tab-btn" data-tab="urgeSurfer">🌊 60s Urge Surfer</button>
+        <button class="tab-btn" data-tab="worryStone">🪨 Smooth Worry Stone</button>
+      </div>
+
+      <!-- Tab 1: Bubble Popper -->
+      <div class="tab-content active" id="tabBubbleWrap">
+        <div class="bubble-header">
+          <span id="bubbleCountText">Pop bubbles to release hand tension:</span>
+          <button id="resetBubblesBtn" class="text-btn">🔄 Reset all bubbles</button>
+        </div>
+        <div class="bubble-grid" id="bubbleGrid">
+          <!-- 24 tactile bubbles generated by JS -->
+        </div>
+      </div>
+
+      <!-- Tab 2: 60-Second Urge Surfer -->
+      <div class="tab-content" id="tabUrgeSurfer">
+        <div class="urge-surfer-box">
+          <div class="surfer-circle-wrap">
+            <svg class="progress-ring" width="160" height="160">
+              <circle class="progress-ring-bg" stroke="rgba(0,0,0,0.06)" stroke-width="10" fill="transparent" r="68" cx="80" cy="80"/>
+              <circle id="surferProgress" class="progress-ring-fill" stroke="#E2847A" stroke-width="10" stroke-linecap="round" fill="transparent" r="68" cx="80" cy="80"/>
+            </svg>
+            <div class="timer-display">
+              <span id="timerSeconds">60</span>
+              <span class="timer-label">sec</span>
+            </div>
+          </div>
+          <div class="surfer-text-box">
+            <h3 id="surferStepTitle">Urges only peak for 60-90 seconds.</h3>
+            <p id="surferStepDesc">Put both hands flat on your thighs or desk. Breathe deeply. Ride the wave like a surfer until it settles.</p>
+          </div>
+          <div class="surfer-controls">
+            <button id="startSurferBtn" class="action-btn primary-btn">Ride the Urge Wave 🌊</button>
+            <button id="resetSurferBtn" class="action-btn secondary-btn" style="display: none;">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Tactile Worry Stone -->
+      <div class="tab-content" id="tabWorryStone">
+        <div class="worry-stone-area">
+          <p class="stone-instructions">Rub and slide your thumb or finger smoothly across the stone to calm restless hands.</p>
+          <div class="worry-stone" id="worryStone">
+            <div class="stone-thumb-dent"></div>
+            <div class="stone-ripples" id="stoneRipples"></div>
+            <span class="stone-label">Smooth & Steady</span>
+          </div>
+          <div class="stone-counter">
+            <span id="rubCount">0</span> gentle rubs
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: GENTLE THERAPY CHECK-IN -->
+    <section class="card therapy-card" id="therapySection">
+      <div class="card-header">
+        <div class="card-title-group">
+          <span class="badge badge-therapy">Gentle Check-In</span>
+          <h2>How is your head & heart right now?</h2>
+        </div>
+      </div>
+      <p class="section-desc">No pressure, no judgment. How are you honestly feeling today?</p>
+
+      <!-- Mood selection buttons -->
+      <div class="mood-grid" id="moodGrid">
+        <button class="mood-btn" data-mood="restless">
+          <span class="mood-emoji">🌪️</span>
+          <span class="mood-name">Restless & Fidgety</span>
+        </button>
+        <button class="mood-btn" data-mood="overwhelmed">
+          <span class="mood-emoji">🌧️</span>
+          <span class="mood-name">Overwhelmed</span>
+        </button>
+        <button class="mood-btn" data-mood="tired">
+          <span class="mood-emoji">🔋</span>
+          <span class="mood-name">Low Battery</span>
+        </button>
+        <button class="mood-btn" data-mood="anxious">
+          <span class="mood-emoji">☁️</span>
+          <span class="mood-name">A bit Anxious</span>
+        </button>
+        <button class="mood-btn" data-mood="good">
+          <span class="mood-emoji">☀️</span>
+          <span class="mood-name">Doing Okay</span>
+        </button>
+      </div>
+
+      <!-- Dynamic Therapy Reflection Box -->
+      <div id="therapyResponseCard" class="therapy-response-card" style="display: none;">
+        <div class="therapy-response-header">
+          <span id="responseMoodEmoji" class="response-emoji">🌱</span>
+          <div>
+            <h3 id="responseTitle">I hear you, Akshat.</h3>
+            <p id="responseSubtitle">Let's unpack it gently together.</p>
+          </div>
+        </div>
+
+        <div class="therapy-prompt-box">
+          <span class="prompt-icon">💭</span>
+          <p id="responsePromptText">What is one thing on your mind right now that does not need to be solved in the next hour?</p>
+        </div>
+
+        <!-- Optional Interactive Reflection Field -->
+        <div class="reflection-input-group">
+          <textarea id="reflectionInput" rows="2" placeholder="Write it down here to get it out of your head (private & safe)..."></textarea>
+          <button id="releaseThoughtBtn" class="pill-btn">Release this thought 🍃</button>
+        </div>
+
+        <!-- Grounding Tool Toggle -->
+        <div class="grounding-quick-box">
+          <h4>Need immediate grounding? Try the 5-4-3-2-1 check:</h4>
+          <ul class="grounding-list">
+            <li>👀 <strong>5 things</strong> you can see around your room</li>
+            <li>🖐️ <strong>4 things</strong> you can physically feel (your sweater, chair)</li>
+            <li>👂 <strong>3 sounds</strong> you hear right now</li>
+            <li>👃 <strong>2 things</strong> you can smell</li>
+            <li>👅 <strong>1 taste</strong> or deep breath</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: COZY SELF-CARE PRESCRIPTIONS -->
+    <section class="card self-care-card">
+      <div class="card-header">
+        <div class="card-title-group">
+          <span class="badge badge-care">Today's Cozy Quests</span>
+          <h2>Tiny Solutions for Big Relief</h2>
+        </div>
+      </div>
+
+      <div class="quest-grid">
+        
+        <!-- Quest 1: 5-Min Guided Meditation & Breathing -->
+        <div class="quest-card" id="breathingCard">
+          <div class="quest-header">
+            <span class="quest-icon">🫁</span>
+            <div class="quest-info">
+              <h3>5-Min Calming Breathing</h3>
+              <p>Relax shoulders & steady heart rate</p>
+            </div>
+            <button id="openBreathingBtn" class="mini-action-btn">Start</button>
+          </div>
+
+          <!-- Expanding breathing module -->
+          <div id="breathingModal" class="breathing-module" style="display: none;">
+            <div class="breathe-circle-container">
+              <div class="breathe-circle" id="breatheCircle">
+                <span id="breatheInstruction">Inhale</span>
+              </div>
+            </div>
+            <div class="breathe-timer">
+              <span id="breatheCountdown">05:00</span> remaining
+            </div>
+            <div class="breathe-actions">
+              <button id="toggleBreatheBtn" class="action-btn primary-btn">Begin Breathwork</button>
+              <button id="closeBreatheBtn" class="action-btn secondary-btn">Close</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quest 2: Light a Calming Candle -->
+        <div class="quest-card" id="candleCard">
+          <div class="quest-header">
+            <span class="quest-icon">🕯️</span>
+            <div class="quest-info">
+              <h3>Light a Cozy Candle</h3>
+              <p>Tap to bring warm light & comfort</p>
+            </div>
+          </div>
+
+          <div class="candle-interactive-box" id="candleWrapper">
+            <div class="candle-glow" id="candleGlow"></div>
+            <div class="virtual-candle" id="candleBody">
+              <div class="candle-wick"></div>
+              <div class="candle-flame" id="candleFlame"></div>
+              <div class="candle-wax"></div>
+            </div>
+            <button id="lightCandleBtn" class="pill-btn">✨ Tap to light candle</button>
+          </div>
+        </div>
+
+        <!-- Quest 3: Call Your Mom Reminder -->
+        <div class="quest-card">
+          <div class="quest-header">
+            <span class="quest-icon">📞</span>
+            <div class="quest-info">
+              <h3>Call Your Mom</h3>
+              <p>Hear a loving voice for 5 minutes</p>
+            </div>
+          </div>
+          <div class="mom-card-content">
+            <p>Moms have a way of putting the world back into perspective. Even a quick 3-minute "Hey Mom, thinking of you" will melt stress away.</p>
+            <div class="mom-actions">
+              <a href="tel:" class="pill-btn call-mom-btn">📱 Open Phone Call</a>
+              <button class="pill-btn check-done-btn" id="momDoneBtn">✓ I called her!</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quest 4: Secret Love Note from Meha -->
+        <div class="quest-card" id="loveNoteCard">
+          <div class="quest-header">
+            <span class="quest-icon">💌</span>
+            <div class="quest-info">
+              <h3>Love Note from Meha</h3>
+              <p>A personal reminder of how special you are</p>
+            </div>
+          </div>
+          <div class="envelope-box">
+            <div class="envelope" id="envelope">
+              <div class="envelope-flap"></div>
+              <div class="envelope-pocket"></div>
+              <div class="letter" id="letter">
+                <p id="loveNoteText">"Akshat, you don't have to carry the whole world today. Take it one gentle step at a time. I love you so much and believe in you always!"</p>
+                <span class="letter-sig">— Forever yours, Meha ❤️</span>
+              </div>
+            </div>
+            <button id="openLetterBtn" class="pill-btn">💌 Open today's note</button>
+            <button id="newNoteBtn" class="text-btn" style="display: none;">Read another note ↻</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>Made with all the love in the world by Meha for her favorite human, Akshat 🧸</p>
+      <p class="footer-sub">Remember to unclench your jaw, drop your shoulders, and rest your hands.</p>
+    </footer>
+
+  </main>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <script src="app.js"></script>
+</body>
+</html>
