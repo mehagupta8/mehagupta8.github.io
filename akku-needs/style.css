@@ -1888,3 +1888,29 @@ body.night-mode .active-timer-display {
   color: var(--accent-honey);
   text-align: right;
 }
+
+/* Custom Akku Emotion Faces on the Feelings Wheel */
+.akku-emotion-face {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.35rem;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mini-face-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.07));
+}
+
+.core-feel-btn:hover .akku-emotion-face {
+  transform: scale(1.12) translateY(-2px);
+}
+
+.core-feel-btn.selected .akku-emotion-face {
+  transform: scale(1.16) translateY(-3px);
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.16));
+}
