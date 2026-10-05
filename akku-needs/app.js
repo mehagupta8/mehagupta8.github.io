@@ -241,6 +241,73 @@
     } catch (e) {}
   }
 
+  // Playful apple-crunch & vocal "Nom nom nom" biting sound
+  function playNomNomNom() {
+    if (!isSoundEnabled) return;
+    initAudio();
+
+    // Cute vocal synthesis utterance if supported
+    try {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance('Nom, nom, nom!');
+        utter.rate = 1.25;
+        utter.pitch = 1.4;
+        utter.volume = 0.9;
+        window.speechSynthesis.speak(utter);
+      }
+    } catch (e) {}
+
+    if (!audioCtx) return;
+    const now = audioCtx.currentTime;
+
+    // 3 successive satisfying bites
+    for (let b = 0; b < 3; b++) {
+      const biteTime = now + b * 0.16;
+      try {
+        // Apple skin crisp crackle (filtered noise burst)
+        const bufferSize = Math.floor(audioCtx.sampleRate * 0.04);
+        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          data[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize);
+        }
+        const noise = audioCtx.createBufferSource();
+        noise.buffer = buffer;
+
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(1450 - b * 130, biteTime);
+        filter.Q.setValueAtTime(2.2, biteTime);
+
+        const gain = audioCtx.createGain();
+        gain.gain.setValueAtTime(0.24, biteTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, biteTime + 0.04);
+
+        noise.connect(filter);
+        filter.connect(gain);
+        gain.connect(audioCtx.destination);
+        noise.start(biteTime);
+        noise.stop(biteTime + 0.04);
+
+        // Oral cavity chomp resonance ("nom" formant slide)
+        const osc = audioCtx.createOscillator();
+        const oscGain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(450 - b * 35, biteTime);
+        osc.frequency.exponentialRampToValueAtTime(170, biteTime + 0.085);
+
+        oscGain.gain.setValueAtTime(0.18, biteTime);
+        oscGain.gain.exponentialRampToValueAtTime(0.001, biteTime + 0.085);
+
+        osc.connect(oscGain);
+        oscGain.connect(audioCtx.destination);
+        osc.start(biteTime);
+        osc.stop(biteTime + 0.085);
+      } catch (e) {}
+    }
+  }
+
   // Audio Toggle UI Binding
   const soundToggleBtn = document.getElementById('soundToggle');
   const soundStatusText = document.getElementById('soundStatusText');
@@ -265,6 +332,7 @@
   // Curls bouncy animation, floating hearts on hugs, and sad urge state
   // ==========================================================================
   const avatarStage = document.getElementById('avatarStage');
+  const akshatAvatar = document.getElementById('akshatAvatar');
   const speechText = document.getElementById('speechText');
 
   // Avatar facial & body elements
@@ -278,14 +346,96 @@
   const avatarMouth = document.getElementById('avatarMouth');
   const avatarSadMouth = document.getElementById('avatarSadMouth');
   const curlsGroup = document.getElementById('curlsGroup');
+  const distressedHairGroup = document.getElementById('distressedHairGroup');
 
+  // Apple-Bite Mask & Eaten Heart elements
+  const biteCutouts = document.getElementById('biteCutouts');
+  const biteVisualBorders = document.getElementById('biteVisualBorders');
+  const eatenHeartStage = document.getElementById('eatenHeartStage');
+  const heartPulseBox = document.getElementById('heartPulseBox');
+  const restoreAkkuBtn = document.getElementById('restoreAkkuBtn');
+
+  // Controls
   const patHeadBtn = document.getElementById('patHeadBtn');
   const hugBtn = document.getElementById('hugBtn');
-  const sosHandsBtn = document.getElementById('sosHandsBtn');
+  const urgeBiteBtn = document.getElementById('urgeBiteBtn');
+  const urgeTwirlBtn = document.getElementById('urgeTwirlBtn');
+  const eatAkkuBtn = document.getElementById('eatAkkuBtn');
 
   let isDistressed = false;
   let curlsTimer = null;
   let happyEyesTimer = null;
+  let eatBiteStep = 0;
+
+  // 5 progressive apple bite definitions
+  const appleBites = [
+    {
+      speech: "Nom! You took a bite out of my curls! They taste like cinnamon.",
+      cutoutSvg: '<circle cx="158" cy="38" r="14" fill="black" /><circle cx="174" cy="46" r="15" fill="black" /><circle cx="190" cy="52" r="15" fill="black" /><circle cx="206" cy="56" r="14" fill="black" /><circle cx="220" cy="58" r="13" fill="black" /><polygon points="160,0 240,0 240,65 190,52" fill="black" />',
+      borderSvg: '<path d="M 146 32 Q 158 42 174 46 Q 190 52 206 56 Q 220 58 230 62" class="apple-bite-rim" />'
+    },
+    {
+      speech: "Nom nom! Mehu, my left shoulder is gone! I'm so delicious.",
+      cutoutSvg: '<circle cx="56" cy="164" r="14" fill="black" /><circle cx="46" cy="180" r="16" fill="black" /><circle cx="44" cy="198" r="16" fill="black" /><circle cx="48" cy="216" r="15" fill="black" /><circle cx="58" cy="230" r="14" fill="black" /><polygon points="0,150 56,164 44,198 0,240" fill="black" />',
+      borderSvg: '<path d="M 66 154 Q 46 180 44 198 Q 48 216 66 238" class="apple-bite-rim" />'
+    },
+    {
+      speech: "Nom nom nom... you're munching my cute cheek! Keep going...",
+      cutoutSvg: '<circle cx="156" cy="106" r="14" fill="black" /><circle cx="166" cy="120" r="15" fill="black" /><circle cx="172" cy="136" r="16" fill="black" /><circle cx="168" cy="152" r="15" fill="black" /><circle cx="158" cy="164" r="14" fill="black" /><polygon points="240,95 166,120 172,136 240,175" fill="black" />',
+      borderSvg: '<path d="M 148 98 Q 166 120 172 136 Q 168 152 148 172" class="apple-bite-rim" />'
+    },
+    {
+      speech: "Nom nom! There's almost nothing left of me!",
+      cutoutSvg: '<circle cx="92" cy="208" r="16" fill="black" /><circle cx="108" cy="218" r="17" fill="black" /><circle cx="124" cy="222" r="18" fill="black" /><circle cx="140" cy="218" r="17" fill="black" /><circle cx="156" cy="208" r="16" fill="black" /><polygon points="80,260 92,208 124,222 156,208 168,260" fill="black" />',
+      borderSvg: '<path d="M 82 200 Q 108 218 124 222 Q 140 218 166 200" class="apple-bite-rim" />'
+    },
+    {
+      speech: "You ate me all up! Love you forever, Mehu.",
+      isFinal: true
+    }
+  ];
+
+  function handleAllowMehaToEat() {
+    if (eatBiteStep >= appleBites.length) {
+      restoreAkkuWhole();
+      return;
+    }
+
+    const bite = appleBites[eatBiteStep];
+    eatBiteStep++;
+
+    playNomNomNom();
+
+    if (bite.isFinal) {
+      if (akshatAvatar) akshatAvatar.style.display = 'none';
+      if (eatenHeartStage) eatenHeartStage.style.display = 'flex';
+      updateSpeech(bite.speech);
+      playChime(660, 2.2);
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => spawnFloatingHeart(), i * 140);
+      }
+    } else {
+      if (biteCutouts && bite.cutoutSvg) {
+        biteCutouts.innerHTML += bite.cutoutSvg;
+      }
+      if (biteVisualBorders && bite.borderSvg) {
+        biteVisualBorders.innerHTML += bite.borderSvg;
+      }
+      updateSpeech(bite.speech);
+      spawnFloatingHeart();
+    }
+  }
+
+  function restoreAkkuWhole() {
+    eatBiteStep = 0;
+    if (biteCutouts) biteCutouts.innerHTML = '';
+    if (biteVisualBorders) biteVisualBorders.innerHTML = '';
+    if (eatenHeartStage) eatenHeartStage.style.display = 'none';
+    if (akshatAvatar) akshatAvatar.style.display = 'block';
+    comfortAkshat();
+    updateSpeech("I'm back together and feeling whole again!");
+    playChime(784, 1.2);
+  }
 
   function spawnFloatingHeart(e) {
     if (!avatarStage) return;
@@ -333,6 +483,8 @@
     if (avatarStage) avatarStage.classList.remove('avatar-distressed');
     if (normalArms) normalArms.style.display = 'block';
     if (distressedArms) distressedArms.style.display = 'none';
+    if (curlsGroup) curlsGroup.style.display = 'block';
+    if (distressedHairGroup) distressedHairGroup.style.display = 'none';
     if (normalEyebrows) normalEyebrows.style.display = 'block';
     if (sadEyebrows) sadEyebrows.style.display = 'none';
     if (avatarSadEyes) avatarSadEyes.style.display = 'none';
@@ -341,11 +493,13 @@
     showHappyEyes(2500);
   }
 
-  function triggerSadDistressed() {
+  function triggerSadDistressed(mode = 'general') {
     isDistressed = true;
     if (avatarStage) avatarStage.classList.add('avatar-distressed');
     if (normalArms) normalArms.style.display = 'none';
     if (distressedArms) distressedArms.style.display = 'block';
+    if (curlsGroup) curlsGroup.style.display = 'none';
+    if (distressedHairGroup) distressedHairGroup.style.display = 'block';
     if (normalEyebrows) normalEyebrows.style.display = 'none';
     if (sadEyebrows) sadEyebrows.style.display = 'block';
     if (avatarEyes) avatarEyes.style.display = 'none';
@@ -354,7 +508,13 @@
     if (avatarMouth) avatarMouth.style.display = 'none';
     if (avatarSadMouth) avatarSadMouth.style.display = 'block';
 
-    updateSpeech("I'm feeling really anxious and overwhelmed right now... I have such a strong urge to bite my nails and twirl my hair. Let's take a deep breath together and surf this wave.");
+    if (mode === 'bite') {
+      updateSpeech("My nails are bitten down and bleeding... it hurts. Let's protect my hands right now.");
+    } else if (mode === 'twirl') {
+      updateSpeech("I've been pulling my hair from the front... my scalp is sore. Let's keep my hands busy here.");
+    } else {
+      updateSpeech("I'm feeling really anxious and overwhelmed right now... Let's protect my hands and surf this wave.");
+    }
     playClick(600);
   }
 
@@ -402,13 +562,21 @@
 
   if (avatarStage) {
     avatarStage.addEventListener('click', (e) => {
-      triggerGiveHug(e);
+      if (eatBiteStep >= appleBites.length) {
+        restoreAkkuWhole();
+      } else {
+        triggerGiveHug(e);
+      }
     });
 
     avatarStage.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        triggerGiveHug();
+        if (eatBiteStep >= appleBites.length) {
+          restoreAkkuWhole();
+        } else {
+          triggerGiveHug();
+        }
       }
     });
   }
@@ -425,17 +593,47 @@
     });
   }
 
-  if (sosHandsBtn) {
-    sosHandsBtn.addEventListener('click', () => {
-      triggerSadDistressed();
+  if (urgeBiteBtn) {
+    urgeBiteBtn.addEventListener('click', () => {
+      triggerSadDistressed('bite');
+      const busySection = document.getElementById('busyHandsSection');
+      if (busySection) {
+        busySection.scrollIntoView({ behavior: 'smooth' });
+        const matrixTab = document.querySelector('.tactile-tab[data-tab="matrix"]');
+        if (matrixTab) matrixTab.click();
+      }
+    });
+  }
+
+  if (urgeTwirlBtn) {
+    urgeTwirlBtn.addEventListener('click', () => {
+      triggerSadDistressed('twirl');
       const busySection = document.getElementById('busyHandsSection');
       if (busySection) {
         busySection.scrollIntoView({ behavior: 'smooth' });
         const surferTab = document.querySelector('.tactile-tab[data-tab="surfer"]');
-        if (surferTab) {
-          surferTab.click();
-        }
+        if (surferTab) surferTab.click();
       }
+    });
+  }
+
+  if (eatAkkuBtn) {
+    eatAkkuBtn.addEventListener('click', () => {
+      handleAllowMehaToEat();
+    });
+  }
+
+  if (restoreAkkuBtn) {
+    restoreAkkuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      restoreAkkuWhole();
+    });
+  }
+
+  if (heartPulseBox) {
+    heartPulseBox.addEventListener('click', (e) => {
+      e.stopPropagation();
+      restoreAkkuWhole();
     });
   }
 

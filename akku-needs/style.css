@@ -441,6 +441,87 @@ body {
   color: #FFFFFF;
 }
 
+/* Eat Akku Chip */
+.chip-eat {
+  border-color: rgba(212, 107, 85, 0.35);
+  background: #FFF7F5;
+  color: #B44A36;
+}
+
+.chip-eat:hover {
+  border-color: #B44A36;
+  background: #B44A36;
+  color: #FFFFFF;
+}
+
+/* Eaten Red Heart Stage */
+.eaten-heart-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.2rem 1rem;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.heart-pulse-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  animation: gentleHeartbeat 1.6s ease-in-out infinite;
+  margin-bottom: 1.2rem;
+}
+
+@keyframes gentleHeartbeat {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 4px 14px rgba(201, 42, 42, 0.25));
+  }
+  50% {
+    transform: scale(1.08);
+    filter: drop-shadow(0 8px 26px rgba(201, 42, 42, 0.45));
+  }
+}
+
+.heart-love-text {
+  font-family: var(--font-serif);
+  font-size: 1.55rem;
+  font-weight: 600;
+  color: #C52828;
+  letter-spacing: 0.04em;
+  margin-top: 0.6rem;
+}
+
+.restore-akku-btn {
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  padding: 0.55rem 1.2rem;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.restore-akku-btn:hover {
+  border-color: var(--gold);
+  color: var(--fg);
+  background: #FAF7F2;
+}
+
+.apple-bite-rim {
+  stroke: #FFFDF8;
+  stroke-width: 3;
+  fill: none;
+  stroke-linecap: round;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
 /* ==========================================================================
    Section 2: Cognitive Restructuring & CBT Worksheets
    ========================================================================== */
@@ -1285,6 +1366,63 @@ body {
   color: var(--muted);
 }
 
+/* Damage Prevention Empathy Banner in Section 05 */
+.damage-prevention-banner {
+  background: #FFF8F6;
+  border: 1px solid #F0D5CC;
+  padding: 1.2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  margin-bottom: 1.8rem;
+}
+
+.banner-avatar-mini {
+  flex-shrink: 0;
+  width: 80px;
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mini-distressed-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.banner-copy {
+  display: flex;
+  flex-direction: column;
+}
+
+.banner-badge {
+  font-family: var(--font-sans);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #B44A36;
+  margin-bottom: 0.25rem;
+}
+
+.banner-title {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--fg);
+  margin-bottom: 0.35rem;
+}
+
+.banner-text {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 620px;
+}
+
 .tactile-tabs-row {
   display: flex;
   border-bottom: 1px solid var(--border);
@@ -1781,7 +1919,7 @@ body {
   border-left-color: #4A7A96;
 }
 
-/* Section 05: Pastel Peach & Rose Quartz (Fidget & Urge Surfing) */
+/* Section 05: Pastel Peach & Rose Quartz (Preventing Damage) */
 #busyHandsSection {
   background: #FDF5F1;
   border-color: #F4DFD5;
@@ -1901,4 +2039,11 @@ body {
   .rituals-grid {
     grid-template-columns: 1fr;
   }
+
+  .damage-prevention-banner {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.9rem;
+  }
 }
+

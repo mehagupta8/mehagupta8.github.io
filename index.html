@@ -78,147 +78,229 @@
               <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
                 <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.12"/>
               </filter>
+
+              <!-- Apple-Bite Mask for Allow Meha to Eat You (punches holes like bites in an apple) -->
+              <mask id="avatarBiteMask">
+                <rect x="-40" y="-40" width="320" height="360" fill="white" />
+                <!-- Dynamic bite cutouts (black shapes punch holes out of avatar) -->
+                <g id="biteCutouts"></g>
+              </mask>
             </defs>
 
             <!-- Shadow underneath -->
             <ellipse cx="120" cy="265" rx="55" ry="10" fill="#3A3845" opacity="0.15" class="ground-shadow" />
 
-            <!-- Broad Shoulders & Cozy Charcoal Henley Shirt -->
-            <g class="body-group">
-              <path d="M 60 178 C 50 195, 42 225, 46 260 L 194 260 C 198 225, 190 195, 180 178 C 160 168, 80 168, 60 178 Z" fill="url(#sweaterGrad)" />
-              <!-- Henley Collarless Curved Neckline -->
-              <path d="M 94 172 Q 120 186 146 172 Q 136 190 104 190 Z" fill="#1C1820" />
-              <!-- Henley Central Button Placket -->
-              <rect x="117" y="186" width="6" height="34" rx="3" fill="#151218" />
-              <!-- Little Henley Buttons -->
-              <circle cx="120" cy="193" r="2.2" fill="#756E7B" />
-              <circle cx="120" cy="203" r="2.2" fill="#756E7B" />
-              <circle cx="120" cy="213" r="2.2" fill="#756E7B" />
+            <!-- Main Avatar Content (masked with bite cutouts) -->
+            <g id="avatarContentGroup" mask="url(#avatarBiteMask)">
 
-              <!-- Normal Arms: Resting safely on desk -->
-              <g id="normalArms">
-                <path d="M 58 185 Q 40 215 52 245" stroke="#221E26" stroke-width="14" stroke-linecap="round" fill="none" />
-                <path d="M 182 185 Q 200 215 188 245" stroke="#221E26" stroke-width="14" stroke-linecap="round" fill="none" />
-                <circle cx="55" cy="246" r="8" fill="url(#skinGrad)" />
-                <circle cx="185" cy="246" r="8" fill="url(#skinGrad)" />
+              <!-- Broad Shoulders & Cozy Charcoal Henley Shirt -->
+              <g class="body-group">
+                <path d="M 60 178 C 50 195, 42 225, 46 260 L 194 260 C 198 225, 190 195, 180 178 C 160 168, 80 168, 60 178 Z" fill="url(#sweaterGrad)" />
+                <!-- Henley Collarless Curved Neckline -->
+                <path d="M 94 172 Q 120 186 146 172 Q 136 190 104 190 Z" fill="#1C1820" />
+                <!-- Henley Central Button Placket -->
+                <rect x="117" y="186" width="6" height="34" rx="3" fill="#151218" />
+                <!-- Little Henley Buttons -->
+                <circle cx="120" cy="193" r="2.2" fill="#756E7B" />
+                <circle cx="120" cy="203" r="2.2" fill="#756E7B" />
+                <circle cx="120" cy="213" r="2.2" fill="#756E7B" />
+
+                <!-- Normal Arms: Resting safely on desk -->
+                <g id="normalArms">
+                  <path d="M 58 185 Q 40 215 52 245" stroke="#221E26" stroke-width="14" stroke-linecap="round" fill="none" />
+                  <path d="M 182 185 Q 200 215 188 245" stroke="#221E26" stroke-width="14" stroke-linecap="round" fill="none" />
+                  <circle cx="55" cy="246" r="8" fill="url(#skinGrad)" />
+                  <circle cx="185" cy="246" r="8" fill="url(#skinGrad)" />
+                </g>
+
+                <!-- Distressed Arms: Raised Hands with Short Bitten Nails & Bleeding Red Dots -->
+                <g id="distressedArms" style="display: none;">
+                  <!-- Left Arm & Hand -->
+                  <path d="M 58 185 Q 46 160 88 162" stroke="#221E26" stroke-width="14" stroke-linecap="round" fill="none" />
+                  <circle cx="92" cy="162" r="10" fill="url(#skinGrad)" />
+                  <!-- 4 stubby fingers with bitten-down nails -->
+                  <rect x="83" y="146" width="5.5" height="14" rx="2.5" fill="url(#skinGrad)" />
+                  <rect x="89.5" y="143" width="5.5" height="17" rx="2.5" fill="url(#skinGrad)" />
+                  <rect x="96" y="144" width="5.5" height="16" rx="2.5" fill="url(#skinGrad)" />
+                  <rect x="102.5" y="148" width="5" height="12" rx="2.5" fill="url(#skinGrad)" />
+                  <!-- Small bitten nails -->
+                  <rect x="84" y="147" width="3.5" height="2" fill="#E8D5CA" />
+                  <rect x="90.5" y="144" width="3.5" height="2" fill="#E8D5CA" />
+                  <rect x="97" y="145" width="3.5" height="2" fill="#E8D5CA" />
+                  <rect x="103.5" y="149" width="3" height="1.8" fill="#E8D5CA" />
+                  <!-- Bleeding red dots on bitten nails -->
+                  <circle cx="85.8" cy="149" r="1.6" fill="#DC2626" />
+                  <circle cx="92.2" cy="146" r="1.8" fill="#DC2626" />
+                  <circle cx="98.8" cy="147" r="1.7" fill="#DC2626" />
+                  <circle cx="105" cy="151" r="1.4" fill="#DC2626" />
+
+                  <!-- Right Arm & Hand -->
+                  <path d="M 182 185 Q 194 160 152 162" stroke="#221E26" stroke-width="14" stroke-linecap="round" fill="none" />
+                  <circle cx="148" cy="162" r="10" fill="url(#skinGrad)" />
+                  <!-- 4 stubby fingers with bitten-down nails -->
+                  <rect x="132.5" y="148" width="5" height="12" rx="2.5" fill="url(#skinGrad)" />
+                  <rect x="138.5" y="144" width="5.5" height="16" rx="2.5" fill="url(#skinGrad)" />
+                  <rect x="145" y="143" width="5.5" height="17" rx="2.5" fill="url(#skinGrad)" />
+                  <rect x="151.5" y="146" width="5.5" height="14" rx="2.5" fill="url(#skinGrad)" />
+                  <!-- Small bitten nails -->
+                  <rect x="133.5" y="149" width="3" height="1.8" fill="#E8D5CA" />
+                  <rect x="139.5" y="145" width="3.5" height="2" fill="#E8D5CA" />
+                  <rect x="146" y="144" width="3.5" height="2" fill="#E8D5CA" />
+                  <rect x="152.5" y="147" width="3.5" height="2" fill="#E8D5CA" />
+                  <!-- Bleeding red dots on bitten nails -->
+                  <circle cx="135" cy="151" r="1.4" fill="#DC2626" />
+                  <circle cx="141.2" cy="147" r="1.7" fill="#DC2626" />
+                  <circle cx="147.8" cy="146" r="1.8" fill="#DC2626" />
+                  <circle cx="154.2" cy="149" r="1.6" fill="#DC2626" />
+                </g>
               </g>
 
-              <!-- Distressed Arms: Biting Nails & Twirling Curls (when sad / urge triggered) -->
-              <g id="distressedArms" style="display: none;">
-                <!-- Left arm reaching up to mouth biting nails -->
-                <path d="M 58 185 Q 45 150 108 148" stroke="#221E26" stroke-width="14" stroke-linecap="round" fill="none" />
-                <circle cx="110" cy="148" r="8" fill="url(#skinGrad)" />
-                <circle cx="108" cy="144" r="2.2" fill="#DDA892" />
-                <circle cx="112" cy="144" r="2.2" fill="#DDA892" />
-                <circle cx="115" cy="145" r="2.2" fill="#DDA892" />
+              <!-- Head Group (Square Jawline + Fair Skin + Memoji Details) -->
+              <g class="head-group" id="headGroup">
+                <rect x="66" y="80" width="108" height="96" rx="28" fill="url(#skinGrad)" filter="url(#softShadow)" />
 
-                <!-- Right arm reaching up to hair twirling curls -->
-                <path d="M 182 185 Q 205 125 168 82" stroke="#221E26" stroke-width="14" stroke-linecap="round" fill="none" />
-                <circle cx="168" cy="80" r="8" fill="url(#skinGrad)" />
-                <path d="M 163 76 Q 170 72 172 80 Q 166 84 162 78" fill="url(#hairGrad)" stroke="#181514" stroke-width="1.8" />
+                <!-- Ears -->
+                <circle cx="62" cy="126" r="11" fill="url(#skinGrad)" />
+                <circle cx="178" cy="126" r="11" fill="url(#skinGrad)" />
+                <circle cx="62" cy="126" r="6" fill="#F4C7B5" opacity="0.6" />
+                <circle cx="178" cy="126" r="6" fill="#F4C7B5" opacity="0.6" />
+
+                <!-- Blush Cheeks -->
+                <ellipse cx="84" cy="138" rx="10" ry="6" fill="#FF9A9E" opacity="0.45" class="blush" id="leftBlush" />
+                <ellipse cx="156" cy="138" rx="10" ry="6" fill="#FF9A9E" opacity="0.45" class="blush" id="rightBlush" />
+
+                <!-- Normal Brown Eyes -->
+                <g class="eyes" id="avatarEyes">
+                  <ellipse cx="92" cy="122" rx="7" ry="8" fill="#4B2C1A" />
+                  <circle cx="90" cy="119" r="3" fill="#FFFFFF" />
+                  <circle cx="95" cy="124" r="1.5" fill="#FFFFFF" />
+                  <ellipse cx="148" cy="122" rx="7" ry="8" fill="#4B2C1A" />
+                  <circle cx="146" cy="119" r="3" fill="#FFFFFF" />
+                  <circle cx="151" cy="124" r="1.5" fill="#FFFFFF" />
+                </g>
+
+                <!-- Happy Squinting Eyes (for hugs & petting curls) -->
+                <g class="eyes-happy" id="avatarHappyEyes" style="display: none;">
+                  <path d="M 85 124 Q 92 116 99 124" stroke="#4B2C1A" stroke-width="3.5" stroke-linecap="round" fill="none" />
+                  <path d="M 141 124 Q 148 116 155 124" stroke="#4B2C1A" stroke-width="3.5" stroke-linecap="round" fill="none" />
+                </g>
+
+                <!-- Sad Distressed Eyes with Crying Streaming Tears -->
+                <g class="eyes-sad" id="avatarSadEyes" style="display: none;">
+                  <ellipse cx="92" cy="125" rx="7.5" ry="8.5" fill="#3D2415" />
+                  <circle cx="93.5" cy="122" r="3.8" fill="#FFFFFF" />
+                  <circle cx="89.5" cy="127" r="1.5" fill="#FFFFFF" />
+                  <ellipse cx="148" cy="125" rx="7.5" ry="8.5" fill="#3D2415" />
+                  <circle cx="146.5" cy="122" r="3.8" fill="#FFFFFF" />
+                  <circle cx="150.5" cy="127" r="1.5" fill="#FFFFFF" />
+                  <!-- Teardrop pools beneath lower eyelids -->
+                  <ellipse cx="92" cy="133" rx="7" ry="3" fill="#7DD3FC" opacity="0.85" />
+                  <ellipse cx="148" cy="133" rx="7" ry="3" fill="#7DD3FC" opacity="0.85" />
+                  <!-- Streaming teardrops rolling down cheeks -->
+                  <path d="M 88 135 C 84 146, 88 155, 86 164 C 83 155, 87 146, 88 135 Z" fill="#38BDF8" opacity="0.9" />
+                  <circle cx="86" cy="165" r="2.8" fill="#38BDF8" />
+                  <path d="M 152 135 C 156 146, 152 155, 154 164 C 157 155, 153 146, 152 135 Z" fill="#38BDF8" opacity="0.9" />
+                  <circle cx="154" cy="165" r="2.8" fill="#38BDF8" />
+                </g>
+
+                <!-- Black Square Glasses (matching his signature look) -->
+                <g class="glasses" id="glassesGroup">
+                  <rect x="76" y="106" width="34" height="28" rx="7" fill="rgba(255,255,255,0.18)" stroke="#1F2421" stroke-width="4.5" />
+                  <rect x="130" y="106" width="34" height="28" rx="7" fill="rgba(255,255,255,0.18)" stroke="#1F2421" stroke-width="4.5" />
+                  <line x1="110" y1="118" x2="130" y2="118" stroke="#1F2421" stroke-width="4.5" stroke-linecap="round" />
+                  <line x1="76" y1="116" x2="62" y2="120" stroke="#1F2421" stroke-width="3.5" stroke-linecap="round" />
+                  <line x1="164" y1="116" x2="178" y2="120" stroke="#1F2421" stroke-width="3.5" stroke-linecap="round" />
+                  <line x1="82" y1="111" x2="90" y2="111" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.75" />
+                  <line x1="136" y1="111" x2="144" y2="111" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.75" />
+                </g>
+
+                <!-- Eyebrows: Normal vs Sad -->
+                <g id="normalEyebrows">
+                  <path d="M 78 100 Q 93 96 104 100" stroke="#181514" stroke-width="4" stroke-linecap="round" fill="none" />
+                  <path d="M 136 100 Q 147 96 162 100" stroke="#181514" stroke-width="4" stroke-linecap="round" fill="none" />
+                </g>
+                <g id="sadEyebrows" style="display: none;">
+                  <path d="M 76 96 Q 90 102 104 96" stroke="#181514" stroke-width="4" stroke-linecap="round" fill="none" />
+                  <path d="M 136 96 Q 150 102 164 96" stroke="#181514" stroke-width="4" stroke-linecap="round" fill="none" />
+                </g>
+
+                <!-- Nose -->
+                <path d="M 118 127 Q 120 131 123 131" stroke="#DDA892" stroke-width="2.5" stroke-linecap="round" fill="none" />
+
+                <!-- Akshat's Signature Cute Moustache -->
+                <path id="avatarMoustache" d="M 103 138 C 109 133, 116 135, 120 137 C 124 135, 131 133, 137 138 C 132 143, 124 141, 120 140 C 116 141, 108 143, 103 138 Z" fill="#1C1819" />
+
+                <!-- Mouth: Normal smile vs Sad frown -->
+                <path id="avatarMouth" d="M 114 146 Q 120 151 126 146" stroke="#4B2C1A" stroke-width="2.5" stroke-linecap="round" fill="none" />
+                <path id="avatarSadMouth" d="M 113 151 Q 120 144 127 151" stroke="#4B2C1A" stroke-width="2.5" stroke-linecap="round" fill="none" style="display: none;" />
+
+                <!-- Distressed Hair: Balding from the front from hair pulling / twirling -->
+                <g class="distressed-hair-group" id="distressedHairGroup" style="display: none;">
+                  <!-- Receded hairline base shape with high exposed forehead -->
+                  <path d="M 64 94 C 54 84, 60 56, 85 54 C 95 62, 105 68, 120 68 C 135 68, 145 62, 155 54 C 180 56, 186 84, 176 94 C 172 82, 160 74, 150 74 C 138 78, 132 82, 120 82 C 108 82, 102 78, 90 74 C 80 74, 68 82, 64 94 Z" fill="url(#hairGrad)" />
+                  <!-- Exposed irritated scalp on the high balding forehead -->
+                  <ellipse cx="120" cy="74" rx="26" ry="12" fill="#FCA5A5" opacity="0.32" />
+                  <!-- Side curls still remaining -->
+                  <circle cx="66" cy="76" r="14" fill="url(#hairGrad)" />
+                  <circle cx="56" cy="92" r="12" fill="url(#hairGrad)" />
+                  <circle cx="174" cy="76" r="14" fill="url(#hairGrad)" />
+                  <circle cx="184" cy="92" r="12" fill="url(#hairGrad)" />
+                  <!-- Thinning, sparse broken hair strands on balding front -->
+                  <path d="M 112 66 Q 115 72 113 78" stroke="#262220" stroke-width="1.8" stroke-linecap="round" fill="none" />
+                  <path d="M 120 64 Q 122 71 121 77" stroke="#262220" stroke-width="1.8" stroke-linecap="round" fill="none" />
+                  <path d="M 127 66 Q 125 72 128 78" stroke="#262220" stroke-width="1.8" stroke-linecap="round" fill="none" />
+                </g>
+
+                <!-- Curly Dark Hair (normal full cute curls) -->
+                <g class="curls-group" id="curlsGroup">
+                  <path d="M 62 94 C 52 80, 58 48, 85 42 C 105 36, 135 36, 155 42 C 182 48, 188 80, 178 94 C 174 80, 162 68, 150 68 C 136 68, 130 76, 120 74 C 110 76, 104 68, 90 68 C 78 68, 68 80, 62 94 Z" fill="url(#hairGrad)" />
+
+                  <!-- Clustered Curls -->
+                  <circle cx="66" cy="72" r="16" fill="url(#hairGrad)" class="curl-cluster" />
+                  <circle cx="56" cy="92" r="13" fill="url(#hairGrad)" class="curl-cluster" />
+                  <circle cx="73" cy="54" r="17" fill="url(#hairGrad)" class="curl-cluster" />
+                  <circle cx="95" cy="44" r="18" fill="url(#hairGrad)" class="curl-cluster" />
+                  <circle cx="120" cy="40" r="19" fill="url(#hairGrad)" class="curl-cluster" />
+                  <circle cx="145" cy="44" r="18" fill="url(#hairGrad)" class="curl-cluster" />
+                  <circle cx="167" cy="54" r="17" fill="url(#hairGrad)" class="curl-cluster" />
+                  <circle cx="174" cy="72" r="16" fill="url(#hairGrad)" class="curl-cluster" />
+                  <circle cx="184" cy="92" r="13" fill="url(#hairGrad)" class="curl-cluster" />
+                  <circle cx="92" cy="70" r="13" fill="url(#hairGrad)" class="curl-cluster" />
+                  <circle cx="114" cy="69" r="14" fill="url(#hairGrad)" class="curl-cluster" />
+                  <circle cx="138" cy="70" r="13" fill="url(#hairGrad)" class="curl-cluster" />
+                  <circle cx="156" cy="74" r="11" fill="url(#hairGrad)" class="curl-cluster" />
+                  <circle cx="78" cy="76" r="11" fill="url(#hairGrad)" class="curl-cluster" />
+
+                  <!-- Curl Wave Accents -->
+                  <path d="M 94 46 A 6 6 0 1 1 98 52" stroke="#3D3633" stroke-width="2.5" fill="none" stroke-linecap="round" />
+                  <path d="M 120 42 A 7 7 0 1 1 125 49" stroke="#3D3633" stroke-width="2.5" fill="none" stroke-linecap="round" />
+                  <path d="M 144 46 A 6 6 0 1 1 148 52" stroke="#3D3633" stroke-width="2.5" fill="none" stroke-linecap="round" />
+                </g>
               </g>
             </g>
 
-            <!-- Head Group (Square Jawline + Fair Skin + Memoji Details) -->
-            <g class="head-group" id="headGroup">
-              <rect x="66" y="80" width="108" height="96" rx="28" fill="url(#skinGrad)" filter="url(#softShadow)" />
-
-              <!-- Ears -->
-              <circle cx="62" cy="126" r="11" fill="url(#skinGrad)" />
-              <circle cx="178" cy="126" r="11" fill="url(#skinGrad)" />
-              <circle cx="62" cy="126" r="6" fill="#F4C7B5" opacity="0.6" />
-              <circle cx="178" cy="126" r="6" fill="#F4C7B5" opacity="0.6" />
-
-              <!-- Blush Cheeks -->
-              <ellipse cx="84" cy="138" rx="10" ry="6" fill="#FF9A9E" opacity="0.45" class="blush" id="leftBlush" />
-              <ellipse cx="156" cy="138" rx="10" ry="6" fill="#FF9A9E" opacity="0.45" class="blush" id="rightBlush" />
-
-              <!-- Normal Brown Eyes -->
-              <g class="eyes" id="avatarEyes">
-                <ellipse cx="92" cy="122" rx="7" ry="8" fill="#4B2C1A" />
-                <circle cx="90" cy="119" r="3" fill="#FFFFFF" />
-                <circle cx="95" cy="124" r="1.5" fill="#FFFFFF" />
-                <ellipse cx="148" cy="122" rx="7" ry="8" fill="#4B2C1A" />
-                <circle cx="146" cy="119" r="3" fill="#FFFFFF" />
-                <circle cx="151" cy="124" r="1.5" fill="#FFFFFF" />
-              </g>
-
-              <!-- Happy Squinting Eyes (for hugs & petting curls) -->
-              <g class="eyes-happy" id="avatarHappyEyes" style="display: none;">
-                <path d="M 85 124 Q 92 116 99 124" stroke="#4B2C1A" stroke-width="3.5" stroke-linecap="round" fill="none" />
-                <path d="M 141 124 Q 148 116 155 124" stroke="#4B2C1A" stroke-width="3.5" stroke-linecap="round" fill="none" />
-              </g>
-
-              <!-- Sad Distressed Eyes with Glistening Tears (for urge state) -->
-              <g class="eyes-sad" id="avatarSadEyes" style="display: none;">
-                <ellipse cx="92" cy="125" rx="7.5" ry="8.5" fill="#3D2415" />
-                <circle cx="93.5" cy="122" r="3.8" fill="#FFFFFF" />
-                <circle cx="89.5" cy="127" r="1.5" fill="#FFFFFF" />
-                <ellipse cx="148" cy="125" rx="7.5" ry="8.5" fill="#3D2415" />
-                <circle cx="146.5" cy="122" r="3.8" fill="#FFFFFF" />
-                <circle cx="150.5" cy="127" r="1.5" fill="#FFFFFF" />
-                <path d="M 160 137 C 163 145, 156 150, 153 147 C 150 144, 154 138, 160 137 Z" fill="#60A5FA" opacity="0.9" />
-                <path d="M 80 137 C 77 145, 84 150, 87 147 C 90 144, 86 138, 80 137 Z" fill="#60A5FA" opacity="0.9" />
-              </g>
-
-              <!-- Black Square Glasses (matching his signature look) -->
-              <g class="glasses" id="glassesGroup">
-                <rect x="76" y="106" width="34" height="28" rx="7" fill="rgba(255,255,255,0.18)" stroke="#1F2421" stroke-width="4.5" />
-                <rect x="130" y="106" width="34" height="28" rx="7" fill="rgba(255,255,255,0.18)" stroke="#1F2421" stroke-width="4.5" />
-                <line x1="110" y1="118" x2="130" y2="118" stroke="#1F2421" stroke-width="4.5" stroke-linecap="round" />
-                <line x1="76" y1="116" x2="62" y2="120" stroke="#1F2421" stroke-width="3.5" stroke-linecap="round" />
-                <line x1="164" y1="116" x2="178" y2="120" stroke="#1F2421" stroke-width="3.5" stroke-linecap="round" />
-                <line x1="82" y1="111" x2="90" y2="111" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.75" />
-                <line x1="136" y1="111" x2="144" y2="111" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.75" />
-              </g>
-
-              <!-- Eyebrows: Normal vs Sad -->
-              <g id="normalEyebrows">
-                <path d="M 78 100 Q 93 96 104 100" stroke="#181514" stroke-width="4" stroke-linecap="round" fill="none" />
-                <path d="M 136 100 Q 147 96 162 100" stroke="#181514" stroke-width="4" stroke-linecap="round" fill="none" />
-              </g>
-              <g id="sadEyebrows" style="display: none;">
-                <path d="M 76 96 Q 90 102 104 96" stroke="#181514" stroke-width="4" stroke-linecap="round" fill="none" />
-                <path d="M 136 96 Q 150 102 164 96" stroke="#181514" stroke-width="4" stroke-linecap="round" fill="none" />
-              </g>
-
-              <!-- Nose -->
-              <path d="M 118 127 Q 120 131 123 131" stroke="#DDA892" stroke-width="2.5" stroke-linecap="round" fill="none" />
-
-              <!-- Akshat's Signature Cute Moustache -->
-              <path id="avatarMoustache" d="M 103 138 C 109 133, 116 135, 120 137 C 124 135, 131 133, 137 138 C 132 143, 124 141, 120 140 C 116 141, 108 143, 103 138 Z" fill="#1C1819" />
-
-              <!-- Mouth: Normal smile vs Sad frown -->
-              <path id="avatarMouth" d="M 114 146 Q 120 151 126 146" stroke="#4B2C1A" stroke-width="2.5" stroke-linecap="round" fill="none" />
-              <path id="avatarSadMouth" d="M 113 151 Q 120 144 127 151" stroke="#4B2C1A" stroke-width="2.5" stroke-linecap="round" fill="none" style="display: none;" />
-
-              <!-- Curly Dark Hair (moves when petted!) -->
-              <g class="curls-group" id="curlsGroup">
-                <path d="M 62 94 C 52 80, 58 48, 85 42 C 105 36, 135 36, 155 42 C 182 48, 188 80, 178 94 C 174 80, 162 68, 150 68 C 136 68, 130 76, 120 74 C 110 76, 104 68, 90 68 C 78 68, 68 80, 62 94 Z" fill="url(#hairGrad)" />
-
-                <!-- Clustered Curls -->
-                <circle cx="66" cy="72" r="16" fill="url(#hairGrad)" class="curl-cluster" />
-                <circle cx="56" cy="92" r="13" fill="url(#hairGrad)" class="curl-cluster" />
-                <circle cx="73" cy="54" r="17" fill="url(#hairGrad)" class="curl-cluster" />
-                <circle cx="95" cy="44" r="18" fill="url(#hairGrad)" class="curl-cluster" />
-                <circle cx="120" cy="40" r="19" fill="url(#hairGrad)" class="curl-cluster" />
-                <circle cx="145" cy="44" r="18" fill="url(#hairGrad)" class="curl-cluster" />
-                <circle cx="167" cy="54" r="17" fill="url(#hairGrad)" class="curl-cluster" />
-                <circle cx="174" cy="72" r="16" fill="url(#hairGrad)" class="curl-cluster" />
-                <circle cx="184" cy="92" r="13" fill="url(#hairGrad)" class="curl-cluster" />
-                <circle cx="92" cy="70" r="13" fill="url(#hairGrad)" class="curl-cluster" />
-                <circle cx="114" cy="69" r="14" fill="url(#hairGrad)" class="curl-cluster" />
-                <circle cx="138" cy="70" r="13" fill="url(#hairGrad)" class="curl-cluster" />
-                <circle cx="156" cy="74" r="11" fill="url(#hairGrad)" class="curl-cluster" />
-                <circle cx="78" cy="76" r="11" fill="url(#hairGrad)" class="curl-cluster" />
-
-                <!-- Curl Wave Accents -->
-                <path d="M 94 46 A 6 6 0 1 1 98 52" stroke="#3D3633" stroke-width="2.5" fill="none" stroke-linecap="round" />
-                <path d="M 120 42 A 7 7 0 1 1 125 49" stroke="#3D3633" stroke-width="2.5" fill="none" stroke-linecap="round" />
-                <path d="M 144 46 A 6 6 0 1 1 148 52" stroke="#3D3633" stroke-width="2.5" fill="none" stroke-linecap="round" />
-              </g>
-            </g>
+            <!-- Visual Scalloped Apple Bite Marks (edges along bitten pieces) -->
+            <g id="biteVisualBorders"></g>
           </svg>
+
+          <!-- Eaten Heart Stage (Appears when all bites taken) -->
+          <div class="eaten-heart-stage" id="eatenHeartStage" style="display: none;">
+            <div class="heart-pulse-box" id="heartPulseBox">
+              <svg class="editorial-red-heart" viewBox="0 0 120 120" width="105" height="105" aria-hidden="true">
+                <defs>
+                  <radialGradient id="heartRedGrad" cx="35%" cy="30%" r="70%">
+                    <stop offset="0%" stop-color="#E54848" />
+                    <stop offset="55%" stop-color="#C52828" />
+                    <stop offset="100%" stop-color="#8F1515" />
+                  </radialGradient>
+                </defs>
+                <path d="M 60 104 C 28 76 8 54 8 33 C 8 16 21 6 37 6 C 47 6 56 12 60 19 C 64 12 73 6 83 6 C 99 6 112 16 112 33 C 112 54 92 76 60 104 Z" fill="url(#heartRedGrad)" />
+                <path d="M 28 18 C 20 25 16 34 16 43" stroke="rgba(255,255,255,0.45)" stroke-width="3" stroke-linecap="round" fill="none" />
+              </svg>
+              <span class="heart-love-text">Love you</span>
+            </div>
+            <button class="restore-akku-btn" id="restoreAkkuBtn">Put Akku back together</button>
+          </div>
         </div>
 
         <!-- Immediate Anchoring Controls -->
@@ -229,8 +311,14 @@
           <button class="editorial-chip" id="hugBtn">
             <span class="chip-text">Give a hug</span>
           </button>
-          <button class="editorial-chip chip-highlight" id="sosHandsBtn">
-            <span class="chip-text">Urge to twirl hair or bite nails</span>
+          <button class="editorial-chip chip-highlight" id="urgeBiteBtn">
+            <span class="chip-text">Urge to bite nails</span>
+          </button>
+          <button class="editorial-chip chip-highlight" id="urgeTwirlBtn">
+            <span class="chip-text">Urge to twirl hair</span>
+          </button>
+          <button class="editorial-chip chip-eat" id="eatAkkuBtn">
+            <span class="chip-text">Allow Meha to eat you</span>
           </button>
         </div>
       </div>
@@ -424,23 +512,89 @@
       </div>
     </section>
 
-    <!-- Section 5: Fidget & Urge Surfing -->
+    <!-- Section 5: Preventing Damage -->
     <section class="editorial-card" id="busyHandsSection">
       <div class="section-meta">
         <span class="meta-number">05</span>
-        <span class="meta-label">Keep your hands busy</span>
+        <span class="meta-label">Preventing damage</span>
       </div>
 
       <div class="section-header-block">
         <div class="streak-header-wrap">
           <div>
-            <h2 class="section-headline">Fidget & urge surfing</h2>
-            <p class="section-subtext">When you feel like rolling your hair or biting your nails, try this instead.</p>
+            <h2 class="section-headline">Preventing damage</h2>
+            <p class="section-subtext">When you feel like pulling your hair or biting your nails, protect your body right here.</p>
           </div>
           <div class="streak-counter-box">
             <span class="streak-digits" id="streakDigits">0</span>
             <span class="streak-label">Urges surfed</span>
           </div>
+        </div>
+      </div>
+
+      <!-- Empathy & Safe Zone Banner -->
+      <div class="damage-prevention-banner">
+        <div class="banner-avatar-mini">
+          <!-- Mini SVG portrait of vulnerable Akku needing protection -->
+          <svg viewBox="0 0 100 110" width="80" height="88" class="mini-distressed-svg" aria-label="Akku needing protection">
+            <defs>
+              <radialGradient id="miniSkin" cx="50%" cy="40%" r="60%">
+                <stop offset="0%" stop-color="#FFF3EB" />
+                <stop offset="100%" stop-color="#FCDDCB" />
+              </radialGradient>
+              <linearGradient id="miniHair" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#262220" />
+                <stop offset="100%" stop-color="#0E0C0B" />
+              </linearGradient>
+            </defs>
+            <!-- Body -->
+            <path d="M 20 85 C 15 95, 12 110, 14 120 L 86 120 C 88 110, 85 95, 80 85 Z" fill="#27232B" />
+            <!-- Head -->
+            <rect x="25" y="32" width="50" height="48" rx="14" fill="url(#miniSkin)" />
+            <!-- Balding front hairline -->
+            <path d="M 24 40 C 20 34, 23 20, 36 18 C 41 24, 45 28, 50 28 C 55 28, 59 24, 64 18 C 77 20, 80 34, 76 40 C 73 34, 68 30, 62 30 C 58 32, 54 34, 50 34 C 46 34, 42 32, 38 30 C 32 30, 27 34, 24 40 Z" fill="url(#miniHair)" />
+            <ellipse cx="50" cy="30" rx="12" ry="5" fill="#FCA5A5" opacity="0.35" />
+            <circle cx="26" cy="33" r="6" fill="url(#miniHair)" />
+            <circle cx="74" cy="33" r="6" fill="url(#miniHair)" />
+            <!-- Glasses -->
+            <rect x="30" y="44" width="16" height="13" rx="3" fill="none" stroke="#1F2421" stroke-width="2" />
+            <rect x="54" y="44" width="16" height="13" rx="3" fill="none" stroke="#1F2421" stroke-width="2" />
+            <line x1="46" y1="50" x2="54" y2="50" stroke="#1F2421" stroke-width="2" />
+            <!-- Sad Crying Eyes -->
+            <circle cx="38" cy="51" r="3.2" fill="#3D2415" />
+            <circle cx="39" cy="49.5" r="1.4" fill="#FFFFFF" />
+            <circle cx="62" cy="51" r="3.2" fill="#3D2415" />
+            <circle cx="61" cy="49.5" r="1.4" fill="#FFFFFF" />
+            <!-- Teardrops streaming -->
+            <path d="M 37 57 Q 35 64 36 70" stroke="#38BDF8" stroke-width="1.8" stroke-linecap="round" fill="none" />
+            <circle cx="36" cy="71" r="1.6" fill="#38BDF8" />
+            <path d="M 63 57 Q 65 64 64 70" stroke="#38BDF8" stroke-width="1.8" stroke-linecap="round" fill="none" />
+            <circle cx="64" cy="71" r="1.6" fill="#38BDF8" />
+            <!-- Sad Mouth -->
+            <path d="M 46 68 Q 50 64 54 68" stroke="#4B2C1A" stroke-width="1.5" stroke-linecap="round" fill="none" />
+            <!-- Raised Hands with Bitten Nails and Bleeding Dots -->
+            <rect x="34" y="74" width="12" height="15" rx="3" fill="url(#miniSkin)" stroke="#27232B" stroke-width="1" />
+            <rect x="54" y="74" width="12" height="15" rx="3" fill="url(#miniSkin)" stroke="#27232B" stroke-width="1" />
+            <!-- Tiny Bitten Nails -->
+            <rect x="35.5" y="75" width="2" height="1.2" fill="#E8D5CA" />
+            <rect x="38.5" y="74.5" width="2" height="1.2" fill="#E8D5CA" />
+            <rect x="41.5" y="75" width="2" height="1.2" fill="#E8D5CA" />
+            <rect x="56.5" y="75" width="2" height="1.2" fill="#E8D5CA" />
+            <rect x="59.5" y="74.5" width="2" height="1.2" fill="#E8D5CA" />
+            <rect x="62.5" y="75" width="2" height="1.2" fill="#E8D5CA" />
+            <!-- Red Bleeding Dots on Nails -->
+            <circle cx="36.5" cy="77" r="1.2" fill="#DC2626" />
+            <circle cx="39.5" cy="76.5" r="1.3" fill="#DC2626" />
+            <circle cx="42.5" cy="77" r="1.2" fill="#DC2626" />
+            <circle cx="57.5" cy="77" r="1.2" fill="#DC2626" />
+            <circle cx="60.5" cy="76.5" r="1.3" fill="#DC2626" />
+            <circle cx="63.5" cy="77" r="1.2" fill="#DC2626" />
+          </svg>
+        </div>
+        <div class="banner-copy">
+          <span class="banner-badge">Safe zone</span>
+          <h3 class="banner-title">Stop before the bleeding starts</h3>
+          <p class="banner-text">If your nails are bleeding or your front hairline is sore from pulling, rest your hands here right now. You are completely safe. Use the sensory tools below to protect your body.</p>
         </div>
       </div>
 
