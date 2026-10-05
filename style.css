@@ -1,51 +1,59 @@
 /* ==========================================================================
-   Cozy Pocket Akshat - Styling & Aesthetics
-   Crafted with love by Meha
+   Cozy Pocket Akshat - Inspira UI Modern Aesthetics
+   Inspired by Inspira UI (Aurora, Border Beam, Spotlight & Shimmer)
+   Crafted with love by Meha for Akku ❤️
    ========================================================================== */
 
 :root {
-  --bg-primary: #FAF6F0;
-  --bg-secondary: #F3ECE2;
-  --card-bg: rgba(255, 255, 255, 0.88);
-  --card-border: rgba(224, 214, 202, 0.6);
-  --text-main: #3C3633;
-  --text-muted: #746964;
-  --text-light: #9E928C;
+  /* Inspira UI: Obsidian Aurora Dark Theme (Default) */
+  --bg-primary: #090B10;
+  --bg-secondary: #111522;
+  --card-bg: rgba(17, 21, 33, 0.72);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --card-border-glow: rgba(251, 113, 133, 0.35);
+  --text-main: #F8FAFC;
+  --text-muted: #94A3B8;
+  --text-light: #64748B;
 
-  /* Theme Accents */
-  --accent-sage: #5E8268;
-  --accent-sage-light: #EBF2EC;
-  --accent-rose: #D97D73;
-  --accent-rose-light: #FDECE9;
-  --accent-honey: #E9A348;
-  --accent-honey-light: #FEF6EB;
-  --accent-lavender: #8E7CC3;
-  --accent-lavender-light: #F2EEFA;
+  /* Inspira Vibrant Neon-Pastel Accents */
+  --accent-sage: #4ADE80;
+  --accent-sage-light: rgba(74, 222, 128, 0.14);
+  --accent-rose: #FB7185;
+  --accent-rose-light: rgba(251, 113, 133, 0.16);
+  --accent-honey: #FBBF24;
+  --accent-honey-light: rgba(251, 191, 36, 0.16);
+  --accent-lavender: #A78BFA;
+  --accent-lavender-light: rgba(167, 139, 250, 0.16);
 
-  --shadow-sm: 0 4px 12px rgba(60, 54, 51, 0.05);
-  --shadow-md: 0 10px 25px rgba(60, 54, 51, 0.08);
-  --shadow-lg: 0 16px 36px rgba(60, 54, 51, 0.12);
+  --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+  --shadow-lg: 0 20px 45px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
   --radius-lg: 24px;
   --radius-md: 16px;
   --radius-sm: 10px;
 
-  --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Cozy Night Ambiance Mode */
-body.night-mode {
-  --bg-primary: #1C1E24;
-  --bg-secondary: #16181D;
-  --card-bg: rgba(35, 38, 48, 0.88);
-  --card-border: rgba(65, 70, 85, 0.5);
-  --text-main: #EAE6E1;
-  --text-muted: #A8A29E;
-  --text-light: #78716C;
+/* Light Cozy Mode */
+body.light-mode {
+  --bg-primary: #FAF8F5;
+  --bg-secondary: #F3EDE4;
+  --card-bg: rgba(255, 255, 255, 0.88);
+  --card-border: rgba(220, 210, 200, 0.6);
+  --card-border-glow: rgba(251, 113, 133, 0.2);
+  --text-main: #1E293B;
+  --text-muted: #64748B;
+  --text-light: #94A3B8;
 
-  --accent-sage-light: rgba(94, 130, 104, 0.2);
-  --accent-rose-light: rgba(217, 125, 115, 0.2);
-  --accent-honey-light: rgba(233, 163, 72, 0.2);
-  --accent-lavender-light: rgba(142, 124, 195, 0.2);
+  --accent-sage-light: #EBF7EE;
+  --accent-rose-light: #FDECEF;
+  --accent-honey-light: #FEF6E9;
+  --accent-lavender-light: #F3EEFB;
+
+  --shadow-sm: 0 4px 12px rgba(60, 54, 51, 0.05);
+  --shadow-md: 0 10px 25px rgba(60, 54, 51, 0.08);
+  --shadow-lg: 0 16px 36px rgba(60, 54, 51, 0.12);
 }
 
 * {
@@ -66,40 +74,96 @@ body {
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* Ambient Backdrops */
-.ambient-glow {
+/* Inspira UI: Animated Aurora Background & Dot Grid */
+.inspira-aurora-bg {
   position: fixed;
-  border-radius: 50%;
-  filter: blur(80px);
-  z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  z-index: -3;
   pointer-events: none;
-  opacity: 0.6;
 }
 
-.glow-1 {
-  width: 380px;
-  height: 380px;
-  background: radial-gradient(circle, #FCD5CE 0%, rgba(252, 213, 206, 0) 70%);
-  top: -60px;
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(110px);
+  opacity: 0.42;
+  animation: auroraDrift 22s infinite alternate ease-in-out;
+}
+
+.blob-1 {
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, #7928CA 0%, rgba(121, 40, 202, 0) 70%);
+  top: -120px;
+  left: 5%;
+}
+
+.blob-2 {
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, #FF0080 0%, rgba(255, 0, 128, 0) 70%);
+  top: 30%;
   right: -80px;
+  animation-delay: -7s;
 }
 
-.glow-2 {
-  width: 420px;
-  height: 420px;
-  background: radial-gradient(circle, #E2ECE9 0%, rgba(226, 236, 233, 0) 70%);
-  bottom: 80px;
-  left: -100px;
+.blob-3 {
+  width: 560px;
+  height: 560px;
+  background: radial-gradient(circle, #00DFD8 0%, rgba(0, 223, 216, 0) 70%);
+  bottom: -160px;
+  left: 15%;
+  animation-delay: -14s;
 }
 
-/* Top Navigation */
+@keyframes auroraDrift {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(40px) scale(1.1) rotate(5deg); }
+  100% { transform: translateY(-30px) scale(0.95) rotate(-5deg); }
+}
+
+.inspira-dot-grid {
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 26px 26px;
+  z-index: -2;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, black 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, black 40%, transparent 100%);
+}
+
+body.light-mode .inspira-dot-grid {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.07) 1px, transparent 1px);
+}
+
+#stardustCanvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Top Navigation (Inspira Floating Dock Style) */
 .top-nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.5rem;
+  padding: 0.7rem 1.2rem;
   max-width: 680px;
-  margin: 0 auto;
+  margin: 1.2rem auto 0.8rem auto;
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--card-border);
+  border-radius: 50px;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-smooth);
+}
+
+.top-nav:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: var(--shadow-md);
 }
 
 .nav-brand {
@@ -163,20 +227,98 @@ body {
   gap: 1.5rem;
 }
 
-/* Cards Common Styling */
+/* Inspira UI: Frosted Glass Cards with Inner Glow */
 .card {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: var(--radius-lg);
   padding: 1.6rem;
   box-shadow: var(--shadow-md);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
   position: relative;
   transition: var(--transition-smooth);
 }
 
 .card:hover {
+  border-color: rgba(255, 255, 255, 0.16);
   box-shadow: var(--shadow-lg);
+}
+
+/* Inspira UI: Spotlight Effect on Cards */
+.spotlight-card {
+  position: relative;
+}
+
+.spotlight-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: radial-gradient(550px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(251, 113, 133, 0.14), transparent 45%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+
+/* Inspira UI: Border Beam (Animated Orbiting Laser Beam) */
+@property --beam-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.border-beam {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.8px;
+  background: conic-gradient(from var(--beam-angle, 0deg) at 50% 50%, transparent 65%, #FB7185 80%, #A78BFA 92%, #4ADE80 98%, transparent 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: borderBeamRotate 7s linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes borderBeamRotate {
+  to {
+    --beam-angle: 360deg;
+  }
+}
+
+/* Inspira UI: Shimmer Button (Moving Light Sweep) */
+.shimmer-btn {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #FB7185 0%, #E11D48 100%) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 20px rgba(251, 113, 133, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+}
+
+.shimmer-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(60deg, transparent 40%, rgba(255, 255, 255, 0.35) 50%, transparent 60%);
+  transform: rotate(25deg);
+  animation: shimmerSweep 3.5s infinite linear;
+  pointer-events: none;
+}
+
+@keyframes shimmerSweep {
+  0% { transform: translateX(-100%) rotate(25deg); }
+  100% { transform: translateX(100%) rotate(25deg); }
 }
 
 .card-header {
@@ -184,6 +326,8 @@ body {
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 0.6rem;
+  position: relative;
+  z-index: 2;
 }
 
 .card-title-group h2 {
@@ -223,6 +367,8 @@ body {
   font-size: 0.92rem;
   color: var(--text-muted);
   margin-bottom: 1.2rem;
+  position: relative;
+  z-index: 2;
 }
 
 /* ==========================================================================
@@ -233,16 +379,14 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1.5rem 1rem;
-  background: linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(245,238,228,0.7) 100%);
+  padding: 1.8rem 1.2rem;
+  background: var(--card-bg);
+  backdrop-filter: blur(24px) saturate(180%);
   border: 1px solid var(--card-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
   position: relative;
-}
-
-body.night-mode .avatar-hero-card {
-  background: linear-gradient(180deg, rgba(40,44,56,0.8) 0%, rgba(25,28,36,0.8) 100%);
+  overflow: hidden;
 }
 
 .speech-bubble-wrapper {

@@ -11,11 +11,16 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧸</text></svg>">
 </head>
 <body>
-  <!-- Ambient Background Glows -->
-  <div class="ambient-glow glow-1"></div>
-  <div class="ambient-glow glow-2"></div>
+  <!-- Inspira UI: Animated Aurora Background & Dot Matrix Grid -->
+  <div class="inspira-aurora-bg">
+    <div class="aurora-blob blob-1"></div>
+    <div class="aurora-blob blob-2"></div>
+    <div class="aurora-blob blob-3"></div>
+  </div>
+  <div class="inspira-dot-grid"></div>
+  <canvas id="stardustCanvas"></canvas>
 
-  <!-- Top Header Navigation -->
+  <!-- Top Header Navigation (Inspira Floating Dock Style) -->
   <header class="top-nav">
     <div class="nav-brand">
       <span class="heart-pulse">❤️</span>
@@ -25,16 +30,17 @@
       <button id="soundToggle" class="icon-btn" title="Toggle Sound" aria-label="Toggle Sound">
         <span class="icon">🔊</span>
       </button>
-      <button id="nightToggle" class="icon-btn" title="Cozy Night Mode" aria-label="Cozy Night Mode">
-        <span class="icon">🌙</span>
+      <button id="nightToggle" class="icon-btn" title="Toggle Theme" aria-label="Toggle Theme">
+        <span class="icon">✨</span>
       </button>
     </div>
   </header>
 
   <main class="app-container">
     
-    <!-- Hero: Interactive Mini Akshat -->
-    <section class="avatar-hero-card">
+    <!-- Hero: Interactive Mini Akshat with Inspira Border Beam -->
+    <section class="avatar-hero-card spotlight-card">
+      <div class="border-beam"></div>
       <div class="speech-bubble-wrapper">
         <div id="speechBubble" class="speech-bubble">
           <p id="speechText">Hey Akku! Tap me anytime you need a breath. I'm always right here with you.</p>
@@ -285,7 +291,7 @@
     <!-- ==========================================================================
          NEW SECTION: FEELINGS WHEEL ("Feel It, Don't Overthink It")
          ========================================================================== -->
-    <section class="card feelings-wheel-card" id="feelingsWheelSection">
+    <section class="card spotlight-card feelings-wheel-card" id="feelingsWheelSection">
       <div class="card-header">
         <div class="card-title-group">
           <span class="badge badge-feelings">Emotion Regulation</span>
@@ -492,7 +498,7 @@
     <!-- ==========================================================================
          NEW SECTION: CALMING TIMERS (Proven Short Meditation & Affirmations)
          ========================================================================== -->
-    <section class="card timers-card" id="calmingTimersSection">
+    <section class="card spotlight-card timers-card" id="calmingTimersSection">
       <div class="card-header">
         <div class="card-title-group">
           <span class="badge badge-care">ADHD Proven Neuroscience</span>
@@ -539,7 +545,7 @@
         </p>
 
         <div class="timer-action-buttons">
-          <button id="startCalmingTimerBtn" class="action-btn primary-btn">Begin 1-Min Reset 🫁</button>
+          <button id="startCalmingTimerBtn" class="action-btn primary-btn shimmer-btn">Begin 1-Min Reset 🫁</button>
           <button id="resetCalmingTimerBtn" class="action-btn secondary-btn" style="display: none;">Stop</button>
         </div>
       </div>
@@ -558,7 +564,7 @@
     </section>
 
     <!-- SECTION 1: SOS BUSY HANDS SHIELD (Hero sensory tool) -->
-    <section class="card fidget-card" id="busyHandsSection">
+    <section class="card spotlight-card fidget-card" id="busyHandsSection">
       <div class="card-header">
         <div class="card-title-group">
           <span class="badge badge-sos">Busy Hands Sanctuary</span>
@@ -610,7 +616,7 @@
             <p id="surferStepDesc">Put both hands flat on your thighs or desk. Breathe deeply. Ride the wave like a surfer until it settles.</p>
           </div>
           <div class="surfer-controls">
-            <button id="startSurferBtn" class="action-btn primary-btn">Ride the Urge Wave 🌊</button>
+            <button id="startSurferBtn" class="action-btn primary-btn shimmer-btn">Ride the Urge Wave 🌊</button>
             <button id="resetSurferBtn" class="action-btn secondary-btn" style="display: none;">Reset</button>
           </div>
         </div>
@@ -633,7 +639,7 @@
     </section>
 
     <!-- SECTION 3: COZY SELF-CARE PRESCRIPTIONS -->
-    <section class="card self-care-card">
+    <section class="card spotlight-card self-care-card">
       <div class="card-header">
         <div class="card-title-group">
           <span class="badge badge-care">Today's Cozy Quests</span>

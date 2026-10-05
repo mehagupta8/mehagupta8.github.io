@@ -1072,7 +1072,7 @@
   });
 
   // ==========================================================================
-  // 8. Navigation Controls (Sound Toggle & Night Mode)
+  // 8. Navigation Controls & Inspira UI Interactions
   // ==========================================================================
   const soundToggle = document.getElementById('soundToggle');
   const nightToggle = document.getElementById('nightToggle');
@@ -1087,10 +1087,65 @@
   });
 
   nightToggle.addEventListener('click', () => {
-    document.body.classList.toggle('night-mode');
-    const isNight = document.body.classList.contains('night-mode');
-    nightToggle.querySelector('.icon').textContent = isNight ? '☀️' : '🌙';
+    document.body.classList.toggle('light-mode');
+    const isLight = document.body.classList.contains('light-mode');
+    nightToggle.querySelector('.icon').textContent = isLight ? '☀️' : '✨';
   });
+
+  // Inspira UI: Interactive Card Spotlight effect
+  document.querySelectorAll('.spotlight-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    });
+  });
+
+  // Inspira UI: Drifting Stardust & Particle Field
+  const stardustCanvas = document.getElementById('stardustCanvas');
+  if (stardustCanvas) {
+    const sCtx = stardustCanvas.getContext('2d');
+    let stars = [];
+
+    function resizeStardust() {
+      stardustCanvas.width = window.innerWidth;
+      stardustCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeStardust);
+    resizeStardust();
+
+    for (let i = 0; i < 50; i++) {
+      stars.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        size: Math.random() * 1.8 + 0.6,
+        alpha: Math.random() * 0.65 + 0.25,
+        speed: Math.random() * 0.3 + 0.08,
+        drift: (Math.random() - 0.5) * 0.15
+      });
+    }
+
+    function renderStardust() {
+      sCtx.clearRect(0, 0, stardustCanvas.width, stardustCanvas.height);
+      stars.forEach(star => {
+        star.y -= star.speed;
+        star.x += star.drift;
+        if (star.y < 0) {
+          star.y = stardustCanvas.height;
+          star.x = Math.random() * stardustCanvas.width;
+        }
+
+        sCtx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
+        sCtx.beginPath();
+        sCtx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        sCtx.fill();
+      });
+      requestAnimationFrame(renderStardust);
+    }
+    renderStardust();
+  }
 
   // ==========================================================================
   // 9. Lightweight Canvas Confetti Engine
