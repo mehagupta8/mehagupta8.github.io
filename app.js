@@ -122,8 +122,8 @@
       const gain = audioCtx.createGain();
 
       osc.type = 'triangle';
-      osc.frequency.setValueAtTime(180 + Math.random() * 40, audioCtx.currentTime);
-      gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(180 + Math.random() * 50, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.08);
 
       osc.connect(gain);
@@ -131,6 +131,113 @@
 
       osc.start();
       osc.stop(audioCtx.currentTime + 0.08);
+    } catch (e) {}
+  }
+
+  // Multi-oscillator ASMR silicone bubble pop sound
+  function playBubblePop(pitch = 380, isReverse = false) {
+    if (!isSoundEnabled) return;
+    initAudio();
+    if (!audioCtx) return;
+
+    try {
+      const t = audioCtx.currentTime;
+
+      if (!isReverse) {
+        // Crisp air pop snap (high frequency burst)
+        const snapOsc = audioCtx.createOscillator();
+        const snapGain = audioCtx.createGain();
+        snapOsc.type = 'triangle';
+        snapOsc.frequency.setValueAtTime(pitch * 2.8, t);
+        snapOsc.frequency.exponentialRampToValueAtTime(pitch * 0.9, t + 0.028);
+
+        snapGain.gain.setValueAtTime(0.2, t);
+        snapGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.035);
+
+        snapOsc.connect(snapGain);
+        snapGain.connect(audioCtx.destination);
+        snapOsc.start(t);
+        snapOsc.stop(t + 0.035);
+
+        // Cavity body pop (deep resonant thump)
+        const bodyOsc = audioCtx.createOscillator();
+        const bodyGain = audioCtx.createGain();
+        bodyOsc.type = 'sine';
+        bodyOsc.frequency.setValueAtTime(pitch, t);
+        bodyOsc.frequency.exponentialRampToValueAtTime(60, t + 0.065);
+
+        bodyGain.gain.setValueAtTime(0.26, t);
+        bodyGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.07);
+
+        bodyOsc.connect(bodyGain);
+        bodyGain.connect(audioCtx.destination);
+        bodyOsc.start(t);
+        bodyOsc.stop(t + 0.07);
+      } else {
+        // Reverse suction snap for un-popping
+        const unpopOsc = audioCtx.createOscillator();
+        const unpopGain = audioCtx.createGain();
+        unpopOsc.type = 'sine';
+        unpopOsc.frequency.setValueAtTime(140, t);
+        unpopOsc.frequency.exponentialRampToValueAtTime(pitch * 1.6, t + 0.03);
+
+        unpopGain.gain.setValueAtTime(0.12, t);
+        unpopGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.035);
+
+        unpopOsc.connect(unpopGain);
+        unpopGain.connect(audioCtx.destination);
+        unpopOsc.start(t);
+        unpopOsc.stop(t + 0.035);
+      }
+    } catch (e) {}
+  }
+
+  // Ambient ocean wave swell audio for the 60-second urge surfer
+  let oceanSourceNode = null;
+  let oceanFilterNode = null;
+  let oceanGainNode = null;
+
+  function startOceanWaveAudio() {
+    if (!isSoundEnabled) return;
+    initAudio();
+    if (!audioCtx) return;
+
+    try {
+      stopOceanWaveAudio();
+
+      const bufferSize = Math.floor(audioCtx.sampleRate * 2.5);
+      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const output = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = (Math.random() * 2 - 1) * 0.35;
+      }
+
+      oceanSourceNode = audioCtx.createBufferSource();
+      oceanSourceNode.buffer = buffer;
+      oceanSourceNode.loop = true;
+
+      oceanFilterNode = audioCtx.createBiquadFilter();
+      oceanFilterNode.type = 'lowpass';
+      oceanFilterNode.frequency.setValueAtTime(320, audioCtx.currentTime);
+
+      oceanGainNode = audioCtx.createGain();
+      oceanGainNode.gain.setValueAtTime(0.06, audioCtx.currentTime);
+
+      oceanSourceNode.connect(oceanFilterNode);
+      oceanFilterNode.connect(oceanGainNode);
+      oceanGainNode.connect(audioCtx.destination);
+
+      oceanSourceNode.start();
+    } catch (e) {}
+  }
+
+  function stopOceanWaveAudio() {
+    try {
+      if (oceanSourceNode) {
+        oceanSourceNode.stop();
+        oceanSourceNode.disconnect();
+        oceanSourceNode = null;
+      }
     } catch (e) {}
   }
 
@@ -1014,7 +1121,7 @@
       y: cy - 7,
       class: 'wheel-text',
       id: 'wheelHubTop',
-      'font-family': "'Playfair Display', serif",
+      'font-family': "'Recoleta', 'Fraunces', serif",
       'font-size': '11px',
       'font-weight': '600',
       fill: '#1A1A1A'
@@ -1533,13 +1640,33 @@
       if (targetPanel) {
         targetPanel.classList.add('active');
       }
+
+      // If switching away from surfer, halt ocean sound
+      if (tab.dataset.tab !== 'surfer') {
+        stopOceanWaveAudio();
+      } else if (isSurferActive) {
+        startOceanWaveAudio();
+      }
       playClick(1050);
     });
   });
 
-  // Tool 1: 24 Tactile Matrix Plates
+  // Tool 1: 24 Tactile Silicone Bubble Pop Pad
   const matrixGrid = document.getElementById('matrixGrid');
+  const matrixPopCounter = document.getElementById('matrixPopCounter');
+  const popAllMatrixBtn = document.getElementById('popAllMatrixBtn');
   const resetMatrixBtn = document.getElementById('resetMatrixBtn');
+
+  function updateMatrixPopCounter() {
+    if (!matrixGrid || !matrixPopCounter) return;
+    const poppedCount = matrixGrid.querySelectorAll('.tactile-cell.depressed').length;
+    matrixPopCounter.textContent = `${poppedCount} / 24 popped`;
+    if (poppedCount === 24) {
+      playChime(660, 1.2);
+      comfortAkshat();
+      updateSpeech("All 24 bubbles popped! Your hands are doing great.");
+    }
+  }
 
   if (matrixGrid) {
     matrixGrid.innerHTML = '';
@@ -1548,23 +1675,28 @@
       cell.className = 'tactile-cell';
       cell.setAttribute('tabindex', '0');
       cell.setAttribute('role', 'button');
-      cell.setAttribute('aria-label', `Tactile plate ${i + 1}`);
+      cell.setAttribute('aria-label', `Tactile bubble ${i + 1}`);
 
-      const handlePress = () => {
-        if (!cell.classList.contains('depressed')) {
+      const handlePop = () => {
+        const isDepressed = cell.classList.contains('depressed');
+        if (!isDepressed) {
           cell.classList.add('depressed');
-          playClick(1400 + (i % 6) * 60);
+          // Harmonic pitch shift across the 24 cells for ASMR satisfaction
+          const pitch = 320 + (i % 8) * 35;
+          playBubblePop(pitch, false);
         } else {
           cell.classList.remove('depressed');
-          playClick(900 + (i % 6) * 40);
+          const pitch = 260 + (i % 8) * 25;
+          playBubblePop(pitch, true);
         }
+        updateMatrixPopCounter();
       };
 
-      cell.addEventListener('click', handlePress);
+      cell.addEventListener('click', handlePop);
       cell.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          handlePress();
+          handlePop();
         }
       });
 
@@ -1572,11 +1704,29 @@
     }
   }
 
+  if (popAllMatrixBtn && matrixGrid) {
+    popAllMatrixBtn.addEventListener('click', () => {
+      const unpopped = Array.from(matrixGrid.querySelectorAll('.tactile-cell:not(.depressed)'));
+      if (unpopped.length === 0) return;
+      unpopped.forEach((cell, idx) => {
+        setTimeout(() => {
+          cell.classList.add('depressed');
+          playBubblePop(300 + (idx % 8) * 40, false);
+          updateMatrixPopCounter();
+          if (idx === unpopped.length - 1) {
+            playChime(580, 1.0);
+          }
+        }, idx * 45);
+      });
+    });
+  }
+
   if (resetMatrixBtn && matrixGrid) {
     resetMatrixBtn.addEventListener('click', () => {
       const cells = matrixGrid.querySelectorAll('.tactile-cell');
       cells.forEach(c => c.classList.remove('depressed'));
-      playChime(700, 0.6);
+      updateMatrixPopCounter();
+      playChime(620, 0.7);
     });
   }
 
@@ -1596,16 +1746,16 @@
 
     if (seconds > 45) {
       surferTitle.textContent = 'Phase 01: The Initial Urge Swell';
-      surferBody.textContent = 'Keep hands flat against your thighs or desktop. Observe the physical impulse to twirl or pick without judging it. Breathe slowly.';
+      surferBody.textContent = 'Keep hands flat on your lap or table. Watch the urge without judging it. Breathe in gently and exhale slowly.';
     } else if (seconds > 20) {
       surferTitle.textContent = 'Phase 02: Cresting the Amplitude';
-      surferBody.textContent = 'The urge is at its peak neurological transmission. Remember that physical sensations cannot compel motor action. You are the observer, not the reaction.';
+      surferBody.textContent = 'The urge is at its peak intensity. Sensation is not an instruction. You are the observer, not the impulse.';
     } else if (seconds > 0) {
       surferTitle.textContent = 'Phase 03: Natural Dissolution';
-      surferBody.textContent = 'The chemical urge is naturally dissipating. The prefrontal brake has successfully overridden the basal ganglia impulse.';
+      surferBody.textContent = 'The wave is settling down. Your nervous system is naturally easing. You have full command of your hands.';
     } else {
-      surferTitle.textContent = 'Protocol Complete: Urge Surfed';
-      surferBody.textContent = 'You successfully allowed the physical impulse to peak and dissolve without harm. Your inhibitory neural circuits just strengthened.';
+      surferTitle.textContent = 'Wave Surfed: You Did It';
+      surferBody.textContent = 'You allowed the impulse to crest and melt away without harm. Your mind and hands are safe and at ease.';
     }
   }
 
@@ -1613,7 +1763,8 @@
     isSurferActive = true;
     if (startSurferBtn) startSurferBtn.style.display = 'none';
     if (resetSurferBtn) resetSurferBtn.style.display = 'inline-flex';
-    playChime(528, 1.0);
+    playChime(528, 1.2);
+    startOceanWaveAudio();
 
     surferInterval = setInterval(() => {
       if (surferRemaining <= 0) {
@@ -1629,10 +1780,11 @@
   function resetUrgeSurfer() {
     isSurferActive = false;
     clearInterval(surferInterval);
+    stopOceanWaveAudio();
     surferRemaining = 60;
     if (surferSecs) surferSecs.textContent = '60';
-    if (surferTitle) surferTitle.textContent = 'Urges Peak Within 60 to 90 Seconds';
-    if (surferBody) surferBody.textContent = 'Place both hands flat against your thighs or desktop. Observe the physiological urge without acting on it. Ride the crest until it dissolves.';
+    if (surferTitle) surferTitle.textContent = 'Urges peak and pass in 60 seconds';
+    if (surferBody) surferBody.textContent = 'Place both hands flat on your lap or table. Watch the physical impulse without acting on it. Ride the wave until it melts away.';
     if (startSurferBtn) startSurferBtn.style.display = 'inline-flex';
     if (resetSurferBtn) resetSurferBtn.style.display = 'none';
     playClick(800);
@@ -1641,6 +1793,7 @@
   function completeUrgeSurfer() {
     clearInterval(surferInterval);
     isSurferActive = false;
+    stopOceanWaveAudio();
     playChime(660, 2.2);
 
     // Increment streak
@@ -1653,7 +1806,7 @@
 
     if (startSurferBtn) {
       startSurferBtn.style.display = 'inline-flex';
-      startSurferBtn.textContent = 'Commence Another Wave';
+      startSurferBtn.textContent = 'Start another wave';
     }
     if (resetSurferBtn) resetSurferBtn.style.display = 'none';
   }
@@ -1666,32 +1819,81 @@
     resetSurferBtn.addEventListener('click', resetUrgeSurfer);
   }
 
-  // Tool 3: Alabaster Worry Stone
+  // Tool 3: Alabaster Worry Stone (Tactile Ergonomic Pebble)
   const alabasterStone = document.getElementById('alabasterStone');
+  const stoneGlowPoint = document.getElementById('stoneGlowPoint');
   const stoneRubCount = document.getElementById('stoneRubCount');
+  const stoneMilestoneCue = document.getElementById('stoneMilestoneCue');
   let rubsCount = 0;
   let lastRubTime = 0;
 
+  const stoneMilestones = [
+    { count: 10, cue: "Shoulders dropping into ease...", freq: 440 },
+    { count: 20, cue: "Hands feeling safe and resting...", freq: 528 },
+    { count: 30, cue: "Breathing deep, calm, and steady...", freq: 587 },
+    { count: 40, cue: "You are completely safe right now...", freq: 659 },
+    { count: 50, cue: "Gentle peace throughout your mind...", freq: 784 }
+  ];
+
   if (alabasterStone) {
-    const recordRub = () => {
+    const handleMove = (e) => {
+      const rect = alabasterStone.getBoundingClientRect();
+      const clientX = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
+      const clientY = e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : 0);
+      if (stoneGlowPoint && clientX && clientY) {
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
+        stoneGlowPoint.style.left = `${x}px`;
+        stoneGlowPoint.style.top = `${y}px`;
+      }
+    };
+
+    const recordRub = (e) => {
+      handleMove(e);
       const now = Date.now();
       if (now - lastRubTime > 120) {
         lastRubTime = now;
         rubsCount++;
         if (stoneRubCount) stoneRubCount.textContent = String(rubsCount);
         playStoneFriction();
-        alabasterStone.style.boxShadow = '0 12px 30px rgba(212, 175, 55, 0.2)';
+
+        const milestone = stoneMilestones.find(m => m.count === rubsCount);
+        if (milestone) {
+          if (stoneMilestoneCue) stoneMilestoneCue.textContent = milestone.cue;
+          playChime(milestone.freq, 1.4);
+          if (rubsCount === 50) {
+            comfortAkshat();
+            updateSpeech("50 gentle strokes. Your mind is quiet and your hands are at rest.");
+          }
+        } else if (rubsCount > 50 && rubsCount % 15 === 0) {
+          const extraCues = [
+            "Stillness returning to your fingers...",
+            "Quiet strength in this moment...",
+            "Every breath softens your heart...",
+            "You are doing wonderfully well..."
+          ];
+          const cueIdx = Math.floor(rubsCount / 15) % extraCues.length;
+          if (stoneMilestoneCue) stoneMilestoneCue.textContent = extraCues[cueIdx];
+          playChime(528, 1.0);
+        }
+
+        alabasterStone.style.boxShadow = '0 14px 34px rgba(212, 175, 55, 0.28)';
         setTimeout(() => {
-          alabasterStone.style.boxShadow = '0 8px 24px rgba(26, 26, 26, 0.06)';
-        }, 200);
+          alabasterStone.style.boxShadow = '';
+        }, 180);
       }
     };
 
     alabasterStone.addEventListener('pointermove', (e) => {
+      handleMove(e);
       if (e.buttons > 0) {
-        recordRub();
+        recordRub(e);
       }
     });
+
+    alabasterStone.addEventListener('touchmove', (e) => {
+      recordRub(e);
+    }, { passive: true });
 
     alabasterStone.addEventListener('click', recordRub);
   }

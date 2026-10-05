@@ -1,9 +1,34 @@
 /* ==========================================================================
    Luxury / Editorial Design System
    Sanctuary for Akku | Curated with love from Mehu
+   Typography: Recoleta & Inter (with Fraunces fallback)
    Aesthetic: Warm Alabaster, Rich Charcoal, Deliberate Metallic Gold Accents
    Zero Emojis. Zero Border Radius. High Editorial Cadence.
    ========================================================================== */
+
+@font-face {
+  font-family: 'Recoleta';
+  src: url('./fonts/Recoleta-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Recoleta';
+  src: url('./fonts/Recoleta-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Recoleta';
+  src: url('./fonts/Recoleta-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   --bg: #F9F8F6;
@@ -25,7 +50,7 @@
   --border-focus: #D4AF37;
 
   /* Typography */
-  --font-serif: "Playfair Display", Georgia, serif;
+  --font-serif: "Recoleta", "Fraunces", "Playfair Display", Georgia, serif;
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   /* Shadows (Subtle, Layered, Expensive) */
@@ -1320,41 +1345,99 @@ body {
   text-decoration: underline;
 }
 
+.matrix-info-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.matrix-counter-chip {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #B46B55;
+  background: #FFFFFF;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid #EDCEBF;
+}
+
+.matrix-actions-wrap {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.matrix-action-link, .matrix-reset-link {
+  background: none;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #B46B55;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: var(--transition-fast);
+}
+
+.matrix-action-link:hover, .matrix-reset-link:hover {
+  color: #8C4430;
+}
+
 .tactile-matrix-grid {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  gap: 0.5rem;
-  background: var(--surface-alt);
-  padding: 1rem;
-  border: 1px solid var(--border);
+  gap: 0.8rem;
+  background: #FAEAE3;
+  padding: 1.6rem;
+  border: 1px solid #EDCEBF;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .tactile-cell {
   aspect-ratio: 1;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 32%, #FFF8F5 0%, #F7DDD4 55%, #EABAA9 100%);
+  border: 2px solid #E6C2B4;
+  box-shadow:
+    0 4px 10px rgba(180, 110, 95, 0.22),
+    inset 0 3px 5px rgba(255, 255, 255, 0.95),
+    inset 0 -3px 4px rgba(160, 85, 70, 0.2);
   cursor: pointer;
-  transition: transform 0.1s ease, background-color 0.15s ease;
+  position: relative;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s ease, background 0.15s ease;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .tactile-cell:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow:
+    0 6px 14px rgba(180, 110, 95, 0.32),
+    inset 0 3px 6px rgba(255, 255, 255, 1);
   border-color: var(--gold);
 }
 
 .tactile-cell:active {
-  transform: scale(0.92);
+  transform: scale(0.9);
 }
 
 .tactile-cell.depressed {
-  background: var(--border-light);
-  border-color: var(--border);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.08);
+  transform: scale(0.88);
+  background: radial-gradient(circle at 50% 50%, #DE8A75 0%, #C9725C 100%);
+  border-color: #B8604A;
+  box-shadow:
+    inset 0 5px 9px rgba(80, 30, 20, 0.45),
+    inset 0 1px 3px rgba(0, 0, 0, 0.3),
+    0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
-/* Tool 2: Urge Surfer */
+/* Tool 2: Urge Surfer with Dynamic Wave Canvas */
 .surfer-editorial-box {
-  border: 1px solid var(--border);
-  background: var(--surface-alt);
+  border: 1px solid #EDCEBF;
+  background: #FAF2EE;
   padding: 2.2rem;
   display: flex;
   flex-direction: column;
@@ -1362,50 +1445,80 @@ body {
   text-align: center;
 }
 
-.surfer-metric-frame {
-  margin-bottom: 1.2rem;
-}
-
-.surfer-radial-readout {
-  width: 130px;
-  height: 130px;
-  border: 1px solid var(--border);
-  border-top: 2px solid var(--gold);
+.surfer-wave-canvas-wrap {
+  width: 100%;
+  max-width: 480px;
+  height: 140px;
+  position: relative;
+  background: linear-gradient(180deg, #FDF7F5 0%, #F5DDD4 100%);
+  border: 1px solid #EDCEBF;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
+.surfer-wave-svg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  animation: waveFlow 4.5s linear infinite;
+}
+
+@keyframes waveFlow {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.surfer-radial-readout {
+  position: relative;
+  z-index: 5;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(8px);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid #D4AF37;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(180, 110, 95, 0.2);
+}
+
 .surfer-time-val {
   font-family: var(--font-serif);
-  font-size: 2.6rem;
+  font-size: 2.2rem;
   color: var(--fg);
   line-height: 1;
 }
 
 .surfer-unit {
   font-family: var(--font-sans);
-  font-size: 9.5px;
-  letter-spacing: 0.25em;
+  font-size: 9px;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--muted);
+  margin-top: 2px;
 }
 
 .surfer-phase-title {
   font-family: var(--font-serif);
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   font-weight: 500;
   color: var(--fg);
   margin-bottom: 0.4rem;
 }
 
 .surfer-phase-body {
-  font-size: 12.5px;
+  font-size: 13px;
   color: var(--muted);
-  max-width: 440px;
+  max-width: 480px;
   margin-bottom: 1.4rem;
-  line-height: 1.55;
+  line-height: 1.6;
 }
 
 .surfer-btn-row {
@@ -1413,11 +1526,11 @@ body {
   gap: 0.8rem;
 }
 
-/* Tool 3: Alabaster Worry Stone */
+/* Tool 3: Alabaster Worry Stone (Tactile Ergonomic Pebble) */
 .worry-stone-editorial {
-  border: 1px solid var(--border);
-  background: var(--surface-alt);
-  padding: 2.2rem;
+  border: 1px solid #EDCEBF;
+  background: #FAF2EE;
+  padding: 2.4rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1425,17 +1538,29 @@ body {
 }
 
 .stone-instruction-line {
-  font-size: 12.5px;
+  font-size: 13px;
   color: var(--muted);
   margin-bottom: 1.5rem;
 }
 
+.stone-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+}
+
 .alabaster-stone {
-  width: 140px;
-  height: 200px;
-  background: linear-gradient(135deg, #FFFFFF 0%, #EBE5DE 100%);
-  border: 1px solid var(--border);
-  box-shadow: 0 8px 24px rgba(26, 26, 26, 0.06);
+  width: 175px;
+  height: 235px;
+  border-radius: 75px 75px 60px 60px / 100px 100px 85px 85px;
+  background: radial-gradient(circle at 35% 25%, #FFFFFF 0%, #FCF8F4 45%, #F2E8E0 80%, #E8D9CE 100%);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  box-shadow:
+    0 16px 40px rgba(180, 140, 120, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.05),
+    inset 0 3px 8px rgba(255, 255, 255, 0.95),
+    inset 0 -5px 12px rgba(190, 160, 140, 0.18);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1443,39 +1568,259 @@ body {
   cursor: grab;
   user-select: none;
   position: relative;
-  transition: transform 0.15s ease;
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
   touch-action: none;
+}
+
+.alabaster-stone:hover {
+  box-shadow:
+    0 20px 48px rgba(212, 175, 55, 0.25),
+    0 6px 16px rgba(0, 0, 0, 0.06),
+    inset 0 2px 8px rgba(255, 255, 255, 1);
+  transform: translateY(-2px);
 }
 
 .alabaster-stone:active {
   cursor: grabbing;
-  transform: scale(0.98);
+  transform: scale(0.97);
 }
 
 .stone-concave-groove {
-  width: 70px;
-  height: 100px;
-  border: 1px solid rgba(26, 26, 26, 0.08);
-  background: radial-gradient(circle, rgba(26, 26, 26, 0.03) 0%, transparent 80%);
+  width: 85px;
+  height: 115px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 45%, rgba(190, 155, 135, 0.25) 0%, rgba(200, 170, 150, 0.1) 60%, transparent 85%);
+  box-shadow: inset 0 4px 14px rgba(120, 90, 75, 0.16), 0 2px 4px rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(190, 160, 140, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stone-groove-cue {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(140, 110, 95, 0.65);
+  pointer-events: none;
 }
 
 .stone-inscription {
+  margin-top: 1.2rem;
+  font-family: var(--font-serif);
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #A08272;
+}
+
+.stone-glow-point {
   position: absolute;
-  bottom: 14px;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 245, 230, 0.8) 0%, rgba(212, 175, 55, 0.25) 50%, transparent 70%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.alabaster-stone:active .stone-glow-point {
+  opacity: 1;
+}
+
+.stone-metrics-line {
+  margin-top: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.stone-count-badge {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #B46B55;
+}
+
+.stone-count-text {
   font-family: var(--font-sans);
-  font-size: 9px;
-  letter-spacing: 0.25em;
+  font-size: 10px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--muted);
 }
 
-.stone-metrics-line {
-  margin-top: 1.2rem;
+.stone-milestone-cue {
   font-family: var(--font-sans);
   font-size: 11px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--gold);
+  color: #8C4430;
+  font-style: italic;
+  margin-left: 0.5rem;
+}
+
+/* ==========================================================================
+   Section-Specific Pastel Palette System
+   Soft, soothing, editorial-grade pastel colors for each distinct section
+   ========================================================================== */
+
+/* Hero Section: Pastel Buttercup & Warm Cream */
+#heroAvatarSection {
+  background: #FCF9F2;
+  border-color: #EFE7D5;
+}
+#heroAvatarSection .section-meta .meta-number {
+  color: #B88E2B;
+  border-bottom-color: #B88E2B;
+}
+#heroAvatarSection .section-meta .meta-label {
+  color: #8C753B;
+}
+
+/* Section 02: Pastel Sage & Mint Celadon (Executive Clarity) */
+#anxietyWorksheetSection {
+  background: #F4F8F4;
+  border-color: #DDE8DD;
+}
+#anxietyWorksheetSection .section-meta .meta-number {
+  color: #557E55;
+  border-bottom-color: #557E55;
+}
+#anxietyWorksheetSection .section-meta .meta-label {
+  color: #446844;
+}
+#anxietyWorksheetSection .stressor-grid {
+  border-color: #D4E2D4;
+}
+#anxietyWorksheetSection .stressor-tab {
+  background: #FAFCFA;
+  border-color: #D4E2D4;
+}
+#anxietyWorksheetSection .stressor-tab:hover,
+#anxietyWorksheetSection .stressor-tab.active {
+  background: #E8F1E8;
+  border-bottom-color: #557E55;
+}
+#anxietyWorksheetSection .stressor-tab.active .tab-name {
+  color: #385E38;
+}
+#anxietyWorksheetSection .cbt-workspace-panel {
+  background: #FAFCFA;
+  border-color: #D4E2D4;
+}
+#anxietyWorksheetSection .step-work-box {
+  background: #FFFFFF;
+  border-color: #D4E2D4;
+  border-left-color: #557E55;
+}
+
+/* Section 03: Pastel Lavender & Soft Lilac Mist (Feelings Wheel) */
+#feelingsWheelSection {
+  background: #F8F5FA;
+  border-color: #E5DDEC;
+}
+#feelingsWheelSection .section-meta .meta-number {
+  color: #7D6594;
+  border-bottom-color: #7D6594;
+}
+#feelingsWheelSection .section-meta .meta-label {
+  color: #654E7B;
+}
+#feelingsWheelSection .wheel-stage-container {
+  background: #FFFFFF;
+  border-color: #E2D7EA;
+}
+#feelingsWheelSection .wheel-selection-card {
+  background: #FFFFFF;
+  border-color: #E2D7EA;
+  border-left-color: #7D6594;
+}
+#feelingsWheelSection .somatic-chip {
+  background: #F4EEF7;
+  border-color: #E3D7EA;
+}
+#feelingsWheelSection .somatic-chip.selected {
+  background: #FFFFFF;
+  border-color: #7D6594;
+  color: #7D6594;
+}
+
+/* Section 04: Pastel Sky & Ice Blue (Calm Timers & Respiration) */
+#calmingTimersSection {
+  background: #F2F7FA;
+  border-color: #D6E4ED;
+}
+#calmingTimersSection .section-meta .meta-number {
+  color: #4A7A96;
+  border-bottom-color: #4A7A96;
+}
+#calmingTimersSection .section-meta .meta-label {
+  color: #39647E;
+}
+#calmingTimersSection .timer-select-tab {
+  background: #FAFCFD;
+  border-color: #D6E4ED;
+}
+#calmingTimersSection .timer-select-tab:hover,
+#calmingTimersSection .timer-select-tab.active {
+  background: #E6F0F6;
+  border-bottom-color: #4A7A96;
+}
+#calmingTimersSection .timer-execution-bay {
+  background: #FAFCFD;
+  border-color: #D6E4ED;
+}
+#calmingTimersSection .affirmation-ledger {
+  background: #FFFFFF;
+  border-color: #D6E4ED;
+  border-left-color: #4A7A96;
+}
+
+/* Section 05: Pastel Peach & Rose Quartz (Fidget & Urge Surfing) */
+#busyHandsSection {
+  background: #FDF5F1;
+  border-color: #F4DFD5;
+}
+#busyHandsSection .section-meta .meta-number {
+  color: #B46B55;
+  border-bottom-color: #B46B55;
+}
+#busyHandsSection .section-meta .meta-label {
+  color: #964F3B;
+}
+#busyHandsSection .streak-counter-box {
+  background: #FAEAE3;
+  border-color: #EDCEBF;
+}
+#busyHandsSection .streak-digits {
+  color: #B46B55;
+}
+#busyHandsSection .tactile-tab {
+  background: #FAF2EE;
+  border-color: #EDCEBF;
+}
+#busyHandsSection .tactile-tab:hover,
+#busyHandsSection .tactile-tab.active {
+  background: #F4DDD1;
+  border-bottom-color: #B46B55;
+  color: #8C4430;
+}
+#busyHandsSection .tactile-matrix-grid {
+  background: #FAEAE3;
+  border-color: #EDCEBF;
+}
+#busyHandsSection .surfer-editorial-box {
+  background: #FAF2EE;
+  border-color: #EDCEBF;
+}
+#busyHandsSection .worry-stone-editorial {
+  background: #FAF2EE;
+  border-color: #EDCEBF;
 }
 
 

@@ -5,10 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sanctuary for Akku | Editorial Cognitive Space</title>
   
-  <!-- Typography: Playfair Display & Inter -->
+  <!-- Typography: Recoleta & Inter (with Fraunces & Playfair Display fallback) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="preload" href="./fonts/Recoleta-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="./fonts/Recoleta-Medium.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="./fonts/Recoleta-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%231A1A1A%22/><text y=%2265%22 x=%2225%22 font-family=%22serif%22 font-size=%2250%22 fill=%22%23D4AF37%22>A</text></svg>">
@@ -443,38 +446,57 @@
 
       <!-- Sub-Tool Navigation -->
       <div class="tactile-tabs-row">
-        <button class="tactile-tab active" data-tab="matrix">Click plates</button>
+        <button class="tactile-tab active" data-tab="matrix">Bubble pop pad</button>
         <button class="tactile-tab" data-tab="surfer">60-Second urge wave</button>
         <button class="tactile-tab" data-tab="stone">Smooth worry stone</button>
       </div>
 
-      <!-- Tool 1: Tactile Matrix -->
+      <!-- Tool 1: Tactile Bubble Pop Matrix -->
       <div class="tactile-panel active" id="panelMatrix">
         <div class="matrix-bar">
-          <span class="matrix-instruction">Click plates to keep your fingers moving:</span>
-          <button id="resetMatrixBtn" class="matrix-reset-link">Reset plates</button>
+          <div class="matrix-info-wrap">
+            <span class="matrix-instruction">Pop silicone bubbles to soothe restless hands:</span>
+            <span class="matrix-counter-chip" id="matrixPopCounter">0 / 24 popped</span>
+          </div>
+          <div class="matrix-actions-wrap">
+            <button id="popAllMatrixBtn" class="matrix-action-link">Pop all</button>
+            <button id="resetMatrixBtn" class="matrix-reset-link">Reset bubbles</button>
+          </div>
         </div>
         <div class="tactile-matrix-grid" id="matrixGrid">
-          <!-- 24 minimalist tactile cells -->
+          <!-- 24 3D tactile silicone bubbles -->
         </div>
       </div>
 
       <!-- Tool 2: 60-Second Urge Surfer -->
       <div class="tactile-panel" id="panelSurfer">
         <div class="surfer-editorial-box">
-          <div class="surfer-metric-frame">
+          <!-- Visual Dynamic Ocean Wave SVG Canvas -->
+          <div class="surfer-wave-canvas-wrap">
+            <svg class="surfer-wave-svg" viewBox="0 0 400 120" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#F7C8BC" />
+                  <stop offset="50%" stop-color="#EAA896" />
+                  <stop offset="100%" stop-color="#D98A76" />
+                </linearGradient>
+              </defs>
+              <path id="surferWavePath" d="M 0 60 Q 100 25 200 60 T 400 60 L 400 120 L 0 120 Z" fill="url(#waveGrad)" opacity="0.65" />
+              <path id="surferWavePath2" d="M 0 75 Q 100 95 200 75 T 400 75 L 400 120 L 0 120 Z" fill="#E89E8C" opacity="0.4" />
+            </svg>
             <div class="surfer-radial-readout">
               <span class="surfer-time-val" id="surferSecs">60</span>
               <span class="surfer-unit">Seconds</span>
             </div>
           </div>
+
           <div class="surfer-text-frame">
             <h3 class="surfer-phase-title" id="surferTitle">Urges peak and pass in 60 seconds</h3>
-            <p class="surfer-phase-body" id="surferBody">Place both hands flat on your lap or table. Watch the urge without doing it. Ride the wave until it melts away.</p>
+            <p class="surfer-phase-body" id="surferBody">Place both hands flat on your lap or table. Watch the physical impulse without acting on it. Ride the wave until it melts away.</p>
           </div>
           <div class="surfer-btn-row">
             <button id="startSurferBtn" class="luxury-action-btn">Start 60s wave</button>
-            <button id="resetSurferBtn" class="secondary-plain-btn" style="display: none;">Reset</button>
+            <button id="resetSurferBtn" class="secondary-plain-btn" style="display: none;">Reset wave</button>
           </div>
         </div>
       </div>
@@ -482,13 +504,20 @@
       <!-- Tool 3: Alabaster Worry Stone -->
       <div class="tactile-panel" id="panelStone">
         <div class="worry-stone-editorial">
-          <p class="stone-instruction-line">Rub your thumb smoothly across the stone to soothe your fingers.</p>
-          <div class="alabaster-stone" id="alabasterStone">
-            <div class="stone-concave-groove"></div>
-            <span class="stone-inscription">Steadiness</span>
+          <p class="stone-instruction-line">Glide your thumb across the smooth indentation. Feel the physical tension melt away.</p>
+          <div class="stone-container">
+            <div class="alabaster-stone" id="alabasterStone" role="button" aria-label="Smooth worry stone">
+              <div class="stone-concave-groove">
+                <span class="stone-groove-cue">Thumb rest</span>
+              </div>
+              <span class="stone-inscription">Steadiness</span>
+              <div class="stone-glow-point" id="stoneGlowPoint"></div>
+            </div>
           </div>
           <div class="stone-metrics-line">
-            <span id="stoneRubCount">0</span> Strokes counted
+            <span class="stone-count-badge" id="stoneRubCount">0</span>
+            <span class="stone-count-text">Gentle strokes</span>
+            <span class="stone-milestone-cue" id="stoneMilestoneCue">Rub smoothly to relax</span>
           </div>
         </div>
       </div>
