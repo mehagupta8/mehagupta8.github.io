@@ -22,13 +22,20 @@
   <div class="editorial-grain"></div>
 
   <!-- Top Navigation / Editorial Bar -->
-  <header class="editorial-nav">
+  <header class="editorial-nav" id="editorialNav">
     <div class="nav-container">
       <div class="nav-left">
         <span class="overline-label">For Akku</span>
         <h1 class="nav-title">For Akku, curated with love from Mehu</h1>
       </div>
-      <div class="nav-right">
+      <button id="mobileMenuToggle" class="mobile-menu-toggle-btn" aria-label="Toggle navigation actions" aria-expanded="false">
+        <span class="mobile-menu-text">Menu</span>
+        <span class="mobile-menu-bars">
+          <span class="m-bar"></span>
+          <span class="m-bar"></span>
+        </span>
+      </button>
+      <div class="nav-right" id="navRightActions">
         <button id="topProgressBtn" class="editorial-nav-btn" title="View all saved progress with dates and times" aria-label="Progress Log">
           <span class="nav-btn-tag">Ledger</span>
           <span class="nav-btn-text">Progress</span>
@@ -43,6 +50,11 @@
           <span class="nav-btn-tag">Containment</span>
           <span class="nav-btn-text">Lock Box</span>
           <span class="nav-btn-badge" id="lockboxStatusBadge">Safe</span>
+        </button>
+        <button id="topSyncBtn" class="editorial-nav-btn" title="Sync progress across laptop and phone" aria-label="Device Sync">
+          <span class="nav-btn-tag">Cloud</span>
+          <span class="nav-btn-text">Device Sync</span>
+          <span class="nav-btn-badge" id="syncStatusBadge">Live</span>
         </button>
         <button id="soundToggle" class="minimal-toggle sound-on" title="Toggle Acoustic Feedback" aria-label="Toggle Sound">
           <span class="toggle-dot"></span>
@@ -68,6 +80,10 @@
           <button class="drawer-tab" id="drawerTabLockbox" data-tab="lockbox">
             <span>Phone Lock Box</span>
             <span class="drawer-count-badge" id="drawerLockboxBadge">Ready</span>
+          </button>
+          <button class="drawer-tab" id="drawerTabSync" data-tab="sync">
+            <span>Device Sync</span>
+            <span class="drawer-count-badge" id="drawerSyncBadge">Live</span>
           </button>
         </div>
         <button class="drawer-close-btn" id="drawerCloseBtn" aria-label="Close panel">Close</button>
@@ -225,6 +241,50 @@
             2. If an urgent urge to check notifications appears, use the 24 bubble pad or mechanical switches instead.<br>
             3. When the lock timer rings, you have officially protected your prefrontal bandwidth.
           </p>
+        </div>
+      </div>
+
+      <!-- Panel 4: Device Sync (Laptop & Phone) -->
+      <div class="drawer-panel" id="drawerPanelSync">
+        <div class="drawer-panel-intro">
+          <p class="drawer-intro-text">Keep your streak, progress ledger, love notes, and calming protocols synchronized across your laptop and phone automatically.</p>
+        </div>
+
+        <div class="sync-card-block">
+          <div class="sync-status-row">
+            <div class="sync-indicator-dot" id="syncStatusDot"></div>
+            <div class="sync-indicator-info">
+              <span class="sync-indicator-title" id="syncRoomTitle">Sync Room: akku-mehu-sanctuary</span>
+              <span class="sync-indicator-sub" id="syncStatusDesc">Connected and auto-syncing</span>
+            </div>
+          </div>
+
+          <div class="sync-qr-section">
+            <span class="sync-qr-overline">Scan with Phone Camera</span>
+            <div class="sync-qr-frame">
+              <img id="syncQrCodeImg" src="" alt="Scan this QR code with your phone camera to link devices" class="sync-qr-image" />
+            </div>
+            <p class="sync-qr-caption">Point your iPhone camera here to open and automatically link your phone to this sanctuary.</p>
+          </div>
+
+          <div class="sync-actions-group">
+            <button id="copySyncLinkBtn" class="luxury-action-btn sync-btn-wide">
+              <span>Copy Link for Phone</span>
+            </button>
+            <button id="forceSyncNowBtn" class="secondary-plain-btn sync-btn-wide">
+              <span>Sync Now</span>
+            </button>
+            <span id="syncNotice" class="step-done-notice" style="display: none;">Link copied to clipboard!</span>
+          </div>
+
+          <div class="sync-advanced-toggle-block">
+            <span class="sync-advanced-label">Private Sync Code</span>
+            <div class="sync-code-row">
+              <input type="text" id="syncRoomInput" class="sync-room-input" value="akku-mehu-sanctuary" placeholder="Enter sync room code" autocomplete="off" />
+              <button id="saveSyncRoomBtn" class="sync-save-code-btn">Save Code</button>
+            </div>
+            <span class="sync-code-help">Use the same code on both devices to keep them continuously linked.</span>
+          </div>
         </div>
       </div>
     </div>
@@ -634,6 +694,7 @@
           </div>
           <div class="archive-actions-header">
             <button id="inpageExportBackupBtn" class="backup-pill-btn" title="Download backup of all progress and notes">Export Backup</button>
+            <button id="inpageSyncDeviceBtn" class="backup-pill-btn" title="Sync progress across laptop and phone">Sync Devices</button>
             <button id="clearArchiveBtn" class="archive-clear-btn" title="Clear history">Clear History</button>
           </div>
         </div>
@@ -1023,6 +1084,12 @@
       </div>
     </div>
   </footer>
+
+  <!-- Real-time Cross-Device Sync Notification Toast -->
+  <div id="syncToastNotification" class="sync-toast" style="display: none;">
+    <span class="sync-toast-dot"></span>
+    <span id="syncToastText" class="sync-toast-text">Progress synced with your other device</span>
+  </div>
 
   <script src="app.js"></script>
 </body>

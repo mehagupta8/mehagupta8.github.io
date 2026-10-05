@@ -1168,6 +1168,11 @@
     // 5. Record to central ledger
     logProgressEvent(activityName, note, subEmotions, somaticSensations);
 
+    // 6. Automatically sync across devices
+    if (typeof broadcastSyncState === 'function') {
+      broadcastSyncState();
+    }
+
     return newStreak;
   }
 
@@ -1531,15 +1536,19 @@
   const topProgressBtn = document.getElementById('topProgressBtn');
   const topNotesBtn = document.getElementById('topNotesBtn');
   const topLockboxBtn = document.getElementById('topLockboxBtn');
+  const topSyncBtn = document.getElementById('topSyncBtn');
+  const inpageSyncDeviceBtn = document.getElementById('inpageSyncDeviceBtn');
   const lockboxStatusBadge = document.getElementById('lockboxStatusBadge');
   const drawerOverlay = document.getElementById('drawerOverlay');
   const drawerCloseBtn = document.getElementById('drawerCloseBtn');
   const drawerTabProgress = document.getElementById('drawerTabProgress');
   const drawerTabNotes = document.getElementById('drawerTabNotes');
   const drawerTabLockbox = document.getElementById('drawerTabLockbox');
+  const drawerTabSync = document.getElementById('drawerTabSync');
   const drawerPanelProgress = document.getElementById('drawerPanelProgress');
   const drawerPanelNotes = document.getElementById('drawerPanelNotes');
   const drawerPanelLockbox = document.getElementById('drawerPanelLockbox');
+  const drawerPanelSync = document.getElementById('drawerPanelSync');
   const drawerNoteInput = document.getElementById('drawerNoteInput');
   const saveDrawerNoteBtn = document.getElementById('saveDrawerNoteBtn');
   const drawerNoteSavedNotice = document.getElementById('drawerNoteSavedNotice');
@@ -1566,17 +1575,21 @@
       if (drawerTabProgress) drawerTabProgress.classList.add('active');
       if (drawerTabNotes) drawerTabNotes.classList.remove('active');
       if (drawerTabLockbox) drawerTabLockbox.classList.remove('active');
+      if (drawerTabSync) drawerTabSync.classList.remove('active');
       if (drawerPanelProgress) drawerPanelProgress.classList.add('active');
       if (drawerPanelNotes) drawerPanelNotes.classList.remove('active');
       if (drawerPanelLockbox) drawerPanelLockbox.classList.remove('active');
+      if (drawerPanelSync) drawerPanelSync.classList.remove('active');
       renderArchiveLedger();
     } else if (tabName === 'notes') {
       if (drawerTabProgress) drawerTabProgress.classList.remove('active');
       if (drawerTabNotes) drawerTabNotes.classList.add('active');
       if (drawerTabLockbox) drawerTabLockbox.classList.remove('active');
+      if (drawerTabSync) drawerTabSync.classList.remove('active');
       if (drawerPanelProgress) drawerPanelProgress.classList.remove('active');
       if (drawerPanelNotes) drawerPanelNotes.classList.add('active');
       if (drawerPanelLockbox) drawerPanelLockbox.classList.remove('active');
+      if (drawerPanelSync) drawerPanelSync.classList.remove('active');
       renderNotesList();
       if (drawerNoteInput) {
         setTimeout(() => drawerNoteInput.focus(), 150);
@@ -1585,10 +1598,24 @@
       if (drawerTabProgress) drawerTabProgress.classList.remove('active');
       if (drawerTabNotes) drawerTabNotes.classList.remove('active');
       if (drawerTabLockbox) drawerTabLockbox.classList.add('active');
+      if (drawerTabSync) drawerTabSync.classList.remove('active');
       if (drawerPanelProgress) drawerPanelProgress.classList.remove('active');
       if (drawerPanelNotes) drawerPanelNotes.classList.remove('active');
       if (drawerPanelLockbox) drawerPanelLockbox.classList.add('active');
+      if (drawerPanelSync) drawerPanelSync.classList.remove('active');
       updateLockboxDisplay();
+    } else if (tabName === 'sync') {
+      if (drawerTabProgress) drawerTabProgress.classList.remove('active');
+      if (drawerTabNotes) drawerTabNotes.classList.remove('active');
+      if (drawerTabLockbox) drawerTabLockbox.classList.remove('active');
+      if (drawerTabSync) drawerTabSync.classList.add('active');
+      if (drawerPanelProgress) drawerPanelProgress.classList.remove('active');
+      if (drawerPanelNotes) drawerPanelNotes.classList.remove('active');
+      if (drawerPanelLockbox) drawerPanelLockbox.classList.remove('active');
+      if (drawerPanelSync) drawerPanelSync.classList.add('active');
+      if (typeof renderSyncPanel === 'function') {
+        renderSyncPanel();
+      }
     }
   }
 
@@ -1602,6 +1629,14 @@
 
   if (topLockboxBtn) {
     topLockboxBtn.addEventListener('click', () => openDrawer('lockbox'));
+  }
+
+  if (topSyncBtn) {
+    topSyncBtn.addEventListener('click', () => openDrawer('sync'));
+  }
+
+  if (inpageSyncDeviceBtn) {
+    inpageSyncDeviceBtn.addEventListener('click', () => openDrawer('sync'));
   }
 
   if (drawerCloseBtn) {
@@ -1637,6 +1672,13 @@
   if (drawerTabLockbox) {
     drawerTabLockbox.addEventListener('click', () => {
       switchDrawerTab('lockbox');
+      playClick(1100);
+    });
+  }
+
+  if (drawerTabSync) {
+    drawerTabSync.addEventListener('click', () => {
+      switchDrawerTab('sync');
       playClick(1100);
     });
   }
@@ -3324,10 +3366,376 @@
   }
 
   // ==========================================================================
+  // Mobile Navigation: Menu Toggle & Scroll Down Auto-Toggle
+  // Leaves desktop / laptop version 100% untouched
+  // ==========================================================================
+  const editorialNav = document.getElementById('editorialNav');
+  const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+  const navRightActions = document.getElementById('navRightActions');
+
+  if (mobileMenuToggle && editorialNav) {
+    mobileMenuToggle.addEventListener('click', () => {
+      playClick(1000);
+      editorialNav.classList.toggle('mobile-menu-open');
+      const isOpen = editorialNav.classList.contains('mobile-menu-open');
+      mobileMenuToggle.setAttribute('aria-expanded', isOpen);
+    });
+  }
+
+  if (navRightActions && editorialNav) {
+    navRightActions.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          editorialNav.classList.remove('mobile-menu-open');
+          if (mobileMenuToggle) mobileMenuToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  }
+
+  let lastMobileScrollY = window.scrollY;
+  let scrollTicking = false;
+
+  window.addEventListener('scroll', () => {
+    if (!scrollTicking) {
+      window.requestAnimationFrame(() => {
+        if (window.innerWidth <= 768 && editorialNav) {
+          const currentScrollY = window.scrollY;
+          if (currentScrollY > lastMobileScrollY + 8 && currentScrollY > 60) {
+            editorialNav.classList.add('nav-scrolled-down');
+            editorialNav.classList.remove('mobile-menu-open');
+            if (mobileMenuToggle) mobileMenuToggle.setAttribute('aria-expanded', 'false');
+          } else if (currentScrollY < lastMobileScrollY - 8 || currentScrollY <= 20) {
+            editorialNav.classList.remove('nav-scrolled-down');
+          }
+          lastMobileScrollY = currentScrollY;
+        }
+        scrollTicking = false;
+      });
+      scrollTicking = true;
+    }
+  }, { passive: true });
+
+  // ==========================================================================
+  // Cross-Device Progress Synchronization Engine
+  // Real-time bidirectional sync across laptop and mobile phones via ntfy.sh
+  // Zero Emojis. Preserves all history, streaks, notes, and CBT worksheets.
+  // ==========================================================================
+
+  const SYNC_ROOM_STORAGE_KEY = 'akku_sanctuary_sync_room_v2';
+  const SYNC_DEVICE_ID_KEY = 'akku_sanctuary_device_id_v2';
+  const DEFAULT_SYNC_ROOM = 'akku-mehu-sanctuary';
+
+  const syncRoomTitle = document.getElementById('syncRoomTitle');
+  const syncQrCodeImg = document.getElementById('syncQrCodeImg');
+  const copySyncLinkBtn = document.getElementById('copySyncLinkBtn');
+  const forceSyncNowBtn = document.getElementById('forceSyncNowBtn');
+  const syncNotice = document.getElementById('syncNotice');
+  const syncRoomInput = document.getElementById('syncRoomInput');
+  const saveSyncRoomBtn = document.getElementById('saveSyncRoomBtn');
+  const syncToastNotification = document.getElementById('syncToastNotification');
+  const syncToastText = document.getElementById('syncToastText');
+
+  function getSyncRoom() {
+    return localStorage.getItem(SYNC_ROOM_STORAGE_KEY) || DEFAULT_SYNC_ROOM;
+  }
+
+  function setSyncRoom(code) {
+    const clean = (code || '').trim().toLowerCase().replace(/[^a-z0-9_-]/g, '') || DEFAULT_SYNC_ROOM;
+    localStorage.setItem(SYNC_ROOM_STORAGE_KEY, clean);
+    return clean;
+  }
+
+  function getDeviceId() {
+    let id = localStorage.getItem(SYNC_DEVICE_ID_KEY);
+    if (!id) {
+      id = 'dev_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 7);
+      localStorage.setItem(SYNC_DEVICE_ID_KEY, id);
+    }
+    return id;
+  }
+
+  function getMobileSyncUrl() {
+    const room = getSyncRoom();
+    return `${window.location.origin}${window.location.pathname}#room=${encodeURIComponent(room)}`;
+  }
+
+  let syncEventSource = null;
+  let isBroadcasting = false;
+
+  function showSyncToast(message) {
+    if (!syncToastNotification) return;
+    if (syncToastText) syncToastText.textContent = message;
+    syncToastNotification.style.display = 'flex';
+    setTimeout(() => {
+      if (syncToastNotification) syncToastNotification.style.display = 'none';
+    }, 4000);
+  }
+
+  function renderSyncPanel() {
+    const room = getSyncRoom();
+    if (syncRoomTitle) syncRoomTitle.textContent = `Sync Room: ${room}`;
+    if (syncRoomInput) syncRoomInput.value = room;
+
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(getMobileSyncUrl())}`;
+    if (syncQrCodeImg) {
+      syncQrCodeImg.src = qrUrl;
+    }
+  }
+
+  // Broadcast current state to cloud room
+  async function broadcastSyncState() {
+    if (isBroadcasting) return;
+    isBroadcasting = true;
+    const room = getSyncRoom();
+    const payload = {
+      type: 'AKKU_SANCTUARY_SYNC',
+      version: 2,
+      deviceId: getDeviceId(),
+      timestamp: new Date().toISOString(),
+      streak: getStreak(),
+      progressLedger: getArchiveEntries(),
+      notesToMeha: getNotesToMeha(),
+      cbtProgress: getCbtProgress()
+    };
+
+    try {
+      await fetch(`https://ntfy.sh/akku_sanctuary_${room}`, {
+        method: 'POST',
+        headers: {
+          'Title': 'Sync',
+          'Priority': '3',
+          'Tags': 'cloud'
+        },
+        body: JSON.stringify(payload)
+      });
+    } catch (e) {
+      // Offline fallback: data is already safely stored in localStorage
+    } finally {
+      isBroadcasting = false;
+    }
+  }
+
+  // Merge incoming remote state safely without overwriting or losing records
+  function mergeRemoteSyncData(remote) {
+    if (!remote || remote.deviceId === getDeviceId()) return false;
+    let hasChanges = false;
+
+    // 1. Merge Streak
+    if (typeof remote.streak === 'number') {
+      const currentStreak = getStreak();
+      if (remote.streak > currentStreak) {
+        setStreak(remote.streak);
+        hasChanges = true;
+      }
+    }
+
+    // 2. Merge Progress Ledger entries by ID
+    if (Array.isArray(remote.progressLedger)) {
+      const currentEntries = getArchiveEntries();
+      const existingIds = new Set(currentEntries.map(e => e.id));
+      let added = false;
+      remote.progressLedger.forEach(item => {
+        if (item && item.id && !existingIds.has(item.id)) {
+          currentEntries.push(item);
+          existingIds.add(item.id);
+          added = true;
+        }
+      });
+      if (added) {
+        currentEntries.sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
+        setArchiveEntries(currentEntries);
+        hasChanges = true;
+      }
+    }
+
+    // 3. Merge Notes to Meha by ID
+    if (Array.isArray(remote.notesToMeha)) {
+      const currentNotes = getNotesToMeha();
+      const existingIds = new Set(currentNotes.map(n => n.id));
+      let addedNotes = false;
+      remote.notesToMeha.forEach(item => {
+        if (item && item.id && !existingIds.has(item.id)) {
+          currentNotes.push(item);
+          existingIds.add(item.id);
+          addedNotes = true;
+        }
+      });
+      if (addedNotes) {
+        currentNotes.sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
+        setNotesToMeha(currentNotes);
+        hasChanges = true;
+      }
+    }
+
+    // 4. Merge CBT progress
+    if (remote.cbtProgress && typeof remote.cbtProgress === 'object') {
+      const currentCbt = getCbtProgress();
+      let cbtChanged = false;
+      Object.keys(remote.cbtProgress).forEach(problemKey => {
+        if (!currentCbt[problemKey]) {
+          currentCbt[problemKey] = remote.cbtProgress[problemKey];
+          cbtChanged = true;
+        } else {
+          Object.keys(remote.cbtProgress[problemKey]).forEach(stepKey => {
+            if (!currentCbt[problemKey][stepKey]) {
+              currentCbt[problemKey][stepKey] = remote.cbtProgress[problemKey][stepKey];
+              cbtChanged = true;
+            }
+          });
+        }
+      });
+      if (cbtChanged) {
+        setCbtProgress(currentCbt);
+        hasChanges = true;
+      }
+    }
+
+    if (hasChanges) {
+      renderArchiveLedger();
+      renderNotesList();
+      updateTopBadges();
+      showSyncToast("Progress synced with your other device");
+      playChime(528, 0.4);
+    }
+
+    return hasChanges;
+  }
+
+  // Poll cloud room for latest records
+  async function pollSyncState() {
+    const room = getSyncRoom();
+    try {
+      const res = await fetch(`https://ntfy.sh/akku_sanctuary_${room}/json?poll=1`);
+      if (!res.ok) return;
+      const text = await res.text();
+      const lines = text.trim().split('\n').filter(Boolean);
+      for (const line of lines) {
+        try {
+          const envelope = JSON.parse(line);
+          if (envelope && envelope.message) {
+            const parsed = JSON.parse(envelope.message);
+            mergeRemoteSyncData(parsed);
+          }
+        } catch (err) {}
+      }
+    } catch (e) {}
+  }
+
+  // Connect SSE real-time listener
+  function initSyncConnection() {
+    if (syncEventSource) {
+      syncEventSource.close();
+      syncEventSource = null;
+    }
+    const room = getSyncRoom();
+    try {
+      syncEventSource = new EventSource(`https://ntfy.sh/akku_sanctuary_${room}/sse`);
+      syncEventSource.onmessage = (event) => {
+        try {
+          const envelope = JSON.parse(event.data);
+          if (envelope && envelope.message) {
+            const parsed = JSON.parse(envelope.message);
+            mergeRemoteSyncData(parsed);
+          }
+        } catch (e) {}
+      };
+      syncEventSource.onerror = () => {
+        // SSE will reconnect automatically
+      };
+    } catch (e) {}
+  }
+
+  // Check URL hash for pairing link e.g. #room=akku-mehu-sanctuary
+  function checkUrlHashPairing() {
+    const hash = window.location.hash;
+    if (hash && hash.includes('room=')) {
+      const match = hash.match(/room=([^&]+)/);
+      if (match && match[1]) {
+        const newRoom = decodeURIComponent(match[1]);
+        setSyncRoom(newRoom);
+        try {
+          history.replaceState(null, '', window.location.pathname);
+        } catch (e) {}
+        initSyncConnection();
+        pollSyncState();
+        updateSpeech("Paired successfully with your laptop! Progress is now live.");
+        showSyncToast("Paired with other device");
+      }
+    }
+  }
+
+  if (copySyncLinkBtn) {
+    copySyncLinkBtn.addEventListener('click', () => {
+      const link = getMobileSyncUrl();
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(link).then(() => {
+          if (syncNotice) {
+            syncNotice.style.display = 'inline-block';
+            syncNotice.textContent = 'Link copied to clipboard! Paste into Messages on your phone.';
+            setTimeout(() => { syncNotice.style.display = 'none'; }, 4000);
+          }
+        }).catch(() => {
+          prompt('Copy this link to open on your phone:', link);
+        });
+      } else {
+        prompt('Copy this link to open on your phone:', link);
+      }
+      playCuteBabySound();
+    });
+  }
+
+  if (forceSyncNowBtn) {
+    forceSyncNowBtn.addEventListener('click', async () => {
+      playClick(1100);
+      forceSyncNowBtn.textContent = 'Syncing...';
+      await broadcastSyncState();
+      await pollSyncState();
+      forceSyncNowBtn.textContent = 'Sync Now';
+      showSyncToast("Sync completed");
+      playCuteBabySound();
+    });
+  }
+
+  if (saveSyncRoomBtn && syncRoomInput) {
+    saveSyncRoomBtn.addEventListener('click', () => {
+      const val = syncRoomInput.value.trim();
+      if (val) {
+        const updated = setSyncRoom(val);
+        renderSyncPanel();
+        initSyncConnection();
+        pollSyncState();
+        broadcastSyncState();
+        if (syncNotice) {
+          syncNotice.style.display = 'inline-block';
+          syncNotice.textContent = `Sync code updated to "${updated}"!`;
+          setTimeout(() => { syncNotice.style.display = 'none'; }, 4000);
+        }
+        playClick(1000);
+      }
+    });
+  }
+
+  // Poll cloud room whenever window regains focus or visibility
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      pollSyncState();
+    }
+  });
+
+  window.addEventListener('focus', () => {
+    pollSyncState();
+  });
+
+  // ==========================================================================
   // 7. Initial Bootstrap
   // ==========================================================================
   renderArchiveLedger();
   renderNotesList();
+  renderSyncPanel();
+  checkUrlHashPairing();
+  initSyncConnection();
+  pollSyncState();
 
 })();
 
