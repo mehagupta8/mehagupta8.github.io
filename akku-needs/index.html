@@ -690,50 +690,6 @@
           <span id="journalDoneNotice" class="step-done-notice">Added to your reward basket!</span>
         </div>
       </div>
-
-      <!-- Reward System: Archival Basket & 100-Task Milestones -->
-      <div class="my-progress-archive" id="progressArchiveBox">
-        <div class="archive-header">
-          <div class="archive-title-meta">
-            <span class="archive-tag">100-Task Milestone</span>
-            <h3 class="archive-headline">Reward System: What you've done &amp; earned</h3>
-          </div>
-          <div class="archive-actions-header">
-            <button id="inpageExportBackupBtn" class="backup-pill-btn" title="Download backup of all progress and notes">Export Backup</button>
-            <button id="inpageSyncDeviceBtn" class="backup-pill-btn" title="Sync progress across laptop and phone">Sync Devices</button>
-            <button id="clearArchiveBtn" class="archive-clear-btn" title="Clear basket">Clear Basket</button>
-          </div>
-        </div>
-
-        <!-- 100-Task Reward Goal Tracker Card (In-Page) -->
-        <div class="reward-goal-tracker-card" id="inpageRewardTrackerCard">
-          <!-- Populated dynamically via app.js -->
-        </div>
-
-        <!-- Section 04 Summary Stats Ribbon -->
-        <div class="archive-stats-ribbon" id="archiveStatsRibbon">
-          <div class="archive-stat-item">
-            <span class="archive-stat-num" id="archStatTotal">0</span>
-            <span class="archive-stat-lbl">Total Logged</span>
-          </div>
-          <div class="archive-stat-item">
-            <span class="archive-stat-num" id="archStatStreak">0</span>
-            <span class="archive-stat-lbl">Urges Surfed</span>
-          </div>
-          <div class="archive-stat-item">
-            <span class="archive-stat-num" id="archStatFocus">0m</span>
-            <span class="archive-stat-lbl">Phone Locked</span>
-          </div>
-          <div class="archive-stat-item">
-            <span class="archive-stat-num" id="archStatNotes">0</span>
-            <span class="archive-stat-lbl">Love Notes</span>
-          </div>
-        </div>
-
-        <div class="archive-list" id="archiveEntriesList">
-          <!-- Dynamically populated or empty state -->
-        </div>
-      </div>
     </section>
 
     <!-- Section 4: Quick Calm Timers -->
@@ -1197,6 +1153,62 @@
               <span id="switchBasketNotice" class="step-done-notice" style="display: none; margin-top: 0.6rem; text-align: center;">Haptic session added to your reward basket!</span>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: Reward System & 100-Task Milestones -->
+    <section class="editorial-card" id="rewardSystemSection">
+      <div class="section-meta">
+        <span class="meta-number">06</span>
+        <span class="meta-label">Reward System</span>
+      </div>
+
+      <div class="section-header-block">
+        <h2 class="section-headline">Reward System</h2>
+        <p class="editorial-sub-text">Every mindful step you take fills your basket. Reach 100 tasks to unlock a reward of your choice.</p>
+      </div>
+
+      <div class="my-progress-archive" id="progressArchiveBox" style="margin-top: 1.5rem; border-top: none; padding-top: 0;">
+        <div class="archive-header">
+          <div class="archive-title-meta">
+            <span class="archive-tag">100-Task Milestone</span>
+            <h3 class="archive-headline">What you've done &amp; earned</h3>
+          </div>
+          <div class="archive-actions-header">
+            <button id="inpageExportBackupBtn" class="backup-pill-btn" title="Download backup of all progress and notes">Export Backup</button>
+            <button id="inpageSyncDeviceBtn" class="backup-pill-btn" title="Sync progress across laptop and phone">Sync Devices</button>
+            <button id="clearArchiveBtn" class="archive-clear-btn" title="Clear basket">Clear Basket</button>
+          </div>
+        </div>
+
+        <!-- 100-Task Reward Goal Tracker Card (In-Page) -->
+        <div class="reward-goal-tracker-card" id="inpageRewardTrackerCard">
+          <!-- Populated dynamically via app.js -->
+        </div>
+
+        <!-- Summary Stats Ribbon -->
+        <div class="archive-stats-ribbon" id="archiveStatsRibbon">
+          <div class="archive-stat-item">
+            <span class="archive-stat-num" id="archStatTotal">0</span>
+            <span class="archive-stat-lbl">Total Logged</span>
+          </div>
+          <div class="archive-stat-item">
+            <span class="archive-stat-num" id="archStatStreak">0</span>
+            <span class="archive-stat-lbl">Urges Surfed</span>
+          </div>
+          <div class="archive-stat-item">
+            <span class="archive-stat-num" id="archStatFocus">0m</span>
+            <span class="archive-stat-lbl">Phone Locked</span>
+          </div>
+          <div class="archive-stat-item">
+            <span class="archive-stat-num" id="archStatNotes">0</span>
+            <span class="archive-stat-lbl">Love Notes</span>
+          </div>
+        </div>
+
+        <div class="archive-list" id="archiveEntriesList">
+          <!-- Dynamically populated or empty state -->
         </div>
       </div>
     </section>

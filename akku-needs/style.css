@@ -1571,11 +1571,16 @@ body {
   margin-top: 1rem;
 }
 
-/* My Progress Archive Log */
+/* Reward System Archive Log */
 .my-progress-archive {
-  margin-top: 3.5rem;
-  border-top: 2px solid var(--fg);
-  padding-top: 2rem;
+  margin-top: 1.5rem;
+  padding-top: 0;
+}
+
+#rewardSystemSection .my-progress-archive {
+  margin-top: 1.2rem;
+  border-top: none;
+  padding-top: 0;
 }
 
 .archive-header {
