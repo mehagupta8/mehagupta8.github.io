@@ -717,103 +717,171 @@ body {
 }
 
 /* ==========================================================================
-   Section 3: Hoffman Institute Feelings Spectrum & Somatic Scan
+   Section 3: Therapy Feelings Wheel (Circular Concentric Sunburst)
    ========================================================================== */
 
-.feelings-stage-block {
-  margin-bottom: 2.2rem;
-  padding-bottom: 1.8rem;
-  border-bottom: 1px solid var(--border-light);
-}
-
-.tier-label-row {
+.wheel-stage-container {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 1.2rem;
+  justify-content: center;
+  align-items: center;
+  margin: 1.5rem 0 2rem 0;
+  padding: 1.2rem;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: visible;
 }
 
-.tier-title {
+.therapy-feelings-wheel-svg {
+  width: 100%;
+  max-width: 580px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.05));
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.wheel-wedge {
+  cursor: pointer;
+  stroke: #F9F8F6;
+  stroke-width: 1.2px;
+  transition: opacity 0.2s ease, stroke-width 0.2s ease, filter 0.2s ease;
+}
+
+.wheel-wedge:hover {
+  filter: brightness(1.08);
+  stroke: #1A1A1A;
+  stroke-width: 1.8px;
+}
+
+.wheel-wedge.active-wedge {
+  stroke: #D4AF37;
+  stroke-width: 2.8px;
+  filter: brightness(1.12) drop-shadow(0 0 6px rgba(212, 175, 55, 0.4));
+}
+
+.wheel-text {
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  fill: #1A1A1A;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.wheel-text-core {
   font-family: var(--font-sans);
   font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.wheel-text-sec {
+  font-family: var(--font-sans);
+  font-size: 9.5px;
   font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.wheel-text-tert {
+  font-family: var(--font-sans);
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.wheel-hub-circle {
+  fill: #FAF8F5;
+  stroke: var(--gold);
+  stroke-width: 1.5px;
+  transition: var(--transition-fast);
+  cursor: pointer;
+}
+
+.wheel-hub-circle:hover {
+  fill: #FFFFFF;
+  stroke-width: 2px;
+}
+
+/* Interactive Selection Card */
+.wheel-selection-card {
+  margin-top: 2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  padding: 1.8rem 2rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.selection-card-header {
+  margin-bottom: 1.2rem;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 0.8rem;
+}
+
+.wheel-breadcrumb {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 500;
   color: var(--fg);
+  margin-top: 0.4rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
 }
 
-.tier-caption {
+.wheel-breadcrumb-sep {
+  color: var(--gold);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  margin: 0 0.2rem;
+}
+
+.somatic-prompt-block {
+  margin: 1.2rem 0;
+}
+
+.somatic-prompt-label {
+  display: block;
+  font-family: var(--font-sans);
   font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
   color: var(--muted);
-  font-style: italic;
+  margin-bottom: 0.8rem;
+  font-weight: 600;
 }
 
-/* Core Domains Grid */
-.core-domain-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
+.somatic-chips-wrap {
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
 }
 
-.domain-pill {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  padding: 0.75rem 0.5rem;
+.somatic-chip {
+  background: var(--surface-alt);
+  border: 1px solid var(--border-light);
+  padding: 0.4rem 0.85rem;
   font-family: var(--font-sans);
-  font-size: 11.5px;
-  font-weight: 500;
+  font-size: 12px;
   color: var(--fg);
-  text-align: center;
   cursor: pointer;
   transition: var(--transition-fast);
 }
 
-.domain-pill:hover {
+.somatic-chip:hover {
   border-color: var(--gold);
   color: var(--gold);
 }
 
-.domain-pill.active {
-  background: var(--fg);
-  border-color: var(--fg);
-  color: #FFFFFF;
-}
-
-/* Nuanced Sub-Emotions */
-.sub-emotions-wrap, .somatic-sensations-wrap {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-}
-
-.granularity-chip, .somatic-chip {
-  background: var(--surface-alt);
-  border: 1px solid var(--border-light);
-  padding: 0.45rem 0.95rem;
-  font-family: var(--font-sans);
-  font-size: 12px;
-  color: var(--muted);
-  cursor: pointer;
-  transition: var(--transition-fast);
-}
-
-.granularity-chip:hover, .somatic-chip:hover {
-  border-color: var(--border);
-  color: var(--fg);
-}
-
-.granularity-chip.selected, .somatic-chip.selected {
+.somatic-chip.selected {
   background: var(--surface);
   border-color: var(--gold);
-  color: var(--fg);
+  color: var(--gold);
   font-weight: 600;
   box-shadow: 0 2px 8px var(--gold-subtle);
-}
-
-/* Underline-Only Form Field */
-.journal-commit-block {
-  margin-top: 1.5rem;
-  padding-top: 1rem;
 }
 
 .underline-input-wrap {
@@ -844,18 +912,11 @@ body {
   border-bottom-color: var(--gold);
 }
 
-.commit-action-row {
+.selection-actions-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.selected-summary-preview {
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 0.05em;
+  gap: 1.2rem;
+  margin-top: 1rem;
 }
 
 /* My Progress Archive Log */

@@ -295,64 +295,48 @@
       </div>
     </section>
 
-    <!-- Section 3: Feelings Check-in -->
+    <!-- Section 3: Feelings Wheel -->
     <section class="editorial-card" id="feelingsWheelSection">
       <div class="section-meta">
         <span class="meta-number">03</span>
-        <span class="meta-label">Feelings check-in</span>
+        <span class="meta-label">Feelings Wheel</span>
       </div>
 
       <div class="section-header-block">
-        <h2 class="section-headline">How are you feeling right now?</h2>
+        <h2 class="section-headline">Feelings Wheel</h2>
+        <p class="editorial-sub-text">Tap any slice on the circle to explore your emotion from the center outward.</p>
       </div>
 
-      <!-- Tier 1: Category Blocks -->
-      <div class="feelings-stage-block">
-        <div class="tier-label-row">
-          <span class="tier-title">Step 1: Pick how you feel overall</span>
-        </div>
-        <div class="core-domain-grid" id="coreDomainGrid">
-          <!-- Populated by JS from Hoffman Institute List -->
-        </div>
+      <!-- Circular Therapy Feelings Wheel Container -->
+      <div class="wheel-stage-container">
+        <svg id="therapyWheelSvg" viewBox="0 0 640 640" class="therapy-feelings-wheel-svg" role="img" aria-label="Interactive therapy feelings wheel">
+          <!-- Dynamically generated via app.js -->
+        </svg>
       </div>
 
-      <!-- Tier 2: Specific Feeling -->
-      <div class="feelings-stage-block" id="subDomainStage" style="display: none;">
-        <div class="tier-label-row">
-          <span class="tier-title">Step 2: More specifically</span>
+      <!-- Interactive Selection & Somatic Card (appears when a feeling is tapped) -->
+      <div class="wheel-selection-card" id="wheelSelectionCard" style="display: none;">
+        <div class="selection-card-header">
+          <span class="step-work-badge">Selected Feeling</span>
+          <div class="wheel-breadcrumb" id="wheelBreadcrumb"></div>
         </div>
-        <div class="sub-emotions-wrap" id="subEmotionsWrap">
-          <!-- Populated dynamically -->
-        </div>
-      </div>
 
-      <!-- Tier 3: Body Sensations -->
-      <div class="feelings-stage-block" id="somaticStage" style="display: none;">
-        <div class="tier-label-row">
-          <span class="tier-title">Step 3: Where do you feel it in your body?</span>
+        <div class="somatic-prompt-block">
+          <span class="somatic-prompt-label">Where do you feel this in your body right now?</span>
+          <div class="somatic-chips-wrap" id="somaticChipsWrap">
+            <!-- Populated dynamically with somatic sensations -->
+          </div>
         </div>
-        <div class="somatic-sensations-wrap" id="somaticSensationsWrap">
-          <!-- Body sensations list from Hoffman Institute -->
-        </div>
-      </div>
 
-      <!-- Tier 4: Note & Save -->
-      <div class="journal-commit-block" id="journalCommitBlock" style="display: none;">
-        <div class="tier-label-row">
-          <span class="tier-title">Step 4: Add a note (optional)</span>
-        </div>
-        
         <div class="underline-input-wrap">
-          <input type="text" id="journalEntryNote" class="editorial-underline-input" placeholder="Add a tiny note or what triggered this state..." autocomplete="off">
+          <input type="text" id="journalEntryNote" class="editorial-underline-input" placeholder="Add a quick note or what made you feel this way..." autocomplete="off">
         </div>
 
-        <div class="commit-action-row">
+        <div class="selection-actions-row">
           <button id="submitProgressEntryBtn" class="luxury-action-btn">
             <span>Save to My Progress</span>
           </button>
-          <div class="selected-summary-preview" id="selectedSummaryPreview">
-            <!-- Dynamic summary text -->
-          </div>
+          <span id="journalDoneNotice" class="step-done-notice">Saved to your progress ledger!</span>
         </div>
       </div>
 

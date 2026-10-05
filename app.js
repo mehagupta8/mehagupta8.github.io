@@ -704,55 +704,114 @@
   });
 
   // ==========================================================================
-  // 4. Hoffman Institute Feelings Spectrum & Somatic Scan
-  // Full 18 Primary Emotional Domains, Granular Sub-Emotions, and Body Sensations
-  // Zero Emojis. Underline-only inputs. Longitudinal Emotional Ledger.
+  // 4. Therapy Feelings Wheel (Circular Concentric Sunburst)
+  // Exact circular clinical feelings wheel used in psychotherapy (Gloria Willcox)
+  // 6 Core Emotions, 24 Secondary Emotions, 48 Tertiary Emotions
+  // Strict Zero Emojis. Full SVG Vector Geometry & Interactive State.
   // ==========================================================================
-  const hoffmanFeelingsList = {
-    'Accepting / Open': ['Calm', 'Centered', 'Content', 'Fulfilled', 'Patient', 'Peaceful', 'Present', 'Relaxed', 'Serene', 'Trusting'],
-    'Aliveness / Joy': ['Amazed', 'Awe', 'Bliss', 'Delighted', 'Eager', 'Ecstatic', 'Enchanted', 'Energized', 'Engaged', 'Enthusiastic', 'Excited', 'Free', 'Happy', 'Inspired', 'Invigorated', 'Lively', 'Passionate', 'Playful', 'Radiant', 'Refreshed', 'Rejuvenated', 'Renewed', 'Satisfied', 'Thrilled', 'Vibrant'],
-    'Angry / Annoyed': ['Agitated', 'Aggravated', 'Bitter', 'Contempt', 'Cynical', 'Disdain', 'Disgruntled', 'Disturbed', 'Edgy', 'Exasperated', 'Frustrated', 'Furious', 'Grouchy', 'Hostile', 'Impatient', 'Irritated', 'Irate', 'Moody', 'On edge', 'Outraged', 'Pissed', 'Resentful', 'Upset', 'Vindictive'],
-    'Courageous / Powerful': ['Adventurous', 'Brave', 'Capable', 'Confident', 'Daring', 'Determined', 'Free', 'Grounded', 'Proud', 'Strong', 'Worthy', 'Valiant'],
-    'Connected / Loving': ['Accepting', 'Affectionate', 'Caring', 'Compassion', 'Empathy', 'Fulfilled', 'Present', 'Safe', 'Warm', 'Worthy'],
-    'Curious': ['Engaged', 'Exploring', 'Fascinated', 'Interested', 'Intrigued', 'Involved', 'Stimulated'],
-    'Despair / Sad': ['Anguish', 'Depressed', 'Despondent', 'Disappointed', 'Discouraged', 'Forlorn', 'Gloomy', 'Grief', 'Heartbroken', 'Hopeless', 'Lonely', 'Longing', 'Melancholy', 'Sorrow', 'Teary', 'Unhappy', 'Upset', 'Weary', 'Yearning'],
-    'Disconnected / Numb': ['Aloof', 'Bored', 'Confused', 'Distant', 'Empty', 'Indifferent', 'Isolated', 'Lethargic', 'Listless', 'Removed', 'Resistant', 'Shut Down', 'Uneasy', 'Withdrawn'],
-    'Embarrassed / Shame': ['Ashamed', 'Humiliated', 'Inhibited', 'Mortified', 'Self-conscious', 'Useless', 'Weak', 'Worthless'],
-    'Fear': ['Afraid', 'Anxious', 'Apprehensive', 'Frightened', 'Hesitant', 'Nervous', 'Panic', 'Paralyzed', 'Scared', 'Terrified', 'Worried'],
-    'Fragile': ['Helpless', 'Sensitive'],
-    'Grateful': ['Appreciative', 'Blessed', 'Delighted', 'Fortunate', 'Grace', 'Humbled', 'Lucky', 'Moved', 'Thankful', 'Touched'],
-    'Guilt': ['Regret', 'Remorseful', 'Sorry'],
-    'Hopeful': ['Encouraged', 'Expectant', 'Optimistic', 'Trusting'],
-    'Powerless': ['Impotent', 'Incapable', 'Resigned', 'Trapped', 'Victim'],
-    'Tender': ['Calm', 'Caring', 'Loving', 'Reflective', 'Self-loving', 'Serene', 'Vulnerable', 'Warm'],
-    'Stressed / Tense': ['Anxious', 'Burned out', 'Cranky', 'Depleted', 'Edgy', 'Exhausted', 'Frazzled', 'Overwhelm', 'Rattled', 'Rejecting', 'Restless', 'Shaken', 'Tight', 'Weary', 'Worn out'],
-    'Unsettled / Doubt': ['Apprehensive', 'Concerned', 'Dissatisfied', 'Disturbed', 'Grouchy', 'Hesitant', 'Inhibited', 'Perplexed', 'Questioning', 'Rejecting', 'Reluctant', 'Shocked', 'Skeptical', 'Suspicious', 'Ungrounded', 'Unsure', 'Worried']
-  };
-
-  const somaticSensationsList = [
-    'Achy', 'Airy', 'Blocked', 'Breathless', 'Bruised', 'Burning', 'Buzzy', 'Clammy',
-    'Clenched', 'Cold', 'Constricted', 'Contained', 'Contracted', 'Dizzy', 'Drained',
-    'Dull', 'Electric', 'Empty', 'Faint', 'Fidgety', 'Flushed', 'Fluttery', 'Frozen',
-    'Heavy', 'Hollow', 'Hot', 'Itchy', 'Jittery', 'Jumpy', 'Knotted', 'Light',
-    'Nauseous', 'Numb', 'Pounding', 'Prickly', 'Pulsing', 'Queasy', 'Radiant',
-    'Restless', 'Sensitive', 'Settled', 'Shaky', 'Shivery', 'Slow', 'Sore',
-    'Spacey', 'Spastic', 'Stiff', 'Suffocating', 'Sweaty', 'Tender', 'Tense',
-    'Throbbing', 'Tight', 'Tingling', 'Trembling', 'Twitchy', 'Vibrating', 'Warm', 'Wobbly'
+  const feelingsWheelData = [
+    {
+      core: 'Joyful',
+      colors: {
+        core: '#E6C265',
+        sec: ['#EDD38A', '#F0DC9C', '#F3E5AE', '#F6EEC0'],
+        tert: ['#F7EBC6', '#FBF3D9', '#F8EDCD', '#FCF5DF', '#F9EFD3', '#FDF7E5', '#FAF1D9', '#FEF9EB']
+      },
+      textColor: '#2C2416',
+      secondaries: [
+        { name: 'Playful', tertiaries: ['Aroused', 'Cheeky'] },
+        { name: 'Content', tertiaries: ['Free', 'Joyful'] },
+        { name: 'Proud', tertiaries: ['Successful', 'Confident'] },
+        { name: 'Peaceful', tertiaries: ['Loving', 'Thankful'] }
+      ]
+    },
+    {
+      core: 'Powerful',
+      colors: {
+        core: '#D99462',
+        sec: ['#E4AD86', '#E9BA97', '#EEC7A8', '#F3D4B9'],
+        tert: ['#EFC9AD', '#F5DCB7', '#F1D0B7', '#F7E2C3', '#F3D8C1', '#F8E8CF', '#F5E0CB', '#FAEFDC']
+      },
+      textColor: '#2E1E14',
+      secondaries: [
+        { name: 'Courageous', tertiaries: ['Adventurous', 'Brave'] },
+        { name: 'Confident', tertiaries: ['Capable', 'Grounded'] },
+        { name: 'Hopeful', tertiaries: ['Optimistic', 'Inspired'] },
+        { name: 'Appreciated', tertiaries: ['Valued', 'Grateful'] }
+      ]
+    },
+    {
+      core: 'Peaceful',
+      colors: {
+        core: '#7EA47E',
+        sec: ['#99BA99', '#A8C4A8', '#B7CEB7', '#C6D9C6'],
+        tert: ['#B8CFB8', '#CADBCA', '#C1D6C1', '#D2E1D2', '#C9DCC9', '#D9E6D9', '#D2E2D2', '#E1ECE1']
+      },
+      textColor: '#1A281A',
+      secondaries: [
+        { name: 'Calm', tertiaries: ['Serene', 'Centered'] },
+        { name: 'Relaxed', tertiaries: ['Present', 'Rested'] },
+        { name: 'Loving', tertiaries: ['Gentle', 'Warm'] },
+        { name: 'Trusting', tertiaries: ['Safe', 'Relieved'] }
+      ]
+    },
+    {
+      core: 'Sad',
+      colors: {
+        core: '#6B8CA8',
+        sec: ['#8BA7BD', '#9BB3C7', '#ABBFD1', '#BBCEDB'],
+        tert: ['#ACC1D3', '#C0D2E1', '#B6C9D9', '#C8D8E5', '#C0D1DF', '#D0DEE9', '#CAC9E5', '#D8E4ED']
+      },
+      textColor: '#15222E',
+      secondaries: [
+        { name: 'Lonely', tertiaries: ['Isolated', 'Abandoned'] },
+        { name: 'Vulnerable', tertiaries: ['Fragile', 'Helpless'] },
+        { name: 'Despair', tertiaries: ['Grief', 'Heartbroken'] },
+        { name: 'Hurt', tertiaries: ['Disappointed', 'Embarrassed'] }
+      ]
+    },
+    {
+      core: 'Mad',
+      colors: {
+        core: '#C76E6E',
+        sec: ['#D68E8E', '#DD9E9E', '#E4AEAE', '#EBBEBE'],
+        tert: ['#E1A2A2', '#ECC0C0', '#E7AEAE', '#F0CACA', '#ECBABA', '#F3D4D4', '#F1C6C6', '#F7DEDE']
+      },
+      textColor: '#2E1414',
+      secondaries: [
+        { name: 'Frustrated', tertiaries: ['Annoyed', 'Agitated'] },
+        { name: 'Aggressive', tertiaries: ['Hostile', 'Provocative'] },
+        { name: 'Bitter', tertiaries: ['Resentful', 'Indignant'] },
+        { name: 'Critical', tertiaries: ['Skeptical', 'Sarcastic'] }
+      ]
+    },
+    {
+      core: 'Scared',
+      colors: {
+        core: '#967FA6',
+        sec: ['#AC99BB', '#B7A6C4', '#C3B4CE', '#CEC2D7'],
+        tert: ['#BCACCA', '#D1C5DC', '#C4B5D1', '#D7CCE2', '#CCBFE7', '#DED4E8', '#D4C8DE', '#E5DCED']
+      },
+      textColor: '#221829',
+      secondaries: [
+        { name: 'Anxious', tertiaries: ['Overwhelmed', 'Worried'] },
+        { name: 'Insecure', tertiaries: ['Inadequate', 'Inferior'] },
+        { name: 'Helpless', tertiaries: ['Frightened', 'Paralyzed'] },
+        { name: 'Threatened', tertiaries: ['Nervous', 'Exposed'] }
+      ]
+    }
   ];
 
-  let selectedCoreDomain = null;
-  let selectedSubEmotions = new Set();
+  const somaticSensationsList = [
+    'Tense jaw', 'Tight shoulders', 'Shallow breath', 'Heavy chest',
+    'Knot in stomach', 'Restless hands', 'Shaky', 'Hollow',
+    'Warm flush', 'Chills', 'Drained', 'Fidgety',
+    'Clenched', 'Numb', 'Pounding heart', 'Tender'
+  ];
+
+  let selectedWheelEmotion = null;
   let selectedSomaticSensations = new Set();
 
-  const coreDomainGrid = document.getElementById('coreDomainGrid');
-  const subDomainStage = document.getElementById('subDomainStage');
-  const subEmotionsWrap = document.getElementById('subEmotionsWrap');
-  const somaticStage = document.getElementById('somaticStage');
-  const somaticSensationsWrap = document.getElementById('somaticSensationsWrap');
-  const journalCommitBlock = document.getElementById('journalCommitBlock');
-  const journalEntryNote = document.getElementById('journalEntryNote');
-  const submitProgressEntryBtn = document.getElementById('submitProgressEntryBtn');
-  const selectedSummaryPreview = document.getElementById('selectedSummaryPreview');
   const archiveEntriesList = document.getElementById('archiveEntriesList');
   const clearArchiveBtn = document.getElementById('clearArchiveBtn');
 
@@ -773,119 +832,347 @@
     } catch (e) {}
   }
 
-  // Populate Core Domains Grid
-  function initFeelingsWheel() {
-    if (!coreDomainGrid) return;
-    coreDomainGrid.innerHTML = '';
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+  function createSvgEl(tag, attrs = {}) {
+    const el = document.createElementNS(SVG_NS, tag);
+    for (const [k, v] of Object.entries(attrs)) {
+      el.setAttribute(k, v);
+    }
+    return el;
+  }
 
-    Object.keys(hoffmanFeelingsList).forEach(domain => {
-      const pill = document.createElement('button');
-      pill.className = 'domain-pill';
-      pill.textContent = domain;
-      pill.addEventListener('click', () => {
-        selectCoreDomain(domain, pill);
+  function describeArc(cx, cy, rIn, rOut, startAngle, endAngle) {
+    const radStart = (startAngle * Math.PI) / 180;
+    const radEnd = (endAngle * Math.PI) / 180;
+    const x1 = cx + rOut * Math.cos(radStart);
+    const y1 = cy + rOut * Math.sin(radStart);
+    const x2 = cx + rOut * Math.cos(radEnd);
+    const y2 = cy + rOut * Math.sin(radEnd);
+    const x3 = cx + rIn * Math.cos(radEnd);
+    const y3 = cy + rIn * Math.sin(radEnd);
+    const x4 = cx + rIn * Math.cos(radStart);
+    const y4 = cy + rIn * Math.sin(radStart);
+    const largeArc = (endAngle - startAngle > 180) ? 1 : 0;
+    return [
+      `M ${x1.toFixed(2)} ${y1.toFixed(2)}`,
+      `A ${rOut} ${rOut} 0 ${largeArc} 1 ${x2.toFixed(2)} ${y2.toFixed(2)}`,
+      `L ${x3.toFixed(2)} ${y3.toFixed(2)}`,
+      `A ${rIn} ${rIn} 0 ${largeArc} 0 ${x4.toFixed(2)} ${y4.toFixed(2)}`,
+      'Z'
+    ].join(' ');
+  }
+
+  function initTherapyFeelingsWheel() {
+    const svg = document.getElementById('therapyWheelSvg');
+    if (!svg) return;
+
+    svg.innerHTML = '';
+
+    const cx = 320;
+    const cy = 320;
+    const r0 = 55;
+    const r1 = 125;
+    const r2 = 210;
+    const r3 = 300;
+
+    const layerTert = createSvgEl('g', { id: 'layerTert' });
+    const layerSec = createSvgEl('g', { id: 'layerSec' });
+    const layerCore = createSvgEl('g', { id: 'layerCore' });
+    const layerHub = createSvgEl('g', { id: 'layerHub', cursor: 'pointer' });
+
+    svg.appendChild(layerTert);
+    svg.appendChild(layerSec);
+    svg.appendChild(layerCore);
+    svg.appendChild(layerHub);
+
+    feelingsWheelData.forEach((coreData, cIdx) => {
+      const coreStart = -90 + cIdx * 60;
+      const coreEnd = coreStart + 60;
+
+      // 1. Core Wedge
+      const corePath = createSvgEl('path', {
+        d: describeArc(cx, cy, r0, r1, coreStart, coreEnd),
+        fill: coreData.colors.core,
+        class: 'wheel-wedge wheel-wedge-core',
+        'data-core': coreData.core,
+        'data-tier': 'core'
       });
-      coreDomainGrid.appendChild(pill);
+
+      const coreMidAngle = (coreStart + coreEnd) / 2;
+      const coreRad = (coreMidAngle * Math.PI) / 180;
+      const coreMidR = (r0 + r1) / 2;
+      const coreTx = cx + coreMidR * Math.cos(coreRad);
+      const coreTy = cy + coreMidR * Math.sin(coreRad);
+
+      let coreRot = coreMidAngle;
+      let coreNormRot = ((coreRot % 360) + 360) % 360;
+      if (coreNormRot > 90 && coreNormRot < 270) coreRot += 180;
+
+      const coreText = createSvgEl('text', {
+        x: coreTx.toFixed(1),
+        y: coreTy.toFixed(1),
+        transform: `rotate(${coreRot.toFixed(1)}, ${coreTx.toFixed(1)}, ${coreTy.toFixed(1)})`,
+        fill: coreData.textColor,
+        class: 'wheel-text wheel-text-core'
+      });
+      coreText.textContent = coreData.core.toUpperCase();
+
+      bindWedgeEvents(corePath, { core: coreData.core, sec: null, tert: null });
+      layerCore.appendChild(corePath);
+      layerCore.appendChild(coreText);
+
+      // 2. Secondary Wedges
+      coreData.secondaries.forEach((secData, sIdx) => {
+        const secStart = coreStart + sIdx * 15;
+        const secEnd = secStart + 15;
+
+        const secPath = createSvgEl('path', {
+          d: describeArc(cx, cy, r1, r2, secStart, secEnd),
+          fill: coreData.colors.sec[sIdx],
+          class: 'wheel-wedge wheel-wedge-sec',
+          'data-core': coreData.core,
+          'data-sec': secData.name,
+          'data-tier': 'sec'
+        });
+
+        const secMidAngle = (secStart + secEnd) / 2;
+        const secRad = (secMidAngle * Math.PI) / 180;
+        const secMidR = (r1 + r2) / 2;
+        const secTx = cx + secMidR * Math.cos(secRad);
+        const secTy = cy + secMidR * Math.sin(secRad);
+
+        let secRot = secMidAngle;
+        let secNormRot = ((secRot % 360) + 360) % 360;
+        if (secNormRot > 90 && secNormRot < 270) secRot += 180;
+
+        const secText = createSvgEl('text', {
+          x: secTx.toFixed(1),
+          y: secTy.toFixed(1),
+          transform: `rotate(${secRot.toFixed(1)}, ${secTx.toFixed(1)}, ${secTy.toFixed(1)})`,
+          fill: coreData.textColor,
+          class: 'wheel-text wheel-text-sec'
+        });
+        secText.textContent = secData.name;
+
+        bindWedgeEvents(secPath, { core: coreData.core, sec: secData.name, tert: null });
+        layerSec.appendChild(secPath);
+        layerSec.appendChild(secText);
+
+        // 3. Tertiary Wedges
+        secData.tertiaries.forEach((tertName, tIdx) => {
+          const tertStart = secStart + tIdx * 7.5;
+          const tertEnd = tertStart + 7.5;
+          const colorIdx = sIdx * 2 + tIdx;
+
+          const tertPath = createSvgEl('path', {
+            d: describeArc(cx, cy, r2, r3, tertStart, tertEnd),
+            fill: coreData.colors.tert[colorIdx],
+            class: 'wheel-wedge wheel-wedge-tert',
+            'data-core': coreData.core,
+            'data-sec': secData.name,
+            'data-tert': tertName,
+            'data-tier': 'tert'
+          });
+
+          const tertMidAngle = (tertStart + tertEnd) / 2;
+          const tertRad = (tertMidAngle * Math.PI) / 180;
+          const tertMidR = (r2 + r3) / 2;
+          const tertTx = cx + tertMidR * Math.cos(tertRad);
+          const tertTy = cy + tertMidR * Math.sin(tertRad);
+
+          let tertRot = tertMidAngle;
+          let tertNormRot = ((tertRot % 360) + 360) % 360;
+          if (tertNormRot > 90 && tertNormRot < 270) tertRot += 180;
+
+          const tertText = createSvgEl('text', {
+            x: tertTx.toFixed(1),
+            y: tertTy.toFixed(1),
+            transform: `rotate(${tertRot.toFixed(1)}, ${tertTx.toFixed(1)}, ${tertTy.toFixed(1)})`,
+            fill: coreData.textColor,
+            class: 'wheel-text wheel-text-tert'
+          });
+          tertText.textContent = tertName;
+
+          bindWedgeEvents(tertPath, { core: coreData.core, sec: secData.name, tert: tertName });
+          layerTert.appendChild(tertPath);
+          layerTert.appendChild(tertText);
+        });
+      });
     });
 
-    // Populate Somatic Sensations Grid (persistent)
-    if (somaticSensationsWrap) {
-      somaticSensationsWrap.innerHTML = '';
-      somaticSensationsList.forEach(sensation => {
-        const chip = document.createElement('button');
-        chip.className = 'somatic-chip';
-        chip.textContent = sensation;
-        chip.addEventListener('click', () => {
-          if (selectedSomaticSensations.has(sensation)) {
-            selectedSomaticSensations.delete(sensation);
-            chip.classList.remove('selected');
-            playClick(800);
-          } else {
-            selectedSomaticSensations.add(sensation);
-            chip.classList.add('selected');
-            playClick(1200);
-          }
-          updateSummaryPreview();
-        });
-        somaticSensationsWrap.appendChild(chip);
-      });
-    }
+    // 4. Center Hub Group
+    const hubCircle = createSvgEl('circle', {
+      cx: cx,
+      cy: cy,
+      r: r0 - 1,
+      class: 'wheel-hub-circle',
+      id: 'wheelHubCircle'
+    });
 
+    const hubTopText = createSvgEl('text', {
+      x: cx,
+      y: cy - 7,
+      class: 'wheel-text',
+      id: 'wheelHubTop',
+      'font-family': "'Playfair Display', serif",
+      'font-size': '11px',
+      'font-weight': '600',
+      fill: '#1A1A1A'
+    });
+    hubTopText.textContent = 'FEELINGS';
+
+    const hubBottomText = createSvgEl('text', {
+      x: cx,
+      y: cy + 11,
+      class: 'wheel-text',
+      id: 'wheelHubBottom',
+      'font-family': "'Inter', sans-serif",
+      'font-size': '8.5px',
+      'font-weight': '600',
+      'letter-spacing': '0.18em',
+      fill: '#D4AF37'
+    });
+    hubBottomText.textContent = 'WHEEL';
+
+    layerHub.appendChild(hubCircle);
+    layerHub.appendChild(hubTopText);
+    layerHub.appendChild(hubBottomText);
+
+    layerHub.addEventListener('click', () => {
+      resetWheelSelection();
+      playClick(700);
+    });
+
+    initSomaticChips();
     renderArchiveLedger();
   }
 
-  function selectCoreDomain(domain, pillElement) {
-    playClick(1300);
-    selectedCoreDomain = domain;
-    selectedSubEmotions.clear();
+  function bindWedgeEvents(wedgeEl, emotionObj) {
+    wedgeEl.addEventListener('mouseenter', () => {
+      const hubTop = document.getElementById('wheelHubTop');
+      const hubBottom = document.getElementById('wheelHubBottom');
+      if (hubTop && hubBottom) {
+        hubTop.textContent = emotionObj.core.toUpperCase();
+        hubBottom.textContent = emotionObj.tert || emotionObj.sec || emotionObj.core;
+      }
+    });
 
-    const allPills = coreDomainGrid.querySelectorAll('.domain-pill');
-    allPills.forEach(p => p.classList.remove('active'));
-    pillElement.classList.add('active');
+    wedgeEl.addEventListener('mouseleave', () => {
+      updateHubDisplay();
+    });
 
-    // Populate Sub-Emotions
-    if (subEmotionsWrap) {
-      subEmotionsWrap.innerHTML = '';
-      const list = hoffmanFeelingsList[domain] || [];
-      list.forEach(emotion => {
-        const chip = document.createElement('button');
-        chip.className = 'granularity-chip';
-        chip.textContent = emotion;
-        chip.addEventListener('click', () => {
-          if (selectedSubEmotions.has(emotion)) {
-            selectedSubEmotions.delete(emotion);
-            chip.classList.remove('selected');
-            playClick(850);
-          } else {
-            selectedSubEmotions.add(emotion);
-            chip.classList.add('selected');
-            playClick(1350);
-          }
-          updateSummaryPreview();
-        });
-        subEmotionsWrap.appendChild(chip);
+    wedgeEl.addEventListener('click', (e) => {
+      e.stopPropagation();
+      selectWheelEmotion(emotionObj, wedgeEl);
+    });
+  }
+
+  function updateHubDisplay() {
+    const hubTop = document.getElementById('wheelHubTop');
+    const hubBottom = document.getElementById('wheelHubBottom');
+    if (!hubTop || !hubBottom) return;
+
+    if (selectedWheelEmotion) {
+      hubTop.textContent = selectedWheelEmotion.core.toUpperCase();
+      hubBottom.textContent = selectedWheelEmotion.tert || selectedWheelEmotion.sec || selectedWheelEmotion.core;
+    } else {
+      hubTop.textContent = 'FEELINGS';
+      hubBottom.textContent = 'WHEEL';
+    }
+  }
+
+  function selectWheelEmotion(emotionObj, wedgeEl) {
+    selectedWheelEmotion = emotionObj;
+    playClick(1200);
+
+    const allWedges = document.querySelectorAll('.wheel-wedge');
+    allWedges.forEach(w => w.classList.remove('active-wedge'));
+
+    if (wedgeEl) {
+      wedgeEl.classList.add('active-wedge');
+    }
+
+    updateHubDisplay();
+
+    const card = document.getElementById('wheelSelectionCard');
+    const breadcrumb = document.getElementById('wheelBreadcrumb');
+
+    if (card) card.style.display = 'block';
+
+    if (breadcrumb) {
+      if (emotionObj.tert) {
+        breadcrumb.innerHTML = `<span>${emotionObj.core}</span><span class="wheel-breadcrumb-sep">&rarr;</span><span>${emotionObj.sec}</span><span class="wheel-breadcrumb-sep">&rarr;</span><strong style="color: var(--gold);">${emotionObj.tert}</strong>`;
+      } else if (emotionObj.sec) {
+        breadcrumb.innerHTML = `<span>${emotionObj.core}</span><span class="wheel-breadcrumb-sep">&rarr;</span><strong style="color: var(--gold);">${emotionObj.sec}</strong>`;
+      } else {
+        breadcrumb.innerHTML = `<strong style="color: var(--gold);">${emotionObj.core}</strong>`;
+      }
+    }
+  }
+
+  function resetWheelSelection() {
+    selectedWheelEmotion = null;
+    const allWedges = document.querySelectorAll('.wheel-wedge');
+    allWedges.forEach(w => w.classList.remove('active-wedge'));
+    updateHubDisplay();
+    const card = document.getElementById('wheelSelectionCard');
+    if (card) card.style.display = 'none';
+  }
+
+  function initSomaticChips() {
+    const container = document.getElementById('somaticChipsWrap');
+    if (!container) return;
+    container.innerHTML = '';
+
+    somaticSensationsList.forEach(sensation => {
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'somatic-chip';
+      chip.textContent = sensation;
+
+      chip.addEventListener('click', () => {
+        if (selectedSomaticSensations.has(sensation)) {
+          selectedSomaticSensations.delete(sensation);
+          chip.classList.remove('selected');
+          playClick(800);
+        } else {
+          selectedSomaticSensations.add(sensation);
+          chip.classList.add('selected');
+          playClick(1200);
+        }
       });
-    }
 
-    if (subDomainStage) subDomainStage.style.display = 'block';
-    if (somaticStage) somaticStage.style.display = 'block';
-    if (journalCommitBlock) journalCommitBlock.style.display = 'block';
-
-    updateSummaryPreview();
+      container.appendChild(chip);
+    });
   }
 
-  function updateSummaryPreview() {
-    if (!selectedSummaryPreview) return;
-    if (!selectedCoreDomain) {
-      selectedSummaryPreview.textContent = '';
-      return;
-    }
-
-    const subCount = selectedSubEmotions.size;
-    const somaticCount = selectedSomaticSensations.size;
-    selectedSummaryPreview.textContent = `${selectedCoreDomain} [${subCount} Granular, ${somaticCount} Somatic Selected]`;
-  }
-
-  // Commit Entry into My Progress Ledger
+  const submitProgressEntryBtn = document.getElementById('submitProgressEntryBtn');
   if (submitProgressEntryBtn) {
     submitProgressEntryBtn.addEventListener('click', () => {
-      if (!selectedCoreDomain) {
-        alert('Please select a primary emotional domain first.');
+      if (!selectedWheelEmotion) {
+        alert('Please tap a feeling on the wheel first.');
         return;
       }
 
-      const noteText = journalEntryNote ? journalEntryNote.value.trim() : '';
+      const noteInput = document.getElementById('journalEntryNote');
+      const noteText = noteInput ? noteInput.value.trim() : '';
+
       const now = new Date();
       const options = { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' };
       const formattedDate = now.toLocaleDateString('en-US', options);
 
+      const pathArray = [selectedWheelEmotion.core];
+      if (selectedWheelEmotion.sec) pathArray.push(selectedWheelEmotion.sec);
+      if (selectedWheelEmotion.tert) pathArray.push(selectedWheelEmotion.tert);
+      const fullPath = pathArray.join(' - ');
+
       const newEntry = {
-        id: 'entry_' + Date.now(),
+        id: 'wheel_' + Date.now(),
         timestamp: formattedDate,
-        domain: selectedCoreDomain,
-        subEmotions: Array.from(selectedSubEmotions),
+        domain: fullPath,
+        subEmotions: ['Feelings Wheel'],
         somaticSensations: Array.from(selectedSomaticSensations),
-        note: noteText
+        note: noteText || `Reflected on ${fullPath}`
       };
 
       const entries = getArchiveEntries();
@@ -894,17 +1181,19 @@
 
       playChime(660, 1.4);
 
-      // Reset form
-      if (journalEntryNote) journalEntryNote.value = '';
-      selectedSubEmotions.clear();
+      if (noteInput) noteInput.value = '';
       selectedSomaticSensations.clear();
-      if (subEmotionsWrap) {
-        subEmotionsWrap.querySelectorAll('.granularity-chip').forEach(c => c.classList.remove('selected'));
+      const chips = document.querySelectorAll('.somatic-chip');
+      chips.forEach(c => c.classList.remove('selected'));
+
+      const notice = document.getElementById('journalDoneNotice');
+      if (notice) {
+        notice.style.display = 'inline-block';
+        notice.textContent = 'Saved to your progress ledger!';
+        setTimeout(() => {
+          notice.style.display = 'none';
+        }, 3000);
       }
-      if (somaticSensationsWrap) {
-        somaticSensationsWrap.querySelectorAll('.somatic-chip').forEach(c => c.classList.remove('selected'));
-      }
-      updateSummaryPreview();
 
       renderArchiveLedger();
     });
@@ -981,7 +1270,7 @@
     });
   }
 
-  initFeelingsWheel();
+  initTherapyFeelingsWheel();
 
   // ==========================================================================
   // 5. Autonomic Nervous System Regulation & Paced Calming Timers
