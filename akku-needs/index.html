@@ -22,7 +22,7 @@
   <header class="editorial-nav">
     <div class="nav-container">
       <div class="nav-left">
-        <span class="overline-label">Sanctuary No. 01</span>
+        <span class="overline-label">For Akku</span>
         <h1 class="nav-title">For Akku, curated with love from Mehu</h1>
       </div>
       <div class="nav-right">
@@ -36,12 +36,11 @@
 
   <main class="page-layout">
     
-    <!-- Hero Section: Portrait & Grounding Presence -->
     <!-- Hero Section: Interactive Akshat Companion -->
     <section class="editorial-card hero-section" id="heroSection">
       <div class="section-meta">
         <span class="meta-number">01</span>
-        <span class="meta-label">Physical Sanctuary & Grounding Companion</span>
+        <span class="meta-label">Pocket Akku</span>
       </div>
 
       <div class="hero-companion-wrapper">
@@ -234,122 +233,113 @@
       </div>
     </section>
 
-    <!-- Section 2: Cognitive Restructuring & CBT Worksheets -->
+    <!-- Section 2: What's Bothering You? -->
     <section class="editorial-card" id="anxietyWorksheetSection">
       <div class="section-meta">
         <span class="meta-number">02</span>
-        <span class="meta-label">Evidence-Based Cognitive Behavioral Protocols</span>
+        <span class="meta-label">What's on your mind?</span>
       </div>
 
       <div class="section-header-block">
-        <h2 class="section-headline">What is demanding your cognitive bandwidth right now?</h2>
-        <p class="section-subtext">Select an active point of friction to access four targeted, research-backed behavioral interventions.</p>
+        <h2 class="section-headline">What's bothering you right now?</h2>
       </div>
 
-      <!-- Stressor Selector Asymmetric Grid -->
+      <!-- Problem Selector Grid (Short, colloquial, no sub-points) -->
       <div class="stressor-grid">
-        <button class="stressor-tab active" data-stressor="assignments">
-          <span class="tab-index">I</span>
+        <button class="stressor-tab" data-stressor="assignments">
           <span class="tab-name">Assignments</span>
-          <span class="tab-descriptor">Executive Dysfunction & Initiation Paralysis</span>
         </button>
         <button class="stressor-tab" data-stressor="tony">
-          <span class="tab-index">II</span>
           <span class="tab-name">Tony (Manager)</span>
-          <span class="tab-descriptor">Evaluative Sensitivity & Workplace Friction</span>
         </button>
         <button class="stressor-tab" data-stressor="year_ending">
-          <span class="tab-index">III</span>
-          <span class="tab-name">2026 is Ending</span>
-          <span class="tab-descriptor">Temporal Discounting & Urgency Panic</span>
+          <span class="tab-name">2026 is ending</span>
         </button>
         <button class="stressor-tab" data-stressor="missing_girlfriend">
-          <span class="tab-index">IV</span>
-          <span class="tab-name">Missing My Girlfriend</span>
-          <span class="tab-descriptor">Attachment Longing & Somatic Isolation</span>
+          <span class="tab-name">Missing my girlfriend</span>
         </button>
         <button class="stressor-tab" data-stressor="clean_house">
-          <span class="tab-index">V</span>
-          <span class="tab-name">Need to Clean House</span>
-          <span class="tab-descriptor">Visual Saturation & Environmental Fatigue</span>
+          <span class="tab-name">Need to clean house</span>
         </button>
       </div>
 
-      <!-- Active CBT Worksheet Panel -->
-      <div class="cbt-workspace-panel" id="cbtWorkspace">
+      <!-- Active Action Panel (hidden until a problem is clicked!) -->
+      <div class="cbt-workspace-panel" id="cbtWorkspace" style="display: none;">
         <div class="workspace-header">
           <div class="workspace-title-group">
-            <span class="workspace-index-label" id="worksheetIndexLabel">Module I</span>
-            <h3 class="workspace-title" id="worksheetTitle">Assignments: Strategic Executive Scaffolding</h3>
+            <span class="workspace-index-label" id="worksheetIndexLabel">Try to do this:</span>
+            <h3 class="workspace-title" id="worksheetTitle">Assignments</h3>
           </div>
           <div class="workspace-progress">
-            <span class="progress-label">Completed Tasks:</span>
+            <span class="progress-label">Done:</span>
             <span class="progress-count" id="cbtCompletedCount">0 / 4</span>
           </div>
         </div>
 
-        <!-- 4 Step CBT Action Grid -->
+        <!-- 4 Step Options -->
         <div class="cbt-steps-container" id="cbtStepsList">
           <!-- Dynamically populated via app.js -->
         </div>
 
-        <!-- Interactive Worksheet Tool -->
-        <div class="worksheet-interactive-sub" id="worksheetInteractiveSub">
-          <!-- Dynamic custom tool container -->
+        <!-- Interactive Work Box (where he does the work and submits) -->
+        <div class="step-work-box" id="stepWorkBox" style="display: none;">
+          <span class="step-work-badge" id="stepWorkBadge">Option 01</span>
+          <h4 class="step-work-title" id="stepWorkTitle">Just 5 minutes</h4>
+          <p class="step-work-prompt" id="stepWorkPrompt">What is one tiny 5-minute step you can do right now?</p>
+          <textarea id="stepWorkInput" class="step-work-textarea" placeholder="Type your thoughts or action here..."></textarea>
+          <div class="step-work-actions">
+            <button id="submitStepWorkBtn" class="luxury-action-btn">Done! Save to My Progress</button>
+            <span id="stepDoneNotice" class="step-done-notice">Saved to your progress ledger!</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Section 3: The Hoffman Institute Feelings Wheel & Somatic Scan -->
+    <!-- Section 3: Feelings Check-in -->
     <section class="editorial-card" id="feelingsWheelSection">
       <div class="section-meta">
         <span class="meta-number">03</span>
-        <span class="meta-label">Affect Labeling & Somatic Interoception</span>
+        <span class="meta-label">Feelings check-in</span>
       </div>
 
       <div class="section-header-block">
-        <h2 class="section-headline">The Feelings Spectrum: Name the State to Disarm the Spiral</h2>
-        <p class="section-subtext">Clinical studies verify that precise affective naming reduces amygdalar reactivity by transitioning neural recruitment toward the prefrontal cortex.</p>
+        <h2 class="section-headline">How are you feeling right now?</h2>
       </div>
 
       <!-- Tier 1: Category Blocks -->
       <div class="feelings-stage-block">
         <div class="tier-label-row">
-          <span class="tier-title">Step 1: Primary Emotional Domain</span>
-          <span class="tier-caption">Select the dominant overarching frequency</span>
+          <span class="tier-title">Step 1: Pick how you feel overall</span>
         </div>
         <div class="core-domain-grid" id="coreDomainGrid">
           <!-- Populated by JS from Hoffman Institute List -->
         </div>
       </div>
 
-      <!-- Tier 2: Nuanced Emotional Granularity -->
+      <!-- Tier 2: Specific Feeling -->
       <div class="feelings-stage-block" id="subDomainStage" style="display: none;">
         <div class="tier-label-row">
-          <span class="tier-title">Step 2: Specific Emotional Granularity</span>
-          <span class="tier-caption">Choose any states that resonate with your internal landscape</span>
+          <span class="tier-title">Step 2: More specifically</span>
         </div>
         <div class="sub-emotions-wrap" id="subEmotionsWrap">
           <!-- Populated dynamically -->
         </div>
       </div>
 
-      <!-- Tier 3: Somatic Body Sensations -->
+      <!-- Tier 3: Body Sensations -->
       <div class="feelings-stage-block" id="somaticStage" style="display: none;">
         <div class="tier-label-row">
-          <span class="tier-title">Step 3: Somatic Interoception</span>
-          <span class="tier-caption">Identify where tension or release is physically stored</span>
+          <span class="tier-title">Step 3: Where do you feel it in your body?</span>
         </div>
         <div class="somatic-sensations-wrap" id="somaticSensationsWrap">
           <!-- Body sensations list from Hoffman Institute -->
         </div>
       </div>
 
-      <!-- Tier 4: Archival Journal Note & Commit Entry -->
+      <!-- Tier 4: Note & Save -->
       <div class="journal-commit-block" id="journalCommitBlock" style="display: none;">
         <div class="tier-label-row">
-          <span class="tier-title">Step 4: Journal Inscription</span>
-          <span class="tier-caption">Underline-only contextual reflection</span>
+          <span class="tier-title">Step 4: Add a note (optional)</span>
         </div>
         
         <div class="underline-input-wrap">
@@ -358,7 +348,7 @@
 
         <div class="commit-action-row">
           <button id="submitProgressEntryBtn" class="luxury-action-btn">
-            <span>Commit Entry to Archival Log</span>
+            <span>Save to My Progress</span>
           </button>
           <div class="selected-summary-preview" id="selectedSummaryPreview">
             <!-- Dynamic summary text -->
@@ -370,10 +360,10 @@
       <div class="my-progress-archive" id="progressArchiveBox">
         <div class="archive-header">
           <div class="archive-title-meta">
-            <span class="archive-tag">Archival Record</span>
-            <h3 class="archive-headline">My Progress: Longitudinal Emotional Ledger</h3>
+            <span class="archive-tag">History</span>
+            <h3 class="archive-headline">My Progress: What you've done & felt</h3>
           </div>
-          <button id="clearArchiveBtn" class="archive-clear-btn" title="Clear local log history">Reset Ledger</button>
+          <button id="clearArchiveBtn" class="archive-clear-btn" title="Clear history">Clear History</button>
         </div>
 
         <div class="archive-list" id="archiveEntriesList">
@@ -382,34 +372,33 @@
       </div>
     </section>
 
-    <!-- Section 4: Calming Timers Hub (Scientifically Paced Resets) -->
+    <!-- Section 4: Quick Calm Timers -->
     <section class="editorial-card" id="calmingTimersSection">
       <div class="section-meta">
         <span class="meta-number">04</span>
-        <span class="meta-label">Autonomic Nervous System Regulation</span>
+        <span class="meta-label">Take a breather</span>
       </div>
 
       <div class="section-header-block">
-        <h2 class="section-headline">Calibrated Timers & Somatic Reset Protocols</h2>
-        <p class="section-subtext">Brief, focused interventions engineered to rapidly engage the parasympathetic vagal brake without cognitive fatigue.</p>
+        <h2 class="section-headline">Quick calm timers</h2>
       </div>
 
       <!-- Timer Selector Options -->
       <div class="timer-category-selector">
         <button class="timer-select-tab active" data-timer="sigh">
           <span class="timer-tab-duration">01:00</span>
-          <span class="timer-tab-title">Physiological Sigh</span>
-          <span class="timer-tab-info">Rapid down-regulation via dual nasal inhale & prolonged oral exhale</span>
+          <span class="timer-tab-title">Reset breath</span>
+          <span class="timer-tab-info">Two quick inhales through your nose, then a slow sigh out your mouth</span>
         </button>
         <button class="timer-select-tab" data-timer="adhd_reset">
           <span class="timer-tab-duration">03:00</span>
-          <span class="timer-tab-title">Cognitive Working Memory Reset</span>
-          <span class="timer-tab-info">Physical shakeout, 5-point sensory scan, and calibrated box breath</span>
+          <span class="timer-tab-title">Brain reset</span>
+          <span class="timer-tab-info">Shake your hands out, look around the room, and take even breaths</span>
         </button>
         <button class="timer-select-tab" data-timer="self_compassion">
           <span class="timer-tab-duration">05:00</span>
-          <span class="timer-tab-title">Non-Judgmental Compassion Break</span>
-          <span class="timer-tab-info">Neurological pacing to soften harsh executive self-criticism</span>
+          <span class="timer-tab-title">Be kind to yourself</span>
+          <span class="timer-tab-info">Slow down, place a hand on your chest, and take a gentle break</span>
         </button>
       </div>
 
@@ -418,68 +407,68 @@
         <div class="timer-visual-frame">
           <div class="hairline-timer-circle" id="timerCircle">
             <div class="circle-inner-data">
-              <span class="pacing-cue" id="timerPacingCue">Standby</span>
+              <span class="pacing-cue" id="timerPacingCue">Ready</span>
               <span class="clock-readout" id="timerClockDigits">01:00</span>
             </div>
           </div>
         </div>
 
         <p class="timer-protocol-desc" id="timerProtocolDesc">
-          Two brief inhales through the nose followed by one long, slow, unforced exhalation through the mouth.
+          Two quick inhales through your nose, then a long, slow sigh out your mouth.
         </p>
 
         <div class="timer-controls-row">
           <button id="toggleTimerBtn" class="luxury-action-btn">
-            <span id="timerBtnText">Initiate Protocol</span>
+            <span id="timerBtnText">Start timer</span>
           </button>
           <button id="cancelTimerBtn" class="secondary-plain-btn" style="display: none;">Cancel</button>
         </div>
       </div>
 
-      <!-- Non-Toxic ADHD Affirmation Ledger -->
+      <!-- Affirmation Ledger -->
       <div class="affirmation-ledger">
         <div class="ledger-header">
-          <span class="ledger-overline">Clinical Reframing</span>
-          <button id="nextAffirmationBtn" class="ledger-refresh-btn">Advance Reflection</button>
+          <span class="ledger-overline">Friendly reminder</span>
+          <button id="nextAffirmationBtn" class="ledger-refresh-btn">Next reminder</button>
         </div>
         <blockquote class="ledger-quote" id="affirmationQuote">
-          "Executive dysfunction is a neurological shortage of chemical transmission, never a moral failing or character flaw. You are navigating reality with the neurotransmitters available to you today."
+          "Having ADHD just means your brain needs different chemistry today. It is not a flaw or failing. You are doing great."
         </blockquote>
       </div>
     </section>
 
-    <!-- Section 5: Tactile Redirection (Hair Twirling & Nail Biting Shield) -->
+    <!-- Section 5: Fidget & Urge Surfing -->
     <section class="editorial-card" id="busyHandsSection">
       <div class="section-meta">
         <span class="meta-number">05</span>
-        <span class="meta-label">Body-Focused Repetitive Behavior Mitigation</span>
+        <span class="meta-label">Keep your hands busy</span>
       </div>
 
       <div class="section-header-block">
         <div class="streak-header-wrap">
           <div>
-            <h2 class="section-headline">Tactile Redirection & Urge Surfing</h2>
-            <p class="section-subtext">When physical restlessness strikes, substitute destructive finger movements with non-damaging tactile inputs.</p>
+            <h2 class="section-headline">Fidget & urge surfing</h2>
+            <p class="section-subtext">When you feel like rolling your hair or biting your nails, try this instead.</p>
           </div>
           <div class="streak-counter-box">
             <span class="streak-digits" id="streakDigits">0</span>
-            <span class="streak-label">Urges Successfully Surfed</span>
+            <span class="streak-label">Urges surfed</span>
           </div>
         </div>
       </div>
 
       <!-- Sub-Tool Navigation -->
       <div class="tactile-tabs-row">
-        <button class="tactile-tab active" data-tab="matrix">Tactile Matrix</button>
-        <button class="tactile-tab" data-tab="surfer">60-Second Urge Surfer</button>
-        <button class="tactile-tab" data-tab="stone">Alabaster Worry Stone</button>
+        <button class="tactile-tab active" data-tab="matrix">Click plates</button>
+        <button class="tactile-tab" data-tab="surfer">60-Second urge wave</button>
+        <button class="tactile-tab" data-tab="stone">Smooth worry stone</button>
       </div>
 
       <!-- Tool 1: Tactile Matrix -->
       <div class="tactile-panel active" id="panelMatrix">
         <div class="matrix-bar">
-          <span class="matrix-instruction">Depress plates to release tactile motor charge:</span>
-          <button id="resetMatrixBtn" class="matrix-reset-link">Reset Plates</button>
+          <span class="matrix-instruction">Click plates to keep your fingers moving:</span>
+          <button id="resetMatrixBtn" class="matrix-reset-link">Reset plates</button>
         </div>
         <div class="tactile-matrix-grid" id="matrixGrid">
           <!-- 24 minimalist tactile cells -->
@@ -496,12 +485,12 @@
             </div>
           </div>
           <div class="surfer-text-frame">
-            <h3 class="surfer-phase-title" id="surferTitle">Urges Peak Within 60 to 90 Seconds</h3>
-            <p class="surfer-phase-body" id="surferBody">Place both hands flat against your thighs or desktop. Observe the physiological urge without acting on it. Ride the crest until it dissolves.</p>
+            <h3 class="surfer-phase-title" id="surferTitle">Urges peak and pass in 60 seconds</h3>
+            <p class="surfer-phase-body" id="surferBody">Place both hands flat on your lap or table. Watch the urge without doing it. Ride the wave until it melts away.</p>
           </div>
           <div class="surfer-btn-row">
-            <button id="startSurferBtn" class="luxury-action-btn">Commence 60s Wave</button>
-            <button id="resetSurferBtn" class="secondary-plain-btn" style="display: none;">Reset Wave</button>
+            <button id="startSurferBtn" class="luxury-action-btn">Start 60s wave</button>
+            <button id="resetSurferBtn" class="secondary-plain-btn" style="display: none;">Reset</button>
           </div>
         </div>
       </div>
@@ -509,72 +498,13 @@
       <!-- Tool 3: Alabaster Worry Stone -->
       <div class="tactile-panel" id="panelStone">
         <div class="worry-stone-editorial">
-          <p class="stone-instruction-line">Trace your thumb or pointer smoothly across the concave stone to ground physical restless impulses.</p>
+          <p class="stone-instruction-line">Rub your thumb smoothly across the stone to soothe your fingers.</p>
           <div class="alabaster-stone" id="alabasterStone">
             <div class="stone-concave-groove"></div>
             <span class="stone-inscription">Steadiness</span>
           </div>
           <div class="stone-metrics-line">
-            <span id="stoneRubCount">0</span> Deliberate Strokes Recorded
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 6: Evening Rituals & Letters from Meha -->
-    <section class="editorial-card" id="eveningRitualSection">
-      <div class="section-meta">
-        <span class="meta-number">06</span>
-        <span class="meta-label">Evening Anchors & Notes of Warmth</span>
-      </div>
-
-      <div class="rituals-grid">
-        <!-- Minimalist Candle -->
-        <div class="ritual-box">
-          <span class="ritual-index">Anchor 01</span>
-          <h3 class="ritual-title">Illumination of Stillness</h3>
-          <p class="ritual-desc">A single virtual point of light to signal to the nervous system that demanding tasks are ended for the evening.</p>
-          
-          <div class="candle-stand" id="candleStand">
-            <div class="candle-glow-aura" id="candleGlow"></div>
-            <div class="candle-pillar">
-              <div class="candle-wick"></div>
-              <div class="candle-flame-hairline" id="candleFlame"></div>
-            </div>
-          </div>
-          
-          <button id="lightCandleBtn" class="editorial-chip">
-            <span id="candleBtnLabel">Light Candle</span>
-          </button>
-        </div>
-
-        <!-- Call Mom Prompt -->
-        <div class="ritual-box">
-          <span class="ritual-index">Anchor 02</span>
-          <h3 class="ritual-title">Direct Maternal Connection</h3>
-          <p class="ritual-desc">Hearing a familiar voice for three minutes anchors cognitive perspective when external professional burdens feel excessive.</p>
-          <div class="ritual-actions-row">
-            <a href="tel:" class="editorial-chip">Telephone Link</a>
-            <button id="momLoggedBtn" class="editorial-chip">Acknowledge Call</button>
-          </div>
-        </div>
-
-        <!-- Letter from Meha -->
-        <div class="ritual-box">
-          <span class="ritual-index">Anchor 03</span>
-          <h3 class="ritual-title">Correspondence from Mehu</h3>
-          <p class="ritual-desc">An unchanging affirmation of unconditional safety, dignity, and partnership.</p>
-          
-          <div class="letter-display-box" id="letterBox" style="display: none;">
-            <p class="letter-content" id="letterContent">
-              "Akku, you do not have to carry the whole world today. Take it one gentle step at a time. I love you unconditionally, and believe in you through every season."
-            </p>
-            <span class="letter-signoff">— Forever yours, Mehu</span>
-          </div>
-
-          <div class="letter-controls">
-            <button id="revealLetterBtn" class="editorial-chip">Unseal Letter</button>
-            <button id="cycleLetterBtn" class="secondary-plain-btn" style="display: none;">Advance Letter</button>
+            <span id="stoneRubCount">0</span> Strokes counted
           </div>
         </div>
       </div>

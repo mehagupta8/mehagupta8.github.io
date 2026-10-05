@@ -333,172 +333,184 @@
   }
 
   // ==========================================================================
-  // 3. Cognitive Behavioral Protocols (Evidence-Based CBT Modules)
-  // Derived from Mastering Your Adult ADHD (Client Workbook)
-  // Exactly 4 research-backed CBT exercises per category. Zero academic citations.
+  // 3. Problem Options & Action Steps (Short, colloquial, friendly)
+  // 5 problems, 4 options each with interactive work box and progress logging
+  // Zero Emojis.
   // ==========================================================================
-  const cbtModulesData = {
+  const problemOptionsData = {
     assignments: {
-      indexRoman: 'Module I',
-      title: 'Assignments: Strategic Executive Scaffolding',
+      title: 'Assignments',
       steps: [
         {
           id: 'step_1',
-          name: 'Task Decimation',
-          desc: 'Break the overwhelming assignment into microscopic 5-minute atomic chunks. Rather than writing the paper or finishing the codebase, focus only on creating the document title and writing one raw sentence.'
+          name: 'Just 5 minutes',
+          desc: 'Pick the tiniest part of your assignment and work on it for just 5 minutes. You have full permission to stop right after.',
+          prompt: 'What is one tiny 5-minute action you can do right now? (e.g., open the doc, create a title, write one sentence)',
+          placeholder: 'Type your 5-minute action here...'
         },
         {
           id: 'step_2',
-          name: 'Externalizing Working Memory',
-          desc: 'Brain-dump every single requirement onto a blank slate to clear cognitive RAM. Free your prefrontal cortex from the paralyzing burden of holding multiple open tabs and criteria simultaneously.'
+          name: 'Brain dump',
+          desc: 'Get everything floating in your head down on the page so you do not have to keep juggling thoughts.',
+          prompt: 'Dump all your assignment requirements, doubts, or notes here to clear your mental bandwidth:',
+          placeholder: 'Write down everything on your mind about this assignment...'
         },
         {
           id: 'step_3',
-          name: 'The Intentional Friction Setup',
-          desc: 'Clear the digital workspace of tabs and notifications, leaving only the target document open. Make distraction physically inconvenient by placing non-essential devices across the room.'
+          name: 'Close extra tabs',
+          desc: 'Keep only the one essential tab or file in front of you. Put your phone out of reach for a moment.',
+          prompt: 'What is the single essential file or tab you need open right now?',
+          placeholder: 'Name your single focus document or tab...'
         },
         {
           id: 'step_4',
-          name: 'Controlled Time-Boxing',
-          desc: 'Set a timer for 10 minutes of low-stakes drafting with explicit permission to write badly. Low-standard momentum dissolves the initiation wall that executive dysfunction erects.'
+          name: 'Permission to write messy',
+          desc: 'Low standards create momentum. Type a rough, imperfect draft without fixing or judging anything yet.',
+          prompt: 'Write your rough, messy draft or initial thoughts here without editing yourself:',
+          placeholder: 'Start typing rough thoughts freely...'
         }
-      ],
-      interactiveTool: {
-        type: 'atomic_breakdown',
-        title: 'Microscopic 5-Minute Atomic Sprint',
-        placeholder: 'Define one single atomic action (e.g., Open terminal, name file, write header)...'
-      }
+      ]
     },
     tony: {
-      indexRoman: 'Module II',
-      title: 'Tony (Manager): Objective Evaluative De-Escalation',
+      title: 'Tony (Manager)',
       steps: [
         {
           id: 'step_1',
-          name: 'Thought-Disputation Log',
-          desc: 'Write down the catastrophic thought about the manager, then systematically list objective factual counter-evidence. Separate neutral communication from inferred negative appraisal.'
+          name: 'Reality check',
+          desc: 'Write down what you are worried he thinks, then write what the actual facts are. Most of the time it is far simpler than our brain imagines.',
+          prompt: 'What is your brain worrying about, and what are the actual facts of the situation?',
+          placeholder: 'Worry: ... \nFacts: ...'
         },
         {
           id: 'step_2',
-          name: 'Boundary Scripting',
-          desc: 'Draft a concise, emotion-neutral professional response or request for clarification in advance. Eliminate ambiguous emotional overtones by sticking strictly to scope and timeline.'
+          name: 'Draft a simple update',
+          desc: 'Draft a short, neutral 2-line check-in so you do not have to stress over wording.',
+          prompt: 'Draft your simple, clear update here (keep it short and easy):',
+          placeholder: 'Hi Tony, I am focusing on [deliverable] today and will share an update by 3pm. Let me know if that works!'
         },
         {
           id: 'step_3',
-          name: 'Physiological Baseline Check',
-          desc: 'Scan the body for tension (jaw, shoulders) and decouple self-worth from external professional feedback. An interaction with leadership is a business coordination event, not a moral indictment.'
+          name: 'Drop your shoulders',
+          desc: 'Unclench your jaw, drop your shoulders, and exhale. Work is just work, not a measurement of your worth.',
+          prompt: 'Take a slow deep breath. Write a gentle reminder to yourself:',
+          placeholder: 'I unclenched my jaw, took a breath, and reminded myself: I am safe, capable, and doing fine.'
         },
         {
           id: 'step_4',
-          name: 'Proactive Agenda Framing',
-          desc: 'Outline exactly 2 bullet points to bring to the next sync to regain a sense of structured control. Leading the sync with structured clarity shifts you from reactive defense to proactive agency.'
+          name: 'Pick 2 talking points',
+          desc: 'Pick just 2 bullet points to bring to your next check-in. That gives you clear structure and peace of mind.',
+          prompt: 'What are 2 simple points you want to cover in your next conversation?',
+          placeholder: '1. Update on ...\n2. Quick question about ...'
         }
-      ],
-      interactiveTool: {
-        type: 'script_template',
-        label: 'Ready-to-Deploy Neutral Alignment Script',
-        script: 'Hi Tony, to ensure clear alignment on priorities for this sprint, I am focusing primarily on [Core Deliverable] today. I will deliver the updated status by 3:00 PM. Please let me know if the sequencing requires adjustment.'
-      }
+      ]
     },
     year_ending: {
-      indexRoman: 'Module III',
-      title: '2026 is Ending: Anchoring the Temporal Horizon',
+      title: '2026 is ending',
       steps: [
         {
           id: 'step_1',
-          name: 'Macro-to-Micro Reframing',
-          desc: 'Shift focus away from abstract year-end timelines down to the single actionable task for today. The illusion that the year is slipping away is an ADHD temporal discounting artifact.'
+          name: 'Focus on today only',
+          desc: 'Forget about months and long-term deadlines. Focus only on what feels doable and kind to yourself before bedtime.',
+          prompt: 'What is the single thing that actually matters for you today?',
+          placeholder: 'Today, all I need to focus on is...'
         },
         {
           id: 'step_2',
-          name: 'Time-Auditing Experiment',
-          desc: 'Map out the next 3 hours visually to counter time-blindness and urgency panic. Ground yourself in concrete blocks of physical time rather than expansive abstract calendars.'
+          name: 'Plan the next 2 hours',
+          desc: 'Instead of worrying about the whole week, just map out the next 2 hours with realistic room to breathe.',
+          prompt: 'What does the next 2 hours look like? Keep it realistic and easy:',
+          placeholder: 'Hour 1: [gentle focus] / Hour 2: [snack, stretch, wind down]'
         },
         {
           id: 'step_3',
-          name: 'Accomplishment Inventory',
-          desc: 'List 3 quiet wins or completed steps from earlier in the cycle to ground temporal perspective. Acknowledge what was accomplished rather than exclusively fixating on unfinished goals.'
+          name: 'Celebrate 3 quiet wins',
+          desc: 'Remind yourself of 3 things you finished or handled well recently, even if they felt small.',
+          prompt: 'Write 3 things you handled well recently that you deserve credit for:',
+          placeholder: '1. ...\n2. ...\n3. ...'
         },
         {
           id: 'step_4',
-          name: 'Release Protocol',
-          desc: 'Consciously write down one future worry that cannot be solved today and file it away. Close the mental tab and grant yourself permission to defer it until a scheduled date.'
+          name: 'Put one worry away',
+          desc: 'Write down one future worry that you cannot solve tonight, and officially give yourself permission to set it down.',
+          prompt: 'What worry can you officially file away until tomorrow or later?',
+          placeholder: 'I am putting away worry about... until a later scheduled time.'
         }
-      ],
-      interactiveTool: {
-        type: 'timeline_block',
-        title: '3-Hour Concrete Horizon Map',
-        placeholder: 'Hour 1: Single target task / Hour 2: Rest & nutrition / Hour 3: Low-friction wrap-up...'
-      }
+      ]
     },
     missing_girlfriend: {
-      indexRoman: 'Module IV',
-      title: 'Missing My Girlfriend: Somatic Attachment Co-Regulation',
+      title: 'Missing my girlfriend',
       steps: [
         {
           id: 'step_1',
-          name: 'Sensory Anchor Retrieval',
-          desc: 'Focus on a physical object or memory representing warmth and safety (e.g., Meha\'s presence, sweater, or handwritten note). Anchor into the concrete sensory evidence of love.'
+          name: 'Hold a cozy memory',
+          desc: 'Remember a sweet moment, laugh, or warm cuddle with Mehu. Close your eyes for 30 seconds and let yourself smile.',
+          prompt: 'What is a warm memory or sweet thought of Mehu that makes you feel safe?',
+          placeholder: 'A cozy memory with Mehu...'
         },
         {
           id: 'step_2',
-          name: 'Connection Scheduling',
-          desc: 'Define a specific, low-friction moment later today to reconnect without interrupting current workflow. Having a designated time reduces the persistent cognitive ache of longing.'
+          name: 'Plan when to connect',
+          desc: 'Pick a sweet time today to text or call so you have something warm to look forward to.',
+          prompt: 'When would be a cozy time to connect with Meha today?',
+          placeholder: 'I would love to call or text Mehu around...'
         },
         {
           id: 'step_3',
-          name: 'Somatic Grounding Sequence',
-          desc: 'Use deep breathing to transition emotional longing into a calm, centered state. Let the sensation of missing someone transform into quiet gratitude for a rock-solid partnership.'
+          name: 'Deep breath & ground',
+          desc: 'Put a hand over your chest, breathe in deeply for 4 seconds, and release. Distance is temporary; love is always steady.',
+          prompt: 'Take 3 deep breaths and write a sweet reminder to yourself:',
+          placeholder: 'Mehu loves me and is always in my corner. We are solid and together.'
         },
         {
           id: 'step_4',
-          name: 'Affirmation Anchoring',
-          desc: 'Read a personal reminder that distance is temporary and emotional safety is steady. Distance is merely physical geography; the emotional foundation remains unshakable.'
+          name: 'Leave a note for Mehu',
+          desc: 'Write down a sweet thought or inside joke for Mehu to share when you talk next.',
+          prompt: 'What is a sweet thought or cute note you want to leave for Mehu?',
+          placeholder: 'Hey cutie, just wanted to share this with you...'
         }
-      ],
-      interactiveTool: {
-        type: 'note_to_meha',
-        title: 'Asynchronous Thought for Mehu',
-        placeholder: 'Jot down a fleeting thought or sweet memory to share when you next connect...'
-      }
+      ]
     },
     clean_house: {
-      indexRoman: 'Module V',
-      title: 'Need to Clean House: Environmental Junebugging & Containment',
+      title: 'Need to clean house',
       steps: [
         {
           id: 'step_1',
-          name: 'Junebugging Containment',
-          desc: 'Select only one single flat surface (e.g., one desk corner) and ignore the rest of the room. When visual chaos triggers paralysis, shrink the physical boundary to twenty square inches.'
+          name: 'Just one corner',
+          desc: 'Ignore the rest of the room. Pick only one tiny spot—like one corner of your desk—and tidy just that.',
+          prompt: 'Which tiny spot or single surface are you picking to tidy up right now?',
+          placeholder: 'I am picking the left corner of my desk...'
         },
         {
           id: 'step_2',
-          name: 'Trash-First Sweep',
-          desc: 'Spend 3 minutes collecting only obvious trash with zero organizing allowed. Pure disposal requires zero executive sorting decisions and creates instant visible clarity.'
+          name: 'Toss 3 pieces of trash',
+          desc: 'Walk around for 2 minutes looking only for obvious trash. No sorting or reorganizing, just toss.',
+          prompt: 'What obvious trash can you toss into the bin in the next 2 minutes?',
+          placeholder: 'Tossed empty cup, wrapper, old paper...'
         },
         {
           id: 'step_3',
-          name: 'The Item Placement Rule',
-          desc: 'Pick up 5 items out of place and move them directly to their permanent home. Complete each item individually before touching the next to prevent aimless room-hopping.'
+          name: 'Put 5 things back home',
+          desc: 'Pick up 5 items out of place and walk each one back to where it belongs, one at a time.',
+          prompt: 'List the 5 items you are putting away right now:',
+          placeholder: '1. Mug to sink\n2. Shirt to hamper\n3. Books on shelf\n4. Keys in bowl\n5. Shoes in closet'
         },
         {
           id: 'step_4',
-          name: 'Sensory Reduction',
-          desc: 'Put on instrumental background audio to mask environmental distractions before starting. Muffle jarring auditory spikes to preserve focus during physical movement.'
+          name: 'Put on good music',
+          desc: 'Put on your favorite lofi beat, instrumental track, or upbeat playlist to make moving around feel effortless.',
+          prompt: 'What music or playlist are you turning on to get your groove going?',
+          placeholder: 'Playing: ...'
         }
-      ],
-      interactiveTool: {
-        type: 'five_items_tally',
-        title: '5-Item Permanent Placement Tally'
-      }
+      ]
     }
   };
 
-  let activeStressorKey = 'assignments';
+  let activeProblemKey = null;
+  let activeStepIdx = 0;
 
   // Persistence keys
   const CBT_STORAGE_KEY = 'akku_cbt_progress_v2';
-  const ATOMIC_TASKS_KEY = 'akku_atomic_tasks_v2';
+  const STEP_WORK_STORAGE_PREFIX = 'akku_step_work_v2_';
 
   function getCbtProgress() {
     try {
@@ -515,170 +527,181 @@
     } catch (e) {}
   }
 
-  function renderCbtWorkspace(key) {
-    const data = cbtModulesData[key];
+  function getStepWork(problemKey, stepIdx) {
+    try {
+      return localStorage.getItem(`${STEP_WORK_STORAGE_PREFIX}${problemKey}_${stepIdx}`) || '';
+    } catch (e) {
+      return '';
+    }
+  }
+
+  function setStepWork(problemKey, stepIdx, text) {
+    try {
+      localStorage.setItem(`${STEP_WORK_STORAGE_PREFIX}${problemKey}_${stepIdx}`, text);
+    } catch (e) {}
+  }
+
+  function renderProblemWorkspace(key, selectedStepIdx = 0) {
+    const data = problemOptionsData[key];
     if (!data) return;
 
+    activeProblemKey = key;
+    activeStepIdx = selectedStepIdx;
+
+    const workspace = document.getElementById('cbtWorkspace');
     const indexLabel = document.getElementById('worksheetIndexLabel');
     const title = document.getElementById('worksheetTitle');
     const stepsContainer = document.getElementById('cbtStepsList');
     const progressCount = document.getElementById('cbtCompletedCount');
-    const interactiveSub = document.getElementById('worksheetInteractiveSub');
 
-    if (indexLabel) indexLabel.textContent = data.indexRoman;
+    if (workspace) workspace.style.display = 'block';
+    if (indexLabel) indexLabel.textContent = 'Try to do this:';
     if (title) title.textContent = data.title;
 
     const progress = getCbtProgress();
     let completedCount = 0;
+
+    data.steps.forEach((step, idx) => {
+      if (progress[`${key}_step_${idx}`]) completedCount++;
+    });
+
+    if (progressCount) {
+      progressCount.textContent = `${completedCount} / 4`;
+    }
 
     if (stepsContainer) {
       stepsContainer.innerHTML = '';
       data.steps.forEach((step, idx) => {
         const stepKey = `${key}_step_${idx}`;
         const isDone = Boolean(progress[stepKey]);
-        if (isDone) completedCount++;
+        const isSelected = (idx === activeStepIdx);
 
         const card = document.createElement('div');
-        card.className = `cbt-step-card ${isDone ? 'completed' : ''}`;
-        card.dataset.stepKey = stepKey;
+        card.className = `cbt-step-card ${isDone ? 'completed' : ''} ${isSelected ? 'selected-step' : ''}`;
+        card.dataset.stepIndex = idx;
 
         card.innerHTML = `
           <div class="cbt-step-top">
-            <span class="step-num-overline">Step 0${idx + 1}</span>
-            <button class="cbt-checkbox-btn" aria-label="Mark task ${step.name} complete" title="Toggle completion">
-              <span class="check-indicator"></span>
-            </button>
+            <span class="step-num-overline">Option 0${idx + 1}</span>
+            <span class="step-status-chip">${isDone ? 'Completed' : 'To Do'}</span>
           </div>
           <h4 class="step-title-text">${step.name}</h4>
           <p class="step-body-desc">${step.desc}</p>
         `;
 
-        const checkBtn = card.querySelector('.cbt-checkbox-btn');
-        checkBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const currentStatus = Boolean(progress[stepKey]);
-          progress[stepKey] = !currentStatus;
-          setCbtProgress(progress);
-          playClick(progress[stepKey] ? 1400 : 700);
-          renderCbtWorkspace(key);
+        card.addEventListener('click', () => {
+          activeStepIdx = idx;
+          stepsContainer.querySelectorAll('.cbt-step-card').forEach((c, i) => {
+            if (i === activeStepIdx) {
+              c.classList.add('selected-step');
+            } else {
+              c.classList.remove('selected-step');
+            }
+          });
+          playClick(1000);
+          renderStepWorkBox(key, activeStepIdx);
         });
 
         stepsContainer.appendChild(card);
       });
     }
 
-    if (progressCount) {
-      progressCount.textContent = `${completedCount} / 4`;
-    }
-
-    // Render custom sub-tool
-    if (interactiveSub && data.interactiveTool) {
-      renderInteractiveSubTool(interactiveSub, key, data.interactiveTool);
-    }
+    renderStepWorkBox(key, activeStepIdx);
   }
 
-  function renderInteractiveSubTool(container, stressorKey, tool) {
-    if (tool.type === 'script_template') {
-      container.innerHTML = `
-        <div class="template-script-box">
-          <span class="template-script-label">${tool.label}</span>
-          <div class="template-script-text" id="scriptTextContent">${tool.script}</div>
-          <button id="copyScriptBtn" class="editorial-chip">Copy Script to Clipboard</button>
-          <span id="copyConfirmNotice" style="margin-left: 1rem; font-size: 11px; color: var(--gold); display: none;">Copied to clipboard</span>
-        </div>
-      `;
-      const copyBtn = container.querySelector('#copyScriptBtn');
-      const notice = container.querySelector('#copyConfirmNotice');
-      if (copyBtn) {
-        copyBtn.addEventListener('click', () => {
-          navigator.clipboard.writeText(tool.script).then(() => {
-            playClick(1500);
-            if (notice) {
-              notice.style.display = 'inline';
-              setTimeout(() => { notice.style.display = 'none'; }, 2000);
-            }
-          });
-        });
-      }
-    } else if (tool.type === 'five_items_tally') {
-      container.innerHTML = `
-        <div class="template-script-box">
-          <span class="template-script-label">${tool.title}</span>
-          <p style="font-size: 12px; color: var(--muted); margin-bottom: 0.8rem;">Select one single item out of place and walk it to its permanent location. Mark off each item:</p>
-          <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
-            <button class="editorial-chip tally-chip" data-idx="1">Item 01: Relocated</button>
-            <button class="editorial-chip tally-chip" data-idx="2">Item 02: Relocated</button>
-            <button class="editorial-chip tally-chip" data-idx="3">Item 03: Relocated</button>
-            <button class="editorial-chip tally-chip" data-idx="4">Item 04: Relocated</button>
-            <button class="editorial-chip tally-chip" data-idx="5">Item 05: Relocated</button>
-          </div>
-        </div>
-      `;
-      const tallyButtons = container.querySelectorAll('.tally-chip');
-      tallyButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          btn.classList.toggle('chip-highlight');
-          playClick(btn.classList.contains('chip-highlight') ? 1300 : 800);
-        });
-      });
-    } else {
-      // General scratchpad / atomic breakdown input
-      const savedTasksKey = `${ATOMIC_TASKS_KEY}_${stressorKey}`;
-      let savedNote = '';
-      try {
-        savedNote = localStorage.getItem(savedTasksKey) || '';
-      } catch (e) {}
+  function renderStepWorkBox(problemKey, idx) {
+    const data = problemOptionsData[problemKey];
+    if (!data || !data.steps[idx]) return;
+    const step = data.steps[idx];
 
-      container.innerHTML = `
-        <div class="template-script-box">
-          <span class="template-script-label">${tool.title}</span>
-          <div class="underline-input-wrap" style="margin-bottom: 0.8rem;">
-            <input type="text" id="interactiveToolInput" class="editorial-underline-input" style="font-size: 1rem; padding: 0.5rem 0;" placeholder="${tool.placeholder}" value="${savedNote}" autocomplete="off">
-          </div>
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted);">Auto-saved locally</span>
-            <button id="clearToolInputBtn" class="archive-clear-btn" style="font-size: 10px;">Clear Entry</button>
-          </div>
-        </div>
-      `;
+    const stepWorkBox = document.getElementById('stepWorkBox');
+    const badge = document.getElementById('stepWorkBadge');
+    const title = document.getElementById('stepWorkTitle');
+    const prompt = document.getElementById('stepWorkPrompt');
+    const input = document.getElementById('stepWorkInput');
+    const notice = document.getElementById('stepDoneNotice');
 
-      const input = container.querySelector('#interactiveToolInput');
-      const clearBtn = container.querySelector('#clearToolInputBtn');
-
-      if (input) {
-        input.addEventListener('input', (e) => {
-          try {
-            localStorage.setItem(savedTasksKey, e.target.value);
-          } catch (err) {}
-        });
-      }
-
-      if (clearBtn && input) {
-        clearBtn.addEventListener('click', () => {
-          input.value = '';
-          try {
-            localStorage.removeItem(savedTasksKey);
-          } catch (err) {}
-          playClick(800);
-        });
-      }
+    if (stepWorkBox) stepWorkBox.style.display = 'block';
+    if (badge) badge.textContent = `Option 0${idx + 1}`;
+    if (title) title.textContent = step.name;
+    if (prompt) prompt.textContent = step.prompt;
+    if (input) {
+      input.placeholder = step.placeholder;
+      input.value = getStepWork(problemKey, idx);
     }
+    if (notice) notice.style.display = 'none';
   }
 
-  // Stressor Tabs Binding
+  // Auto-save input while typing
+  const stepWorkInput = document.getElementById('stepWorkInput');
+  if (stepWorkInput) {
+    stepWorkInput.addEventListener('input', (e) => {
+      if (activeProblemKey !== null) {
+        setStepWork(activeProblemKey, activeStepIdx, e.target.value);
+      }
+    });
+  }
+
+  // Submit button in Step Work Box
+  const submitStepWorkBtn = document.getElementById('submitStepWorkBtn');
+  if (submitStepWorkBtn) {
+    submitStepWorkBtn.addEventListener('click', () => {
+      if (!activeProblemKey) return;
+      const data = problemOptionsData[activeProblemKey];
+      if (!data || !data.steps[activeStepIdx]) return;
+      const step = data.steps[activeStepIdx];
+
+      const input = document.getElementById('stepWorkInput');
+      const text = input ? input.value.trim() : '';
+
+      setStepWork(activeProblemKey, activeStepIdx, text);
+
+      const progress = getCbtProgress();
+      progress[`${activeProblemKey}_step_${activeStepIdx}`] = true;
+      setCbtProgress(progress);
+
+      const entries = getArchiveEntries();
+      const now = new Date();
+      const options = { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' };
+      const formattedDate = now.toLocaleDateString('en-US', options);
+
+      const newEntry = {
+        id: 'work_' + Date.now(),
+        timestamp: formattedDate,
+        domain: `${data.title} - ${step.name}`,
+        subEmotions: ['Completed Step'],
+        somaticSensations: [],
+        note: text || `Completed "${step.name}"`
+      };
+      entries.unshift(newEntry);
+      setArchiveEntries(entries);
+      renderArchiveLedger();
+
+      const notice = document.getElementById('stepDoneNotice');
+      if (notice) {
+        notice.style.display = 'inline-block';
+        notice.textContent = 'Saved to your progress ledger!';
+        setTimeout(() => {
+          notice.style.display = 'none';
+        }, 3000);
+      }
+
+      playChime(660, 1.4);
+      renderProblemWorkspace(activeProblemKey, activeStepIdx);
+    });
+  }
+
+  // Problem Selector Tabs Binding
   const stressorTabs = document.querySelectorAll('.stressor-tab');
   stressorTabs.forEach(tab => {
     tab.addEventListener('click', () => {
       stressorTabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
-      activeStressorKey = tab.dataset.stressor;
+      const key = tab.dataset.stressor;
       playClick(1100);
-      renderCbtWorkspace(activeStressorKey);
+      renderProblemWorkspace(key, 0);
     });
   });
-
-  // Initial render of CBT workspace
-  renderCbtWorkspace(activeStressorKey);
 
   // ==========================================================================
   // 4. Hoffman Institute Feelings Spectrum & Somatic Scan
@@ -1384,84 +1407,5 @@
     alabasterStone.addEventListener('click', recordRub);
   }
 
-  // ==========================================================================
-  // 7. Evening Rituals & Letters from Meha
-  // Candle Lighting, Maternal Connection, Unsealed Letters
-  // Strict Zero Emojis. Playfair Display Editorial Letters.
-  // ==========================================================================
-  const lightCandleBtn = document.getElementById('lightCandleBtn');
-  const candleBtnLabel = document.getElementById('candleBtnLabel');
-  const candleFlame = document.getElementById('candleFlame');
-  const candleGlow = document.getElementById('candleGlow');
-  let isCandleLit = false;
-
-  if (lightCandleBtn && candleFlame && candleGlow && candleBtnLabel) {
-    lightCandleBtn.addEventListener('click', () => {
-      isCandleLit = !isCandleLit;
-      if (isCandleLit) {
-        candleFlame.classList.add('lit');
-        candleGlow.classList.add('lit');
-        candleBtnLabel.textContent = 'Extinguish Candle';
-        playFlameIgnite();
-      } else {
-        candleFlame.classList.remove('lit');
-        candleGlow.classList.remove('lit');
-        candleBtnLabel.textContent = 'Light Candle';
-        playClick(800);
-      }
-    });
-  }
-
-  const momLoggedBtn = document.getElementById('momLoggedBtn');
-  if (momLoggedBtn) {
-    momLoggedBtn.addEventListener('click', () => {
-      playChime(640, 1.2);
-      momLoggedBtn.textContent = 'Call Acknowledged';
-      momLoggedBtn.classList.add('chip-highlight');
-      setTimeout(() => {
-        momLoggedBtn.textContent = 'Acknowledge Call';
-        momLoggedBtn.classList.remove('chip-highlight');
-      }, 4000);
-    });
-  }
-
-  // Restorative Letters from Mehu (Strict Zero Emojis)
-  const lettersFromMeha = [
-    'Akku, you do not have to carry the whole world today. Take it one gentle step at a time. I love you unconditionally, and believe in you through every season.',
-    'Whenever your mind feels crowded with tasks, remember that your worth is not measured by items checked off a list. Rest your shoulders and let yourself just breathe. I am always in your corner.',
-    'It is okay to pause. The work will wait, the world will keep turning, and you are doing so much better than you give yourself credit for. You are deeply cherished.',
-    'I love your curious mind, your kindness, and the quiet determination you show every single day. Even when you feel stuck, I see how hard you try. Be gentle with yourself today.',
-    'No single deadline or conversation can define who you are. Ground your feet on the floor, release your jaw, and know that you are safe, loved, and never alone.',
-    'You are my favorite person to dream with, laugh with, and walk beside. Whatever is weighing on you right now, we will navigate it together. Sending you the warmest, calmest embrace.',
-    'Give your brain credit for navigating a world that often moves at a jarring cadence. You are built for resilience, but you are also allowed to rest. Take tonight slowly.'
-  ];
-
-  let currentLetterIdx = 0;
-  const revealLetterBtn = document.getElementById('revealLetterBtn');
-  const cycleLetterBtn = document.getElementById('cycleLetterBtn');
-  const letterBox = document.getElementById('letterBox');
-  const letterContent = document.getElementById('letterContent');
-
-  if (revealLetterBtn && letterBox && letterContent) {
-    revealLetterBtn.addEventListener('click', () => {
-      playChime(528, 1.4);
-      letterBox.style.display = 'block';
-      revealLetterBtn.style.display = 'none';
-      if (cycleLetterBtn) cycleLetterBtn.style.display = 'inline-flex';
-      letterContent.textContent = `"${lettersFromMeha[currentLetterIdx]}"`;
-    });
-  }
-
-  if (cycleLetterBtn && letterContent) {
-    cycleLetterBtn.addEventListener('click', () => {
-      playClick(1200);
-      currentLetterIdx = (currentLetterIdx + 1) % lettersFromMeha.length;
-      letterContent.style.opacity = '0';
-      setTimeout(() => {
-        letterContent.textContent = `"${lettersFromMeha[currentLetterIdx]}"`;
-        letterContent.style.opacity = '1';
-      }, 200);
-    });
-  }
-
 })();
+
