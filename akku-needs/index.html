@@ -77,8 +77,68 @@
       <div class="drawer-panel active" id="drawerPanelProgress">
         <div class="drawer-panel-intro">
           <p class="drawer-intro-text">Every action step, calming timer, feelings reflection, and safe urge wave is tracked here with exact dates and times.</p>
+        </div>
+
+        <!-- Progress Statistics Dashboard -->
+        <div class="ledger-stats-container" id="ledgerStatsContainer">
+          <div class="stats-header-row">
+            <span class="stats-overline">Overall Analytics</span>
+            <span class="stats-timestamp-note" id="statsLastUpdated">Live tracking</span>
+          </div>
+
+          <!-- 4-Up High Impact Stats Grid -->
+          <div class="stats-metric-grid">
+            <div class="stat-card">
+              <span class="stat-card-value" id="statTotalLogged">0</span>
+              <span class="stat-card-label">Total Actions</span>
+              <span class="stat-card-sub" id="statTodayCount">0 recorded today</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-card-value" id="statSafeStreak">0</span>
+              <span class="stat-card-label">Urges Surfed</span>
+              <span class="stat-card-sub">Body protected</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-card-value" id="statFocusTime">0m</span>
+              <span class="stat-card-label">Phone Locked</span>
+              <span class="stat-card-sub" id="statLockboxSessions">0 sessions</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-card-value" id="statNotesCount">0</span>
+              <span class="stat-card-label">Love Notes</span>
+              <span class="stat-card-sub">Saved for Mehu</span>
+            </div>
+          </div>
+
+          <!-- Proportional Distribution Bar -->
+          <div class="stats-distribution-block" id="statsDistBlock">
+            <div class="stats-bar-header">
+              <span class="stats-subheading">Activity Balance</span>
+              <span class="stats-balance-detail" id="statsDominantCategory">Awaiting entries</span>
+            </div>
+            <div class="stats-segmented-bar" id="statsSegmentedBar">
+              <!-- Dynamically populated segments -->
+            </div>
+            <div class="stats-legend-grid" id="statsLegendGrid">
+              <!-- Dynamically populated category chips with counts and percentages -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Backup, Restore & Clear Toolbar -->
+        <div class="drawer-backup-bar">
+          <div class="backup-actions-left">
+            <button id="exportBackupBtn" class="backup-pill-btn" title="Download backup file of all progress and notes">Export Backup</button>
+            <button id="importBackupBtn" class="backup-pill-btn" title="Restore progress from a backup file">Restore Backup</button>
+            <input type="file" id="backupFileInput" accept=".json" style="display: none;" />
+          </div>
           <button class="drawer-clear-btn" id="drawerClearProgressBtn">Clear Progress</button>
         </div>
+
+        <div class="drawer-entries-header">
+          <span class="history-label">Activity Timeline</span>
+        </div>
+
         <div class="drawer-entries-list" id="drawerProgressList">
           <!-- Dynamically populated -->
         </div>
@@ -573,6 +633,26 @@
             <h3 class="archive-headline">My Progress: What you've done & felt</h3>
           </div>
           <button id="clearArchiveBtn" class="archive-clear-btn" title="Clear history">Clear History</button>
+        </div>
+
+        <!-- Section 04 Summary Stats Ribbon -->
+        <div class="archive-stats-ribbon" id="archiveStatsRibbon">
+          <div class="archive-stat-item">
+            <span class="archive-stat-num" id="archStatTotal">0</span>
+            <span class="archive-stat-lbl">Total Logged</span>
+          </div>
+          <div class="archive-stat-item">
+            <span class="archive-stat-num" id="archStatStreak">0</span>
+            <span class="archive-stat-lbl">Urges Surfed</span>
+          </div>
+          <div class="archive-stat-item">
+            <span class="archive-stat-num" id="archStatFocus">0m</span>
+            <span class="archive-stat-lbl">Phone Locked</span>
+          </div>
+          <div class="archive-stat-item">
+            <span class="archive-stat-num" id="archStatNotes">0</span>
+            <span class="archive-stat-lbl">Love Notes</span>
+          </div>
         </div>
 
         <div class="archive-list" id="archiveEntriesList">

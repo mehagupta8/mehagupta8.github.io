@@ -1209,6 +1209,167 @@
   function renderArchiveLedger() {
     const entries = getArchiveEntries();
 
+    // 0. Compute Analytics & Statistics
+    const totalCount = entries.length;
+    const safeStreak = getStreak();
+    const notesList = getNotesToMeha();
+    const notesCount = notesList.length;
+
+    // Today count
+    const now = new Date();
+    const todayStr = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    const todayCount = entries.filter(e => e.timestamp && e.timestamp.startsWith(todayStr)).length;
+
+    // Focus Lock Box calculations
+    let totalFocusMins = 0;
+    let lockboxSessionsCount = 0;
+    entries.forEach(e => {
+      if (e.domain && (e.domain.includes('Lock Box') || e.domain.includes('Phone in Lock Box'))) {
+        lockboxSessionsCount++;
+        const match = e.note && e.note.match(/(\d+)\s*minute/i);
+        if (match) {
+          totalFocusMins += parseInt(match[1], 10);
+        } else {
+          totalFocusMins += 15;
+        }
+      }
+    });
+
+    const formatMinsDisplay = (mins) => {
+      if (mins >= 60) {
+        const h = Math.floor(mins / 60);
+        const rem = mins % 60;
+        return rem > 0 ? `${h}h ${rem}m` : `${h}h`;
+      }
+      return `${mins}m`;
+    };
+
+    // Category breakdown
+    const categories = {
+      cbt: {
+        name: 'CBT Action Steps',
+        color: '#C98E58',
+        count: entries.filter(e =>
+          (e.subEmotions && e.subEmotions.includes('CBT Action Step')) ||
+          ['Assignments', 'Tony (Manager)', '2026 is Ending', 'Missing My Girlfriend', 'Need to Clean House'].some(k => e.domain.startsWith(k))
+        ).length
+      },
+      tactile: {
+        name: 'Tactile Anchoring',
+        color: '#2FB896',
+        count: entries.filter(e =>
+          e.domain === 'Preventing Damage' ||
+          e.domain === 'Mechanical Switch Deck' ||
+          e.domain === 'Urge Surfer' ||
+          (e.subEmotions && (e.subEmotions.includes('Tactile Calming') || e.subEmotions.includes('Impulse Surfing') || e.subEmotions.includes('Physical Anchoring')))
+        ).length
+      },
+      calming: {
+        name: 'Autonomic Regulation',
+        color: '#00A5B5',
+        count: entries.filter(e =>
+          e.domain.startsWith('Calming Timer') ||
+          (e.subEmotions && e.subEmotions.includes('Autonomic Regulation'))
+        ).length
+      },
+      feelings: {
+        name: 'Feelings Reflections',
+        color: '#8F6E9F',
+        count: entries.filter(e =>
+          (e.subEmotions && e.subEmotions.includes('Feelings Wheel')) ||
+          (feelingsWheelData.some(f => e.domain.startsWith(f.core)) && !(e.subEmotions && e.subEmotions.includes('CBT Action Step')))
+        ).length
+      },
+      lockbox: {
+        name: 'Phone Lock Box',
+        color: '#686DAE',
+        count: lockboxSessionsCount
+      },
+      notes: {
+        name: 'Notes to Meha',
+        color: '#BC6379',
+        count: entries.filter(e => e.domain === 'Love Note to Meha').length
+      }
+    };
+
+    // Update Top-Right Drawer Metric Cards
+    const statTotalLogged = document.getElementById('statTotalLogged');
+    const statTodayCount = document.getElementById('statTodayCount');
+    const statSafeStreak = document.getElementById('statSafeStreak');
+    const statFocusTime = document.getElementById('statFocusTime');
+    const statLockboxSessions = document.getElementById('statLockboxSessions');
+    const statNotesCount = document.getElementById('statNotesCount');
+    const statsLastUpdated = document.getElementById('statsLastUpdated');
+
+    if (statTotalLogged) statTotalLogged.textContent = String(totalCount);
+    if (statTodayCount) statTodayCount.textContent = `${todayCount} recorded today`;
+    if (statSafeStreak) statSafeStreak.textContent = String(safeStreak);
+    if (statFocusTime) statFocusTime.textContent = formatMinsDisplay(totalFocusMins);
+    if (statLockboxSessions) statLockboxSessions.textContent = `${lockboxSessionsCount} sessions`;
+    if (statNotesCount) statNotesCount.textContent = String(notesCount);
+    if (statsLastUpdated) statsLastUpdated.textContent = totalCount > 0 ? `${totalCount} events logged` : 'Live tracking';
+
+    // Update Section 04 Archive Ribbon
+    const archStatTotal = document.getElementById('archStatTotal');
+    const archStatStreak = document.getElementById('archStatStreak');
+    const archStatFocus = document.getElementById('archStatFocus');
+    const archStatNotes = document.getElementById('archStatNotes');
+    if (archStatTotal) archStatTotal.textContent = String(totalCount);
+    if (archStatStreak) archStatStreak.textContent = String(safeStreak);
+    if (archStatFocus) archStatFocus.textContent = formatMinsDisplay(totalFocusMins);
+    if (archStatNotes) archStatNotes.textContent = String(notesCount);
+
+    // Update Segmented Distribution Bar & Legend
+    const statsSegmentedBar = document.getElementById('statsSegmentedBar');
+    const statsLegendGrid = document.getElementById('statsLegendGrid');
+    const statsDominantCategory = document.getElementById('statsDominantCategory');
+
+    const catSum = Object.values(categories).reduce((sum, c) => sum + c.count, 0);
+
+    if (statsSegmentedBar && statsLegendGrid) {
+      statsSegmentedBar.innerHTML = '';
+      statsLegendGrid.innerHTML = '';
+
+      if (catSum === 0) {
+        if (statsDominantCategory) statsDominantCategory.textContent = 'Awaiting entries';
+        const emptySeg = document.createElement('div');
+        emptySeg.className = 'stats-bar-segment';
+        emptySeg.style.width = '100%';
+        emptySeg.style.background = 'rgba(26, 26, 26, 0.08)';
+        statsSegmentedBar.appendChild(emptySeg);
+      } else {
+        let maxCat = null;
+        Object.values(categories).forEach(cat => {
+          if (!maxCat || cat.count > maxCat.count) maxCat = cat;
+        });
+        if (statsDominantCategory && maxCat && maxCat.count > 0) {
+          statsDominantCategory.textContent = `Most active: ${maxCat.name}`;
+        }
+
+        Object.values(categories).forEach(cat => {
+          if (cat.count > 0) {
+            const pct = ((cat.count / catSum) * 100).toFixed(1);
+
+            const seg = document.createElement('div');
+            seg.className = 'stats-bar-segment';
+            seg.style.width = `${pct}%`;
+            seg.style.backgroundColor = cat.color;
+            seg.title = `${cat.name}: ${cat.count} (${pct}%)`;
+            statsSegmentedBar.appendChild(seg);
+
+            const chip = document.createElement('div');
+            chip.className = 'stats-legend-chip';
+            chip.innerHTML = `
+              <span class="stats-legend-dot" style="background-color: ${cat.color};"></span>
+              <span>${escapeHtml(cat.name)}</span>
+              <span class="stats-chip-count">${cat.count} (${pct}%)</span>
+            `;
+            statsLegendGrid.appendChild(chip);
+          }
+        });
+      }
+    }
+
     // Update top nav badge and drawer badge
     const progressCountBadge = document.getElementById('progressCountBadge');
     const drawerProgressBadge = document.getElementById('drawerProgressBadge');
@@ -1516,6 +1677,114 @@
         renderNotesList();
       }
     });
+  }
+
+  // Data Resilience: Export & Restore Backup Engine
+  const exportBackupBtn = document.getElementById('exportBackupBtn');
+  const importBackupBtn = document.getElementById('importBackupBtn');
+  const backupFileInput = document.getElementById('backupFileInput');
+
+  if (exportBackupBtn) {
+    exportBackupBtn.addEventListener('click', () => {
+      const backupData = {
+        app: 'Akku Needs ADHD Sanctuary',
+        version: 2,
+        exportedAt: new Date().toISOString(),
+        streak: getStreak(),
+        progressLedger: getArchiveEntries(),
+        notesToMeha: getNotesToMeha(),
+        cbtProgress: getCbtProgress()
+      };
+
+      const jsonStr = JSON.stringify(backupData, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const dateTag = new Date().toISOString().slice(0, 10);
+      a.href = url;
+      a.download = `akku-sanctuary-backup-${dateTag}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      playCuteBabySound();
+      updateSpeech("Backup exported safely! Keep that file safe.");
+    });
+  }
+
+  if (importBackupBtn && backupFileInput) {
+    importBackupBtn.addEventListener('click', () => {
+      backupFileInput.click();
+    });
+
+    backupFileInput.addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const parsed = JSON.parse(event.target.result);
+          if (!parsed || (!parsed.progressLedger && !parsed.notesToMeha)) {
+            alert('Invalid backup file format.');
+            return;
+          }
+
+          if (confirm('Restore progress and notes from this backup file? Existing entries will be combined safely.')) {
+            // Restore streak
+            if (typeof parsed.streak === 'number') {
+              setStreak(Math.max(getStreak(), parsed.streak));
+            }
+
+            // Restore progress entries (merge without duplicate IDs)
+            if (Array.isArray(parsed.progressLedger)) {
+              const current = getArchiveEntries();
+              const existingIds = new Set(current.map(item => item.id));
+              parsed.progressLedger.forEach(item => {
+                if (!existingIds.has(item.id)) {
+                  current.push(item);
+                }
+              });
+              setArchiveEntries(current);
+            }
+
+            // Restore notes to Meha
+            if (Array.isArray(parsed.notesToMeha)) {
+              const currentNotes = getNotesToMeha();
+              const existingNoteIds = new Set(currentNotes.map(n => n.id));
+              parsed.notesToMeha.forEach(item => {
+                if (!existingNoteIds.has(item.id)) {
+                  currentNotes.push(item);
+                }
+              });
+              setNotesToMeha(currentNotes);
+            }
+
+            // Restore CBT progress
+            if (parsed.cbtProgress && typeof parsed.cbtProgress === 'object') {
+              const curCbt = getCbtProgress();
+              const mergedCbt = Object.assign({}, curCbt, parsed.cbtProgress);
+              setCbtProgress(mergedCbt);
+            }
+
+            renderArchiveLedger();
+            renderNotesList();
+            playCuteBabySound();
+            updateSpeech("Backup restored successfully! All your progress and notes are back.");
+          }
+        } catch (err) {
+          alert('Could not read the backup file: ' + err.message);
+        }
+        backupFileInput.value = '';
+      };
+      reader.readAsText(file);
+    });
+  }
+
+  // Request persistent browser storage if supported
+  if (navigator.storage && navigator.storage.persist) {
+    navigator.storage.persist().catch(() => {});
   }
 
   // ==========================================================================
