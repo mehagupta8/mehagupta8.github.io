@@ -494,6 +494,16 @@ body {
   margin-top: 0.6rem;
 }
 
+.heart-tap-hint {
+  font-family: var(--font-sans);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #B44A36;
+  opacity: 0.85;
+  margin-top: 0.4rem;
+}
+
 .restore-akku-btn {
   background: #FFFFFF;
   border: 1px solid var(--border);

@@ -426,15 +426,34 @@
     }
   }
 
-  function restoreAkkuWhole() {
+  function restoreAkkuWhole(action = 'none', e = null) {
     eatBiteStep = 0;
     if (biteCutouts) biteCutouts.innerHTML = '';
     if (biteVisualBorders) biteVisualBorders.innerHTML = '';
     if (eatenHeartStage) eatenHeartStage.style.display = 'none';
     if (akshatAvatar) akshatAvatar.style.display = 'block';
     comfortAkshat();
-    updateSpeech("I'm back together and feeling whole again!");
+
+    if (action === 'pet') {
+      triggerPetCurls(e);
+      return;
+    }
+    if (action === 'hug') {
+      triggerGiveHug(e);
+      return;
+    }
+
+    updateSpeech("I'm back together! Love you so much, Mehu. Tap my face to hug, or pet my curls.");
     playChime(784, 1.2);
+    if (curlsGroup) {
+      curlsGroup.classList.remove('curls-moving');
+      void curlsGroup.offsetWidth;
+      curlsGroup.classList.add('curls-moving');
+      setTimeout(() => curlsGroup.classList.remove('curls-moving'), 1800);
+    }
+    for (let i = 0; i < 3; i++) {
+      setTimeout(() => spawnFloatingHeart(e), i * 140);
+    }
   }
 
   function spawnFloatingHeart(e) {
@@ -494,6 +513,15 @@
   }
 
   function triggerSadDistressed(mode = 'general') {
+    // If eaten heart is visible or any bites taken, restore whole first
+    if (eatBiteStep > 0 || (eatenHeartStage && eatenHeartStage.style.display === 'flex') || (akshatAvatar && akshatAvatar.style.display === 'none')) {
+      eatBiteStep = 0;
+      if (biteCutouts) biteCutouts.innerHTML = '';
+      if (biteVisualBorders) biteVisualBorders.innerHTML = '';
+      if (eatenHeartStage) eatenHeartStage.style.display = 'none';
+      if (akshatAvatar) akshatAvatar.style.display = 'block';
+    }
+
     isDistressed = true;
     if (avatarStage) avatarStage.classList.add('avatar-distressed');
     if (normalArms) normalArms.style.display = 'none';
@@ -519,6 +547,15 @@
   }
 
   function triggerPetCurls(e) {
+    // If eaten heart is visible or any bites taken, restore whole first!
+    if (eatBiteStep > 0 || (eatenHeartStage && eatenHeartStage.style.display === 'flex') || (akshatAvatar && akshatAvatar.style.display === 'none')) {
+      eatBiteStep = 0;
+      if (biteCutouts) biteCutouts.innerHTML = '';
+      if (biteVisualBorders) biteVisualBorders.innerHTML = '';
+      if (eatenHeartStage) eatenHeartStage.style.display = 'none';
+      if (akshatAvatar) akshatAvatar.style.display = 'block';
+    }
+
     const wasSad = isDistressed;
     comfortAkshat();
 
@@ -545,6 +582,15 @@
   }
 
   function triggerGiveHug(e) {
+    // If eaten heart is visible or any bites taken, restore whole first!
+    if (eatBiteStep > 0 || (eatenHeartStage && eatenHeartStage.style.display === 'flex') || (akshatAvatar && akshatAvatar.style.display === 'none')) {
+      eatBiteStep = 0;
+      if (biteCutouts) biteCutouts.innerHTML = '';
+      if (biteVisualBorders) biteVisualBorders.innerHTML = '';
+      if (eatenHeartStage) eatenHeartStage.style.display = 'none';
+      if (akshatAvatar) akshatAvatar.style.display = 'block';
+    }
+
     const wasSad = isDistressed;
     comfortAkshat();
     playChime(528, 1.6);
@@ -562,8 +608,9 @@
 
   if (avatarStage) {
     avatarStage.addEventListener('click', (e) => {
-      if (eatBiteStep >= appleBites.length) {
-        restoreAkkuWhole();
+      // If in heart state or partially bitten, clicking brings his face back!
+      if (eatBiteStep > 0 || (eatenHeartStage && eatenHeartStage.style.display === 'flex') || (akshatAvatar && akshatAvatar.style.display === 'none')) {
+        restoreAkkuWhole('restore', e);
       } else {
         triggerGiveHug(e);
       }
@@ -572,12 +619,33 @@
     avatarStage.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        if (eatBiteStep >= appleBites.length) {
-          restoreAkkuWhole();
+        if (eatBiteStep > 0 || (eatenHeartStage && eatenHeartStage.style.display === 'flex') || (akshatAvatar && akshatAvatar.style.display === 'none')) {
+          restoreAkkuWhole('restore');
         } else {
           triggerGiveHug();
         }
       }
+    });
+  }
+
+  if (eatenHeartStage) {
+    eatenHeartStage.addEventListener('click', (e) => {
+      e.stopPropagation();
+      restoreAkkuWhole('restore', e);
+    });
+  }
+
+  if (heartPulseBox) {
+    heartPulseBox.addEventListener('click', (e) => {
+      e.stopPropagation();
+      restoreAkkuWhole('restore', e);
+    });
+  }
+
+  if (restoreAkkuBtn) {
+    restoreAkkuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      restoreAkkuWhole('restore', e);
     });
   }
 
@@ -620,20 +688,6 @@
   if (eatAkkuBtn) {
     eatAkkuBtn.addEventListener('click', () => {
       handleAllowMehaToEat();
-    });
-  }
-
-  if (restoreAkkuBtn) {
-    restoreAkkuBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      restoreAkkuWhole();
-    });
-  }
-
-  if (heartPulseBox) {
-    heartPulseBox.addEventListener('click', (e) => {
-      e.stopPropagation();
-      restoreAkkuWhole();
     });
   }
 
