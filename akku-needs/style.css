@@ -1660,6 +1660,289 @@ body {
   margin-top: 0.2rem;
 }
 
+/* 100-Task Reward System & Goal Tracker */
+.reward-goal-tracker-card {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 1.6rem;
+  transition: var(--transition-fast);
+}
+
+.reward-tracker-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 0.3rem;
+}
+
+.reward-tracker-tag {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.reward-badge-chip {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(212, 175, 55, 0.12);
+  color: var(--gold);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+}
+
+.reward-tracker-title {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--fg);
+  margin: 0.2rem 0 0.3rem 0;
+}
+
+.reward-tracker-sub {
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.reward-progress-track {
+  height: 10px;
+  background: rgba(0, 0, 0, 0.07);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 1rem;
+  position: relative;
+}
+
+.reward-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #D4AF37 0%, #E5A93C 50%, #C98E58 100%);
+  border-radius: 5px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 0;
+}
+
+.reward-milestones-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9.5px;
+  font-family: var(--font-sans);
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-top: 0.35rem;
+}
+
+.reward-status-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.85rem;
+}
+
+.reward-remaining-cue {
+  font-size: 12.5px;
+  font-family: var(--font-sans);
+  color: var(--fg);
+  font-weight: 500;
+}
+
+.reward-unlocked-card {
+  margin-top: 1.2rem;
+  padding: 1.2rem;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 4px;
+}
+
+.reward-unlocked-pill {
+  font-family: var(--font-sans);
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.reward-unlocked-title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--fg);
+  margin: 0.2rem 0;
+}
+
+.reward-unlocked-desc {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0.3rem 0 0.8rem 0;
+  line-height: 1.45;
+}
+
+.reward-claim-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.reward-choice-input {
+  flex: 1;
+  min-width: 220px;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  border-radius: 2px;
+}
+
+.reward-choice-input:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.reward-claim-feedback {
+  margin-top: 0.6rem;
+  font-size: 12px;
+  color: var(--gold);
+  font-weight: 500;
+}
+
+.claimed-rewards-box {
+  margin-top: 1.2rem;
+  border-top: 1px solid var(--border-light);
+  padding-top: 1rem;
+}
+
+.claimed-rewards-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.claimed-rewards-label {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.claimed-rewards-count {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.claimed-rewards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.claimed-reward-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.7rem 0.9rem;
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.claimed-reward-item-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.claimed-reward-name {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.claimed-reward-time {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.claimed-reward-item-right {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.claimed-reward-milestone-pill {
+  font-family: var(--font-sans);
+  font-size: 9.5px;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(212, 175, 55, 0.1);
+  color: var(--gold);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.claimed-reward-del-btn {
+  background: none;
+  border: none;
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+}
+
+.claimed-reward-del-btn:hover {
+  color: var(--gold);
+}
+
+.matrix-basket-btn {
+  color: var(--gold) !important;
+  font-weight: 600;
+}
+
+.matrix-basket-btn:hover {
+  text-decoration: underline;
+}
+
+.switch-footer-actions {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.switch-basket-action-btn {
+  padding: 0.45rem 1rem;
+  font-size: 11px;
+}
+
 .archive-list {
   display: flex;
   flex-direction: column;
@@ -4079,6 +4362,33 @@ body {
     font-size: 10px;
     white-space: nowrap;
     padding-bottom: 0.3rem;
+  }
+
+  /* Reward System Card Mobile Adaptations */
+  .reward-goal-tracker-card {
+    padding: 1.1rem 1rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .reward-claim-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .reward-choice-input {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .claimed-reward-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .claimed-reward-item-right {
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 0.3rem;
   }
 }
 

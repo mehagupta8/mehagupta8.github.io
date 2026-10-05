@@ -1124,6 +1124,26 @@
     } catch (e) {}
   }
 
+  const CLAIMED_REWARDS_KEY = 'akku_claimed_rewards_v2';
+
+  function getClaimedRewards() {
+    try {
+      const data = localStorage.getItem(CLAIMED_REWARDS_KEY);
+      return data ? JSON.parse(data) : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function setClaimedRewards(rewards) {
+    try {
+      localStorage.setItem(CLAIMED_REWARDS_KEY, JSON.stringify(rewards));
+      if (typeof broadcastSyncState === 'function') {
+        broadcastSyncState();
+      }
+    } catch (e) {}
+  }
+
   function logProgressEvent(domain, note = '', subEmotions = ['Completed'], somaticSensations = []) {
     const entries = getArchiveEntries();
     const formattedDate = getFormattedDateTime();
@@ -1263,9 +1283,10 @@
         name: 'Tactile Anchoring',
         color: '#2FB896',
         count: entries.filter(e =>
-          e.domain === 'Preventing Damage' ||
-          e.domain === 'Mechanical Switch Deck' ||
-          e.domain === 'Urge Surfer' ||
+          e.domain.includes('Preventing Damage') ||
+          e.domain.includes('Mechanical Switch') ||
+          e.domain.includes('Urge Surfer') ||
+          e.domain.includes('Bubble Pop') ||
           (e.subEmotions && (e.subEmotions.includes('Tactile Calming') || e.subEmotions.includes('Impulse Surfing') || e.subEmotions.includes('Physical Anchoring')))
         ).length
       },
@@ -1288,12 +1309,15 @@
       lockbox: {
         name: 'Phone Lock Box',
         color: '#686DAE',
-        count: lockboxSessionsCount
+        count: entries.filter(e =>
+          (e.domain && (e.domain.includes('Lock Box') || e.domain.includes('Phone in Lock Box'))) ||
+          (e.subEmotions && e.subEmotions.includes('Phone Lock Box'))
+        ).length
       },
       notes: {
         name: 'Notes to Meha',
         color: '#BC6379',
-        count: entries.filter(e => e.domain === 'Love Note to Meha').length
+        count: entries.filter(e => e.domain === 'Love Note to Meha' || (e.subEmotions && e.subEmotions.includes('Dear Mehu'))).length
       }
     };
 
@@ -1375,11 +1399,12 @@
       }
     }
 
-    // Update top nav badge and drawer badge
+    // Update top nav badge and drawer badge to 100-goal progress
     const progressCountBadge = document.getElementById('progressCountBadge');
     const drawerProgressBadge = document.getElementById('drawerProgressBadge');
-    if (progressCountBadge) progressCountBadge.textContent = String(entries.length);
-    if (drawerProgressBadge) drawerProgressBadge.textContent = String(entries.length);
+    const badgeText = `${entries.length} / 100`;
+    if (progressCountBadge) progressCountBadge.textContent = badgeText;
+    if (drawerProgressBadge) drawerProgressBadge.textContent = badgeText;
 
     // 1. Render in Section 04 Feelings Wheel Ledger
     const archiveList = document.getElementById('archiveEntriesList');
@@ -1483,6 +1508,171 @@
         });
       }
     }
+
+    // 3. Render 100-Task Reward Goal Trackers
+    renderRewardGoalTracker();
+  }
+
+  // 100-Task Reward System & Milestone Goal Engine
+  function renderRewardGoalTracker() {
+    const entries = getArchiveEntries();
+    const totalTasks = entries.length;
+    const claimedRewards = getClaimedRewards();
+
+    // 100-Task Milestone computations
+    const totalMilestonesEarned = Math.floor(totalTasks / 100);
+    const unclaimedCount = Math.max(0, totalMilestonesEarned - claimedRewards.length);
+
+    // Current cycle progress (0-99 tasks, or 100 when exactly at a milestone)
+    let cycleTasks = totalTasks % 100;
+    if (totalTasks > 0 && cycleTasks === 0) {
+      cycleTasks = 100;
+    }
+    const percent = Math.min(100, Math.round((cycleTasks / 100) * 100));
+    const tasksRemaining = Math.max(0, 100 - cycleTasks);
+
+    const containers = [
+      document.getElementById('drawerRewardTrackerCard'),
+      document.getElementById('inpageRewardTrackerCard')
+    ].filter(Boolean);
+
+    if (containers.length === 0) return;
+
+    containers.forEach(container => {
+      let subText = '';
+      let statusLeft = '';
+      if (totalTasks >= 100) {
+        if (unclaimedCount > 0) {
+          subText = `Milestone reached! You completed ${totalTasks} mindful tasks and earned a reward for yourself of your choosing.`;
+          statusLeft = `<span class="reward-remaining-cue" style="color: var(--gold); font-weight: 600;">Reward ready to claim!</span>`;
+        } else {
+          subText = `${claimedRewards.length} reward${claimedRewards.length > 1 ? 's' : ''} earned! Working toward Reward #${claimedRewards.length + 1}: ${tasksRemaining} task${tasksRemaining === 1 ? '' : 's'} remaining.`;
+          statusLeft = `<span class="reward-remaining-cue">${tasksRemaining} more task${tasksRemaining === 1 ? '' : 's'} to next reward</span>`;
+        }
+      } else {
+        subText = `Complete 100 mindful tasks across your sanctuary to earn a reward for yourself of your choosing.`;
+        statusLeft = `<span class="reward-remaining-cue">${tasksRemaining} task${tasksRemaining === 1 ? '' : 's'} remaining to earn your reward</span>`;
+      }
+
+      const showClaimCard = (totalTasks >= 100 || unclaimedCount > 0);
+      const unlockedCardHtml = showClaimCard ? `
+        <div class="reward-unlocked-card">
+          <div class="reward-unlocked-pill">Milestone Unlocked</div>
+          <h4 class="reward-unlocked-title">You earned a reward for yourself!</h4>
+          <p class="reward-unlocked-desc">You completed 100 mindful tasks across your sanctuary. What reward do you choose for yourself (e.g. favorite dinner, relaxing massage, weekend trip, new game)?</p>
+          <div class="reward-claim-row">
+            <input type="text" class="reward-choice-input" placeholder="Type your chosen reward..." />
+            <button class="luxury-action-btn claim-reward-btn">Claim Reward</button>
+          </div>
+          <div class="reward-claim-feedback" style="display: none;"></div>
+        </div>
+      ` : '';
+
+      const claimedListHtml = `
+        <div class="claimed-rewards-box">
+          <div class="claimed-rewards-header">
+            <span class="claimed-rewards-label">Claimed Rewards</span>
+            <span class="claimed-rewards-count">${claimedRewards.length} earned</span>
+          </div>
+          <div class="claimed-rewards-list">
+            ${claimedRewards.length === 0 ? `
+              <div style="font-size: 11.5px; color: var(--muted); font-style: italic; padding: 0.4rem 0;">
+                Reach 100 tasks in your reward basket to claim your first reward!
+              </div>
+            ` : claimedRewards.map(r => `
+              <div class="claimed-reward-item">
+                <div class="claimed-reward-item-left">
+                  <span class="claimed-reward-name">${escapeHtml(r.reward)}</span>
+                  <span class="claimed-reward-time">${escapeHtml(r.timestamp)}</span>
+                </div>
+                <div class="claimed-reward-item-right">
+                  <span class="claimed-reward-milestone-pill">${escapeHtml(r.milestoneTag || '100 Tasks')}</span>
+                  <button class="claimed-reward-del-btn" data-id="${r.id}" title="Remove reward entry">Delete</button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+      container.innerHTML = `
+        <div class="reward-tracker-header">
+          <span class="reward-tracker-tag">100-Task Milestone Goal</span>
+          <span class="reward-badge-chip">${totalTasks} / 100 tasks completed</span>
+        </div>
+        <h3 class="reward-tracker-title">Earn a reward of your choice</h3>
+        <p class="reward-tracker-sub">${subText}</p>
+
+        <div class="reward-progress-track">
+          <div class="reward-progress-fill" style="width: ${percent}%;"></div>
+        </div>
+        <div class="reward-milestones-row">
+          <span>0</span>
+          <span>25</span>
+          <span>50</span>
+          <span>75</span>
+          <span>100 Goal</span>
+        </div>
+
+        <div class="reward-status-summary">
+          ${statusLeft}
+          <span style="font-size: 11px; color: var(--muted); font-family: var(--font-sans);">${percent}% completed</span>
+        </div>
+
+        ${unlockedCardHtml}
+        ${claimedListHtml}
+      `;
+
+      // Wire Claim Button
+      const claimBtn = container.querySelector('.claim-reward-btn');
+      const claimInput = container.querySelector('.reward-choice-input');
+      const claimFeedback = container.querySelector('.reward-claim-feedback');
+      if (claimBtn && claimInput) {
+        claimBtn.addEventListener('click', () => {
+          const val = claimInput.value.trim();
+          if (!val) {
+            claimInput.focus();
+            return;
+          }
+          const currentClaimed = getClaimedRewards();
+          const milestoneNum = (currentClaimed.length + 1) * 100;
+          const newClaim = {
+            id: 'reward_' + Date.now(),
+            reward: val,
+            timestamp: getFormattedDateTime(),
+            milestoneTag: `${milestoneNum} Tasks`
+          };
+          setClaimedRewards([...currentClaimed, newClaim]);
+          playCuteBabySound();
+          updateSpeech(`You earned your reward: "${val}"! Akku, I am so deeply proud of you for completing 100 mindful tasks!`);
+          if (claimFeedback) {
+            claimFeedback.textContent = `Reward claimed: "${val}"! Enjoy your treat!`;
+            claimFeedback.style.display = 'block';
+          }
+          renderRewardGoalTracker();
+        });
+
+        claimInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            claimBtn.click();
+          }
+        });
+      }
+
+      // Wire Delete buttons
+      const delBtns = container.querySelectorAll('.claimed-reward-del-btn');
+      delBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const rId = btn.dataset.id;
+          const currentClaimed = getClaimedRewards();
+          const updated = currentClaimed.filter(r => r.id !== rId);
+          setClaimedRewards(updated);
+          playClick(800);
+          renderRewardGoalTracker();
+        });
+      });
+    });
   }
 
   function renderNotesList() {
@@ -1703,7 +1893,7 @@
 
   if (drawerClearProgressBtn) {
     drawerClearProgressBtn.addEventListener('click', () => {
-      if (confirm('Clear all entries from your progress ledger?')) {
+      if (confirm('Clear all entries from your reward basket?')) {
         setArchiveEntries([]);
         playClick(700);
         renderArchiveLedger();
@@ -1736,7 +1926,8 @@
         streak: getStreak(),
         progressLedger: getArchiveEntries(),
         notesToMeha: getNotesToMeha(),
-        cbtProgress: getCbtProgress()
+        cbtProgress: getCbtProgress(),
+        claimedRewards: getClaimedRewards()
       };
 
       const jsonStr = JSON.stringify(backupData, null, 2);
@@ -1815,6 +2006,18 @@
               const curCbt = getCbtProgress();
               const mergedCbt = Object.assign({}, curCbt, parsed.cbtProgress);
               setCbtProgress(mergedCbt);
+            }
+
+            // Restore claimed rewards
+            if (Array.isArray(parsed.claimedRewards)) {
+              const currentClaimed = getClaimedRewards();
+              const existingClaimedIds = new Set(currentClaimed.map(r => r.id));
+              parsed.claimedRewards.forEach(item => {
+                if (!existingClaimedIds.has(item.id)) {
+                  currentClaimed.push(item);
+                }
+              });
+              setClaimedRewards(currentClaimed);
             }
 
             renderArchiveLedger();
@@ -2071,6 +2274,25 @@
     cancelLockboxBtn.addEventListener('click', resetLockboxStandby);
   }
 
+  const addLockboxToBasketBtn = document.getElementById('addLockboxToBasketBtn');
+  const lockboxCompletionNotice = document.getElementById('lockboxCompletionNotice');
+  if (addLockboxToBasketBtn) {
+    addLockboxToBasketBtn.addEventListener('click', () => {
+      recordActivityCompleted(
+        'Phone in Lock Box',
+        `Protected ${lockboxDurationMins || 15} minutes of cognitive focus in vault.`,
+        ['Phone Lock Box']
+      );
+      playClick(1000);
+      if (lockboxCompletionNotice) {
+        lockboxCompletionNotice.style.display = 'block';
+        setTimeout(() => {
+          lockboxCompletionNotice.style.display = 'none';
+        }, 3000);
+      }
+    });
+  }
+
   // Persistence keys
   const CBT_STORAGE_KEY = 'akku_cbt_progress_v2';
   const STEP_WORK_STORAGE_PREFIX = 'akku_step_work_v2_';
@@ -2238,7 +2460,7 @@
       const notice = document.getElementById('stepDoneNotice');
       if (notice) {
         notice.style.display = 'inline-block';
-        notice.textContent = 'Saved to your progress ledger!';
+        notice.textContent = 'Added to your reward basket!';
         setTimeout(() => {
           notice.style.display = 'none';
         }, 3000);
@@ -2760,7 +2982,7 @@
       const notice = document.getElementById('journalDoneNotice');
       if (notice) {
         notice.style.display = 'inline-block';
-        notice.textContent = 'Saved to your progress ledger!';
+        notice.textContent = 'Added to your reward basket!';
         setTimeout(() => {
           notice.style.display = 'none';
         }, 3000);
@@ -2771,7 +2993,7 @@
   // Clear Ledger Button in Section 04
   if (clearArchiveBtn) {
     clearArchiveBtn.addEventListener('click', () => {
-      if (confirm('Reset entire archival emotional ledger?')) {
+      if (confirm('Clear all entries from your reward basket?')) {
         setArchiveEntries([]);
         playClick(700);
         renderArchiveLedger();
@@ -3339,6 +3561,45 @@
     });
   }
 
+  const addBubbleSetBtn = document.getElementById('addBubbleSetBtn');
+  const bubbleMatrixNotice = document.getElementById('bubbleMatrixNotice');
+  if (addBubbleSetBtn && matrixGrid) {
+    addBubbleSetBtn.addEventListener('click', () => {
+      const poppedCount = matrixGrid.querySelectorAll('.tactile-cell.depressed').length;
+      recordActivityCompleted(
+        'Preventing Damage - Bubble Pop',
+        `Popped ${poppedCount > 0 ? poppedCount : 24} tactile silicone bubbles safely. Protected hands and fingers.`,
+        ['Tactile Calming']
+      );
+      playClick(1000);
+      if (bubbleMatrixNotice) {
+        bubbleMatrixNotice.style.display = 'block';
+        setTimeout(() => {
+          bubbleMatrixNotice.style.display = 'none';
+        }, 3000);
+      }
+    });
+  }
+
+  const addBubbleCompleteBtn = document.getElementById('addBubbleCompleteBtn');
+  const bubbleBasketNotice = document.getElementById('bubbleBasketNotice');
+  if (addBubbleCompleteBtn) {
+    addBubbleCompleteBtn.addEventListener('click', () => {
+      recordActivityCompleted(
+        'Preventing Damage - Bubble Pop',
+        'Popped all 24 bubbles safely. Better than hurting your body!',
+        ['Tactile Calming']
+      );
+      playClick(1000);
+      if (bubbleBasketNotice) {
+        bubbleBasketNotice.style.display = 'block';
+        setTimeout(() => {
+          bubbleBasketNotice.style.display = 'none';
+        }, 3000);
+      }
+    });
+  }
+
   // Tool 2: 60-Second Urge Surfer
   const surferSecs = document.getElementById('surferSecs');
   const surferTitle = document.getElementById('surferTitle');
@@ -3421,6 +3682,25 @@
 
   if (resetSurferBtn) {
     resetSurferBtn.addEventListener('click', resetUrgeSurfer);
+  }
+
+  const addSurferToBasketBtn = document.getElementById('addSurferToBasketBtn');
+  const surferBasketNotice = document.getElementById('surferBasketNotice');
+  if (addSurferToBasketBtn) {
+    addSurferToBasketBtn.addEventListener('click', () => {
+      recordActivityCompleted(
+        'Preventing Damage - Urge Surfer',
+        'Surfed an impulse wave safely. Watched physical sensation crest and pass without body harm.',
+        ['Impulse Surfing']
+      );
+      playClick(1000);
+      if (surferBasketNotice) {
+        surferBasketNotice.style.display = 'block';
+        setTimeout(() => {
+          surferBasketNotice.style.display = 'none';
+        }, 3000);
+      }
+    });
   }
 
   // Tool 3: Mechanical Haptic Switch Deck
@@ -3508,6 +3788,26 @@
         switchMilestoneCue.textContent = 'Press keys repeatedly whenever you feel the urge to bite or twirl...';
       }
       playClick(800);
+    });
+  }
+
+  const addSwitchSetToBasketBtn = document.getElementById('addSwitchSetToBasketBtn');
+  const switchBasketNotice = document.getElementById('switchBasketNotice');
+  if (addSwitchSetToBasketBtn) {
+    addSwitchSetToBasketBtn.addEventListener('click', () => {
+      const clicks = switchClicksCount > 0 ? switchClicksCount : 10;
+      recordActivityCompleted(
+        'Preventing Damage - Haptic Switches',
+        `Conquered ${clicks} tactile impulses with haptic mechanical switch resistance.`,
+        ['Tactile Calming']
+      );
+      playClick(1000);
+      if (switchBasketNotice) {
+        switchBasketNotice.style.display = 'block';
+        setTimeout(() => {
+          switchBasketNotice.style.display = 'none';
+        }, 3000);
+      }
     });
   }
 
@@ -3643,7 +3943,8 @@
       calmGoalSeconds: typeof getCalmGoalSeconds === 'function' ? getCalmGoalSeconds() : 0,
       progressLedger: getArchiveEntries(),
       notesToMeha: getNotesToMeha(),
-      cbtProgress: getCbtProgress()
+      cbtProgress: getCbtProgress(),
+      claimedRewards: getClaimedRewards()
     };
 
     try {
@@ -3750,10 +4051,27 @@
       }
     }
 
+    // 5. Merge Claimed Rewards
+    if (Array.isArray(remote.claimedRewards)) {
+      const currentClaimed = getClaimedRewards();
+      const existingClaimedIds = new Set(currentClaimed.map(r => r.id));
+      let addedRewards = false;
+      remote.claimedRewards.forEach(item => {
+        if (item && item.id && !existingClaimedIds.has(item.id)) {
+          currentClaimed.push(item);
+          existingClaimedIds.add(item.id);
+          addedRewards = true;
+        }
+      });
+      if (addedRewards) {
+        setClaimedRewards(currentClaimed);
+        hasChanges = true;
+      }
+    }
+
     if (hasChanges) {
       renderArchiveLedger();
       renderNotesList();
-      updateTopBadges();
       showSyncToast("Progress synced with your other device");
       playChime(528, 0.4);
     }

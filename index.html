@@ -36,10 +36,10 @@
         </span>
       </button>
       <div class="nav-right" id="navRightActions">
-        <button id="topProgressBtn" class="editorial-nav-btn" title="View all saved progress with dates and times" aria-label="Progress Log">
-          <span class="nav-btn-tag">Ledger</span>
-          <span class="nav-btn-text">Progress</span>
-          <span class="nav-btn-badge" id="progressCountBadge">0</span>
+        <button id="topProgressBtn" class="editorial-nav-btn" title="View reward system and claimed rewards" aria-label="Reward System">
+          <span class="nav-btn-tag">100 Goal</span>
+          <span class="nav-btn-text">Reward System</span>
+          <span class="nav-btn-badge" id="progressCountBadge">0 / 100</span>
         </button>
         <button id="topNotesBtn" class="editorial-nav-btn" title="View all saved notes to Meha" aria-label="Notes to Meha">
           <span class="nav-btn-tag">Dear Mehu</span>
@@ -64,14 +64,14 @@
     </div>
   </header>
 
-  <!-- Editorial Slide-Over Drawer: Progress & Notes to Meha & Lock Box -->
+  <!-- Editorial Slide-Over Drawer: Reward System & Notes to Meha & Lock Box -->
   <div class="editorial-drawer-overlay" id="drawerOverlay" style="display: none;">
     <div class="editorial-drawer" id="editorialDrawer">
       <div class="drawer-header">
         <div class="drawer-tabs-row">
           <button class="drawer-tab active" id="drawerTabProgress" data-tab="progress">
-            <span>Progress Ledger</span>
-            <span class="drawer-count-badge" id="drawerProgressBadge">0</span>
+            <span>Reward System</span>
+            <span class="drawer-count-badge" id="drawerProgressBadge">0 / 100</span>
           </button>
           <button class="drawer-tab" id="drawerTabNotes" data-tab="notes">
             <span>Notes to Meha</span>
@@ -89,10 +89,15 @@
         <button class="drawer-close-btn" id="drawerCloseBtn" aria-label="Close panel">Close</button>
       </div>
 
-      <!-- Panel 1: Progress Ledger with Date & Time -->
+      <!-- Panel 1: Reward System & 100-Task Goal -->
       <div class="drawer-panel active" id="drawerPanelProgress">
         <div class="drawer-panel-intro">
-          <p class="drawer-intro-text">Every action step, calming timer, feelings reflection, and safe urge wave is tracked here with exact dates and times.</p>
+          <p class="drawer-intro-text">Every mindful action step adds to your reward basket. Reach 100 tasks to unlock a reward for yourself of your own choosing!</p>
+        </div>
+
+        <!-- 100-Task Reward Goal Tracker Card (Drawer) -->
+        <div class="reward-goal-tracker-card" id="drawerRewardTrackerCard">
+          <!-- Dynamically populated via app.js -->
         </div>
 
         <!-- Progress Statistics Dashboard -->
@@ -148,11 +153,11 @@
             <button id="importBackupBtn" class="backup-pill-btn" title="Restore progress from a backup file">Restore Backup</button>
             <input type="file" id="backupFileInput" accept=".json" style="display: none;" />
           </div>
-          <button class="drawer-clear-btn" id="drawerClearProgressBtn">Clear Progress</button>
+          <button class="drawer-clear-btn" id="drawerClearProgressBtn">Clear Basket</button>
         </div>
 
         <div class="drawer-entries-header">
-          <span class="history-label">Activity Timeline</span>
+          <span class="history-label">Reward Basket Timeline</span>
         </div>
 
         <div class="drawer-entries-list" id="drawerProgressList">
@@ -225,10 +230,11 @@
           <div class="lockbox-actions">
             <button id="startLockboxBtn" class="luxury-action-btn" style="width: 100%;">Lock Phone in Vault</button>
             <button id="cancelLockboxBtn" class="cancel-timer-btn" style="display: none; width: 100%; margin-top: 0.6rem;">Unlock Vault Early</button>
+            <button id="addLockboxToBasketBtn" class="luxury-action-btn complete-btn" style="width: 100%; margin-top: 0.6rem;">Add focus session to reward basket</button>
           </div>
 
           <div id="lockboxCompletionNotice" class="step-done-notice" style="display: none; margin-top: 1rem; width: 100%; text-align: center;">
-            Phone Unlocked! Successfully protected your focus.
+            Added to your reward basket!
           </div>
         </div>
 
@@ -633,8 +639,8 @@
           <p class="step-work-prompt" id="stepWorkPrompt">What is one tiny 5-minute step you can do right now?</p>
           <textarea id="stepWorkInput" class="step-work-textarea" placeholder="Type your thoughts or action here..."></textarea>
           <div class="step-work-actions">
-            <button id="submitStepWorkBtn" class="luxury-action-btn">Done! Save to My Progress</button>
-            <span id="stepDoneNotice" class="step-done-notice">Saved to your progress ledger!</span>
+            <button id="submitStepWorkBtn" class="luxury-action-btn">Done! Add to reward basket</button>
+            <span id="stepDoneNotice" class="step-done-notice">Added to your reward basket!</span>
           </div>
         </div>
       </div>
@@ -679,24 +685,29 @@
 
         <div class="selection-actions-row">
           <button id="submitProgressEntryBtn" class="luxury-action-btn">
-            <span>Save to My Progress</span>
+            <span>Add to reward basket</span>
           </button>
-          <span id="journalDoneNotice" class="step-done-notice">Saved to your progress ledger!</span>
+          <span id="journalDoneNotice" class="step-done-notice">Added to your reward basket!</span>
         </div>
       </div>
 
-      <!-- My Progress: Archival Journal Log -->
+      <!-- Reward System: Archival Basket & 100-Task Milestones -->
       <div class="my-progress-archive" id="progressArchiveBox">
         <div class="archive-header">
           <div class="archive-title-meta">
-            <span class="archive-tag">History</span>
-            <h3 class="archive-headline">My Progress: What you've done & felt</h3>
+            <span class="archive-tag">100-Task Milestone</span>
+            <h3 class="archive-headline">Reward System: What you've done &amp; earned</h3>
           </div>
           <div class="archive-actions-header">
             <button id="inpageExportBackupBtn" class="backup-pill-btn" title="Download backup of all progress and notes">Export Backup</button>
             <button id="inpageSyncDeviceBtn" class="backup-pill-btn" title="Sync progress across laptop and phone">Sync Devices</button>
-            <button id="clearArchiveBtn" class="archive-clear-btn" title="Clear history">Clear History</button>
+            <button id="clearArchiveBtn" class="archive-clear-btn" title="Clear basket">Clear Basket</button>
           </div>
+        </div>
+
+        <!-- 100-Task Reward Goal Tracker Card (In-Page) -->
+        <div class="reward-goal-tracker-card" id="inpageRewardTrackerCard">
+          <!-- Populated dynamically via app.js -->
         </div>
 
         <!-- Section 04 Summary Stats Ribbon -->
@@ -820,12 +831,12 @@
           <button id="toggleTimerBtn" class="luxury-action-btn">
             <span id="timerBtnText">Start timer</span>
           </button>
-          <button id="completeTimerEarlyBtn" class="luxury-action-btn complete-btn" title="Complete this calming session and record progress">
-            <span>Complete &amp; save to progress</span>
+          <button id="completeTimerEarlyBtn" class="luxury-action-btn complete-btn" title="Complete this calming session and add to reward basket">
+            <span>Complete &amp; add to reward basket</span>
           </button>
           <button id="cancelTimerBtn" class="secondary-plain-btn" style="display: none;">Cancel</button>
         </div>
-        <span id="calmSavedNotice" class="step-done-notice" style="display: none; margin-top: 0.8rem;">Calming session saved to your progress ledger!</span>
+        <span id="calmSavedNotice" class="step-done-notice" style="display: none; margin-top: 0.8rem;">Calming session added to your reward basket!</span>
       </div>
 
       <!-- 30-Minute Calm Goal: The Reunion Journey (Zero Emojis) -->
@@ -1049,10 +1060,12 @@
             <span class="matrix-counter-chip" id="matrixPopCounter">0 / 24 popped</span>
           </div>
           <div class="matrix-actions-wrap">
+            <button id="addBubbleSetBtn" class="matrix-action-link matrix-basket-btn" title="Add popped bubbles to reward basket">Add to reward basket</button>
             <button id="popAllMatrixBtn" class="matrix-action-link">Pop all</button>
             <button id="resetMatrixBtn" class="matrix-reset-link">Reset bubbles</button>
           </div>
         </div>
+        <span id="bubbleMatrixNotice" class="step-done-notice" style="display: none; margin: 0.4rem 0; text-align: center;">Added to your reward basket!</span>
         <div class="tactile-matrix-grid" id="matrixGrid">
           <!-- 24 3D tactile silicone bubbles -->
         </div>
@@ -1063,7 +1076,11 @@
             <span class="completion-pill">Protected your hands</span>
             <h3 class="completion-headline">Better than hurting your body, huh?</h3>
             <p class="completion-subtext">All 24 bubbles popped safely. Your hands found calm without any harm.</p>
-            <button id="resetAfterCompleteBtn" class="matrix-reset-prominent-btn">Reset bubbles & pop again</button>
+            <div class="completion-actions-row" style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;">
+              <button id="addBubbleCompleteBtn" class="luxury-action-btn">Add to reward basket</button>
+              <button id="resetAfterCompleteBtn" class="matrix-reset-prominent-btn">Reset bubbles &amp; pop again</button>
+            </div>
+            <span id="bubbleBasketNotice" class="step-done-notice" style="display: none; margin-top: 0.6rem; text-align: center;">Added to your reward basket!</span>
           </div>
         </div>
       </div>
@@ -1096,8 +1113,10 @@
           </div>
           <div class="surfer-btn-row">
             <button id="startSurferBtn" class="luxury-action-btn">Start 60s wave</button>
+            <button id="addSurferToBasketBtn" class="luxury-action-btn basket-action-btn" title="Add urge surf to reward basket">Add to reward basket</button>
             <button id="resetSurferBtn" class="secondary-plain-btn" style="display: none;">Reset wave</button>
           </div>
+          <span id="surferBasketNotice" class="step-done-notice" style="display: none; margin-top: 0.6rem; text-align: center;">Urge surf added to your reward basket!</span>
         </div>
       </div>
 
@@ -1171,7 +1190,11 @@
 
             <div class="switch-deck-footer">
               <span class="switch-milestone-text" id="switchMilestoneCue">Press keys repeatedly whenever you feel the urge to bite or twirl...</span>
-              <button class="switch-reset-btn" id="switchResetBtn">Reset Clicks</button>
+              <div class="switch-footer-actions">
+                <button id="addSwitchSetToBasketBtn" class="luxury-action-btn switch-basket-action-btn" title="Add switch clicks to reward basket">Add to reward basket</button>
+                <button class="switch-reset-btn" id="switchResetBtn">Reset Clicks</button>
+              </div>
+              <span id="switchBasketNotice" class="step-done-notice" style="display: none; margin-top: 0.6rem; text-align: center;">Haptic session added to your reward basket!</span>
             </div>
           </div>
         </div>
