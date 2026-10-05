@@ -228,22 +228,75 @@ body {
   padding-top: 3.2rem;
 }
 
-.hero-split {
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  gap: 3.5rem;
+.hero-companion-wrapper {
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  text-align: center;
+  margin: 0 auto;
+  max-width: 580px;
+}
+
+.speech-bubble-wrapper {
+  width: 100%;
+  max-width: 480px;
+  margin-bottom: 1.4rem;
+  position: relative;
+  z-index: 5;
+}
+
+.speech-bubble {
+  background: var(--surface);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  padding: 1rem 1.4rem;
+  position: relative;
+  text-align: center;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  box-shadow: var(--shadow-subtle);
+  transition: var(--transition-fast);
+}
+
+.bubble-arrow {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--border);
+}
+
+.bubble-arrow::after {
+  content: '';
+  position: absolute;
+  bottom: 1px;
+  left: -8px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--surface);
 }
 
 .portrait-stage {
   border: 1px solid var(--border);
-  padding: 1rem;
+  padding: 1.2rem;
   background: var(--surface-alt);
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  overflow: visible;
   transition: var(--transition-slow);
+  margin-bottom: 1.6rem;
 }
 
 .portrait-stage:hover {
@@ -253,7 +306,7 @@ body {
 
 .portrait-frame {
   width: 100%;
-  max-width: 200px;
+  max-width: 210px;
 }
 
 .portrait-svg {
@@ -262,51 +315,68 @@ body {
   display: block;
 }
 
-.hero-dialogue-pane {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+/* Floating Heart Animation */
+.floating-heart-item {
+  position: absolute;
+  pointer-events: none;
+  animation: floatUpFade 1.3s ease-out forwards;
+  z-index: 20;
 }
 
-.author-note-wrapper {
-  border-left: 2px solid var(--gold);
-  padding-left: 1.5rem;
+@keyframes floatUpFade {
+  0% { opacity: 1; transform: translateY(0) scale(0.7); }
+  50% { opacity: 0.95; transform: translateY(-38px) scale(1.15); }
+  100% { opacity: 0; transform: translateY(-75px) scale(1); }
 }
 
-.overline-tag {
-  display: block;
-  font-family: var(--font-sans);
-  font-size: 10px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 0.5rem;
+/* Curls Movement Animation (triggered when "Pet my curls" is clicked) */
+.curls-moving {
+  transform-origin: 120px 70px;
+  animation: curlsMove 0.75s ease-in-out infinite alternate;
 }
 
-.editorial-speech {
-  font-family: var(--font-serif);
-  font-size: 1.35rem;
-  font-style: italic;
-  font-weight: 400;
-  line-height: 1.5;
-  color: var(--fg);
-  margin-bottom: 0.6rem;
-  transition: var(--transition-fast);
+@keyframes curlsMove {
+  0% { transform: scale(1) translateY(0) rotate(0deg); }
+  25% { transform: scale(1.05, 1.03) translateY(-4px) rotate(-3deg); }
+  50% { transform: scale(1.08, 1.06) translateY(-6px) rotate(3deg); }
+  75% { transform: scale(1.04, 1.02) translateY(-3px) rotate(-2deg); }
+  100% { transform: scale(1) translateY(0) rotate(0deg); }
 }
 
-.speech-author {
-  display: block;
-  font-family: var(--font-sans);
-  font-size: 11px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--muted);
-  font-style: normal;
+.curl-cluster {
+  transition: transform 0.3s ease;
+}
+
+.curls-moving .curl-cluster:nth-child(even) {
+  animation: curlJiggle 0.5s ease-in-out infinite alternate;
+}
+
+.curls-moving .curl-cluster:nth-child(odd) {
+  animation: curlJiggle 0.7s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes curlJiggle {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(1.5px, -3px); }
+}
+
+/* Distressed Trembling Animation (active when biting nails / twirling hair) */
+.avatar-distressed {
+  animation: sadTremble 0.3s infinite ease-in-out;
+}
+
+@keyframes sadTremble {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-0.8px, 0.8px); }
+  50% { transform: translate(0.8px, -0.6px); }
+  75% { transform: translate(-0.6px, -0.8px); }
+  100% { transform: translate(0, 0); }
 }
 
 .anchoring-controls {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 0.8rem;
 }
 

@@ -37,145 +37,199 @@
   <main class="page-layout">
     
     <!-- Hero Section: Portrait & Grounding Presence -->
-    <section class="editorial-card hero-section">
+    <!-- Hero Section: Interactive Akshat Companion -->
+    <section class="editorial-card hero-section" id="heroSection">
       <div class="section-meta">
         <span class="meta-number">01</span>
-        <span class="meta-label">Physical Presence & Co-Regulation</span>
+        <span class="meta-label">Physical Sanctuary & Grounding Companion</span>
       </div>
 
-      <div class="hero-split">
-        <!-- Interactive Akshat Portrait -->
-        <div class="portrait-stage" id="avatarStage" tabindex="0" role="button" title="Interact for grounding">
-          <div class="portrait-frame">
-            <svg id="akshatAvatar" viewBox="0 0 240 280" class="portrait-svg" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="skinBase" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#FDFBF7" />
-                  <stop offset="100%" stop-color="#F2EBE1" />
-                </linearGradient>
-                <linearGradient id="charcoalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#262626" />
-                  <stop offset="100%" stop-color="#141414" />
-                </linearGradient>
-              </defs>
-
-              <!-- Subtle Platform Base -->
-              <ellipse cx="120" cy="265" rx="60" ry="6" fill="#1A1A1A" opacity="0.06" />
-
-              <!-- Broad Built Shoulders in Rich Charcoal Henley -->
-              <g class="body-group">
-                <path d="M 52 185 C 44 205, 38 235, 42 265 L 198 265 C 202 235, 196 205, 188 185 C 168 172, 72 172, 52 185 Z" fill="url(#charcoalGrad)" stroke="#1A1A1A" stroke-width="1.5" />
-                
-                <!-- Henley Neckline -->
-                <path d="M 94 176 Q 120 192 146 176 Q 134 200 106 200 Z" fill="#1A1A1A" stroke="#1A1A1A" stroke-width="1" />
-                
-                <!-- Placket & Metallic Stitch Detailing -->
-                <line x1="120" y1="198" x2="120" y2="238" stroke="#333333" stroke-width="2" />
-                <circle cx="120" cy="206" r="2" fill="#D4AF37" />
-                <circle cx="120" cy="218" r="2" fill="#D4AF37" />
-                <circle cx="120" cy="230" r="2" fill="#D4AF37" />
-
-                <!-- Arms & Resting Hands -->
-                <path d="M 50 190 Q 36 220 46 252" stroke="#1A1A1A" stroke-width="12" stroke-linecap="square" fill="none" />
-                <path d="M 190 190 Q 204 220 194 252" stroke="#1A1A1A" stroke-width="12" stroke-linecap="square" fill="none" />
-                <circle cx="50" cy="254" r="7" fill="url(#skinBase)" stroke="#1A1A1A" stroke-width="1.2" />
-                <circle cx="190" cy="254" r="7" fill="url(#skinBase)" stroke="#1A1A1A" stroke-width="1.2" />
-              </g>
-
-              <!-- Head & Square Jaw Structure -->
-              <g class="head-group" id="headGroup">
-                <rect x="68" y="82" width="104" height="96" rx="14" fill="url(#skinBase)" stroke="#1A1A1A" stroke-width="1.5" />
-
-                <!-- Ears -->
-                <rect x="58" y="118" width="10" height="22" rx="4" fill="url(#skinBase)" stroke="#1A1A1A" stroke-width="1.2" />
-                <rect x="172" y="118" width="10" height="22" rx="4" fill="url(#skinBase)" stroke="#1A1A1A" stroke-width="1.2" />
-
-                <!-- Refined High-Contrast Eyes -->
-                <g class="eyes" id="avatarEyes">
-                  <ellipse cx="94" cy="123" rx="6" ry="7" fill="#1A1A1A" />
-                  <circle cx="92" cy="120" r="2" fill="#FFFFFF" />
-                  <ellipse cx="146" cy="123" rx="6" ry="7" fill="#1A1A1A" />
-                  <circle cx="144" cy="120" r="2" fill="#FFFFFF" />
-                </g>
-
-                <!-- Calm Closed Eyes on Interaction -->
-                <g class="eyes-calm" id="avatarCalmEyes" style="display: none;">
-                  <line x1="88" y1="124" x2="100" y2="124" stroke="#1A1A1A" stroke-width="2.5" stroke-linecap="square" />
-                  <line x1="140" y1="124" x2="152" y2="124" stroke="#1A1A1A" stroke-width="2.5" stroke-linecap="square" />
-                </g>
-
-                <!-- Black Square Frames (Signature Spec) -->
-                <g class="glasses" id="glassesGroup">
-                  <rect x="74" y="106" width="36" height="30" rx="3" fill="none" stroke="#1A1A1A" stroke-width="4.2" />
-                  <rect x="130" y="106" width="36" height="30" rx="3" fill="none" stroke="#1A1A1A" stroke-width="4.2" />
-                  <line x1="110" y1="119" x2="130" y2="119" stroke="#1A1A1A" stroke-width="4.2" />
-                  <line x1="74" y1="117" x2="60" y2="121" stroke="#1A1A1A" stroke-width="3" />
-                  <line x1="166" y1="117" x2="180" y2="121" stroke="#1A1A1A" stroke-width="3" />
-                  <!-- Subtle Gold Temple Accent -->
-                  <circle cx="75" cy="117" r="1.5" fill="#D4AF37" />
-                  <circle cx="165" cy="117" r="1.5" fill="#D4AF37" />
-                </g>
-
-                <!-- Strong Defined Eyebrows -->
-                <path d="M 76 99 Q 92 95 104 99" stroke="#1A1A1A" stroke-width="4" stroke-linecap="square" fill="none" />
-                <path d="M 136 99 Q 148 95 164 99" stroke="#1A1A1A" stroke-width="4" stroke-linecap="square" fill="none" />
-
-                <!-- Nose Line -->
-                <path d="M 118 126 L 120 131 L 123 131" stroke="#8E857C" stroke-width="2" stroke-linecap="square" fill="none" />
-
-                <!-- Signature Moustache -->
-                <path id="avatarMoustache" d="M 102 139 C 108 134, 116 136, 120 138 C 124 136, 132 134, 138 139 C 133 144, 124 142, 120 141 C 116 142, 107 144, 102 139 Z" fill="#1A1A1A" />
-
-                <!-- Understated Mouth Line -->
-                <line x1="115" y1="148" x2="125" y2="148" stroke="#1A1A1A" stroke-width="2" stroke-linecap="square" />
-
-                <!-- Textured Wavy Hair -->
-                <g class="curls-group" id="curlsGroup">
-                  <path d="M 64 92 C 52 78, 56 46, 84 40 C 105 34, 135 34, 156 40 C 184 46, 188 78, 176 92 C 172 78, 162 66, 150 66 C 136 66, 130 74, 120 72 C 110 74, 104 66, 90 66 C 78 66, 68 78, 64 92 Z" fill="#1A1A1A" />
-                  <!-- Structured Wave Tufts -->
-                  <circle cx="68" cy="70" r="15" fill="#1A1A1A" />
-                  <circle cx="58" cy="88" r="12" fill="#1A1A1A" />
-                  <circle cx="76" cy="52" r="16" fill="#1A1A1A" />
-                  <circle cx="98" cy="42" r="17" fill="#1A1A1A" />
-                  <circle cx="120" cy="38" r="18" fill="#1A1A1A" />
-                  <circle cx="142" cy="42" r="17" fill="#1A1A1A" />
-                  <circle cx="164" cy="52" r="16" fill="#1A1A1A" />
-                  <circle cx="172" cy="70" r="15" fill="#1A1A1A" />
-                  <circle cx="182" cy="88" r="12" fill="#1A1A1A" />
-                  <circle cx="94" cy="68" r="12" fill="#1A1A1A" />
-                  <circle cx="116" cy="67" r="13" fill="#1A1A1A" />
-                  <circle cx="138" cy="68" r="12" fill="#1A1A1A" />
-                  <!-- Gold Texture Accents -->
-                  <line x1="96" y1="46" x2="104" y2="52" stroke="#D4AF37" stroke-width="1.2" opacity="0.6" />
-                  <line x1="120" y1="42" x2="128" y2="48" stroke="#D4AF37" stroke-width="1.2" opacity="0.6" />
-                  <line x1="144" y1="46" x2="152" y2="52" stroke="#D4AF37" stroke-width="1.2" opacity="0.6" />
-                </g>
-              </g>
-            </svg>
+      <div class="hero-companion-wrapper">
+        <!-- Interactive Speech Bubble -->
+        <div class="speech-bubble-wrapper" id="speechBubbleWrapper">
+          <div id="speechBubble" class="speech-bubble">
+            <p id="speechText">Hey Akku! Tap me anytime to give me a hug, or pet my curls.</p>
+            <div class="bubble-arrow"></div>
           </div>
         </div>
 
-        <!-- Editorial Dialogue & Immediate Grounding Chips -->
-        <div class="hero-dialogue-pane">
-          <div class="author-note-wrapper">
-            <span class="overline-tag">Current Reflection</span>
-            <blockquote class="editorial-speech" id="speechText">
-              "Pause for a moment, Akku. You do not need to solve the entire trajectory of this week today. Ground your hands, unseat the tension in your jaw, and take one deliberate breath."
-            </blockquote>
-            <cite class="speech-author">— Presence Note</cite>
-          </div>
+        <!-- Interactive Akshat Avatar Stage -->
+        <div class="portrait-stage" id="avatarStage" tabindex="0" role="button" title="Click Akshat to give him a hug">
+          <div class="floating-hearts" id="floatingHearts"></div>
 
-          <div class="anchoring-controls">
-            <button class="editorial-chip" id="patHeadBtn">
-              <span class="chip-text">Pet Curls / Sensory Focus</span>
-            </button>
-            <button class="editorial-chip" id="hugBtn">
-              <span class="chip-text">Co-Regulate with Meha</span>
-            </button>
-            <button class="editorial-chip chip-highlight" id="sosHandsBtn">
-              <span class="chip-text">Urge to Twirl Hair or Bite Nails</span>
-            </button>
-          </div>
+          <svg id="akshatAvatar" viewBox="0 0 240 280" class="portrait-svg" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="skinGrad" cx="50%" cy="40%" r="60%">
+                <stop offset="0%" stop-color="#FFF3EB" />
+                <stop offset="100%" stop-color="#FCDDCB" />
+              </radialGradient>
+              <linearGradient id="hairGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#262220" />
+                <stop offset="60%" stop-color="#181514" />
+                <stop offset="100%" stop-color="#0E0C0B" />
+              </linearGradient>
+              <linearGradient id="sweaterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#353139" />
+                <stop offset="60%" stop-color="#27232B" />
+                <stop offset="100%" stop-color="#1A171D" />
+              </linearGradient>
+              <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+                <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.12"/>
+              </filter>
+            </defs>
+
+            <!-- Shadow underneath -->
+            <ellipse cx="120" cy="265" rx="55" ry="10" fill="#3A3845" opacity="0.15" class="ground-shadow" />
+
+            <!-- Broad Shoulders & Cozy Charcoal Henley Shirt -->
+            <g class="body-group">
+              <path d="M 60 178 C 50 195, 42 225, 46 260 L 194 260 C 198 225, 190 195, 180 178 C 160 168, 80 168, 60 178 Z" fill="url(#sweaterGrad)" />
+              <!-- Henley Collarless Curved Neckline -->
+              <path d="M 94 172 Q 120 186 146 172 Q 136 190 104 190 Z" fill="#1C1820" />
+              <!-- Henley Central Button Placket -->
+              <rect x="117" y="186" width="6" height="34" rx="3" fill="#151218" />
+              <!-- Little Henley Buttons -->
+              <circle cx="120" cy="193" r="2.2" fill="#756E7B" />
+              <circle cx="120" cy="203" r="2.2" fill="#756E7B" />
+              <circle cx="120" cy="213" r="2.2" fill="#756E7B" />
+
+              <!-- Normal Arms: Resting safely on desk -->
+              <g id="normalArms">
+                <path d="M 58 185 Q 40 215 52 245" stroke="#221E26" stroke-width="14" stroke-linecap="round" fill="none" />
+                <path d="M 182 185 Q 200 215 188 245" stroke="#221E26" stroke-width="14" stroke-linecap="round" fill="none" />
+                <circle cx="55" cy="246" r="8" fill="url(#skinGrad)" />
+                <circle cx="185" cy="246" r="8" fill="url(#skinGrad)" />
+              </g>
+
+              <!-- Distressed Arms: Biting Nails & Twirling Curls (when sad / urge triggered) -->
+              <g id="distressedArms" style="display: none;">
+                <!-- Left arm reaching up to mouth biting nails -->
+                <path d="M 58 185 Q 45 150 108 148" stroke="#221E26" stroke-width="14" stroke-linecap="round" fill="none" />
+                <circle cx="110" cy="148" r="8" fill="url(#skinGrad)" />
+                <circle cx="108" cy="144" r="2.2" fill="#DDA892" />
+                <circle cx="112" cy="144" r="2.2" fill="#DDA892" />
+                <circle cx="115" cy="145" r="2.2" fill="#DDA892" />
+
+                <!-- Right arm reaching up to hair twirling curls -->
+                <path d="M 182 185 Q 205 125 168 82" stroke="#221E26" stroke-width="14" stroke-linecap="round" fill="none" />
+                <circle cx="168" cy="80" r="8" fill="url(#skinGrad)" />
+                <path d="M 163 76 Q 170 72 172 80 Q 166 84 162 78" fill="url(#hairGrad)" stroke="#181514" stroke-width="1.8" />
+              </g>
+            </g>
+
+            <!-- Head Group (Square Jawline + Fair Skin + Memoji Details) -->
+            <g class="head-group" id="headGroup">
+              <rect x="66" y="80" width="108" height="96" rx="28" fill="url(#skinGrad)" filter="url(#softShadow)" />
+
+              <!-- Ears -->
+              <circle cx="62" cy="126" r="11" fill="url(#skinGrad)" />
+              <circle cx="178" cy="126" r="11" fill="url(#skinGrad)" />
+              <circle cx="62" cy="126" r="6" fill="#F4C7B5" opacity="0.6" />
+              <circle cx="178" cy="126" r="6" fill="#F4C7B5" opacity="0.6" />
+
+              <!-- Blush Cheeks -->
+              <ellipse cx="84" cy="138" rx="10" ry="6" fill="#FF9A9E" opacity="0.45" class="blush" id="leftBlush" />
+              <ellipse cx="156" cy="138" rx="10" ry="6" fill="#FF9A9E" opacity="0.45" class="blush" id="rightBlush" />
+
+              <!-- Normal Brown Eyes -->
+              <g class="eyes" id="avatarEyes">
+                <ellipse cx="92" cy="122" rx="7" ry="8" fill="#4B2C1A" />
+                <circle cx="90" cy="119" r="3" fill="#FFFFFF" />
+                <circle cx="95" cy="124" r="1.5" fill="#FFFFFF" />
+                <ellipse cx="148" cy="122" rx="7" ry="8" fill="#4B2C1A" />
+                <circle cx="146" cy="119" r="3" fill="#FFFFFF" />
+                <circle cx="151" cy="124" r="1.5" fill="#FFFFFF" />
+              </g>
+
+              <!-- Happy Squinting Eyes (for hugs & petting curls) -->
+              <g class="eyes-happy" id="avatarHappyEyes" style="display: none;">
+                <path d="M 85 124 Q 92 116 99 124" stroke="#4B2C1A" stroke-width="3.5" stroke-linecap="round" fill="none" />
+                <path d="M 141 124 Q 148 116 155 124" stroke="#4B2C1A" stroke-width="3.5" stroke-linecap="round" fill="none" />
+              </g>
+
+              <!-- Sad Distressed Eyes with Glistening Tears (for urge state) -->
+              <g class="eyes-sad" id="avatarSadEyes" style="display: none;">
+                <ellipse cx="92" cy="125" rx="7.5" ry="8.5" fill="#3D2415" />
+                <circle cx="93.5" cy="122" r="3.8" fill="#FFFFFF" />
+                <circle cx="89.5" cy="127" r="1.5" fill="#FFFFFF" />
+                <ellipse cx="148" cy="125" rx="7.5" ry="8.5" fill="#3D2415" />
+                <circle cx="146.5" cy="122" r="3.8" fill="#FFFFFF" />
+                <circle cx="150.5" cy="127" r="1.5" fill="#FFFFFF" />
+                <path d="M 160 137 C 163 145, 156 150, 153 147 C 150 144, 154 138, 160 137 Z" fill="#60A5FA" opacity="0.9" />
+                <path d="M 80 137 C 77 145, 84 150, 87 147 C 90 144, 86 138, 80 137 Z" fill="#60A5FA" opacity="0.9" />
+              </g>
+
+              <!-- Black Square Glasses (matching his signature look) -->
+              <g class="glasses" id="glassesGroup">
+                <rect x="76" y="106" width="34" height="28" rx="7" fill="rgba(255,255,255,0.18)" stroke="#1F2421" stroke-width="4.5" />
+                <rect x="130" y="106" width="34" height="28" rx="7" fill="rgba(255,255,255,0.18)" stroke="#1F2421" stroke-width="4.5" />
+                <line x1="110" y1="118" x2="130" y2="118" stroke="#1F2421" stroke-width="4.5" stroke-linecap="round" />
+                <line x1="76" y1="116" x2="62" y2="120" stroke="#1F2421" stroke-width="3.5" stroke-linecap="round" />
+                <line x1="164" y1="116" x2="178" y2="120" stroke="#1F2421" stroke-width="3.5" stroke-linecap="round" />
+                <line x1="82" y1="111" x2="90" y2="111" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.75" />
+                <line x1="136" y1="111" x2="144" y2="111" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.75" />
+              </g>
+
+              <!-- Eyebrows: Normal vs Sad -->
+              <g id="normalEyebrows">
+                <path d="M 78 100 Q 93 96 104 100" stroke="#181514" stroke-width="4" stroke-linecap="round" fill="none" />
+                <path d="M 136 100 Q 147 96 162 100" stroke="#181514" stroke-width="4" stroke-linecap="round" fill="none" />
+              </g>
+              <g id="sadEyebrows" style="display: none;">
+                <path d="M 76 96 Q 90 102 104 96" stroke="#181514" stroke-width="4" stroke-linecap="round" fill="none" />
+                <path d="M 136 96 Q 150 102 164 96" stroke="#181514" stroke-width="4" stroke-linecap="round" fill="none" />
+              </g>
+
+              <!-- Nose -->
+              <path d="M 118 127 Q 120 131 123 131" stroke="#DDA892" stroke-width="2.5" stroke-linecap="round" fill="none" />
+
+              <!-- Akshat's Signature Cute Moustache -->
+              <path id="avatarMoustache" d="M 103 138 C 109 133, 116 135, 120 137 C 124 135, 131 133, 137 138 C 132 143, 124 141, 120 140 C 116 141, 108 143, 103 138 Z" fill="#1C1819" />
+
+              <!-- Mouth: Normal smile vs Sad frown -->
+              <path id="avatarMouth" d="M 114 146 Q 120 151 126 146" stroke="#4B2C1A" stroke-width="2.5" stroke-linecap="round" fill="none" />
+              <path id="avatarSadMouth" d="M 113 151 Q 120 144 127 151" stroke="#4B2C1A" stroke-width="2.5" stroke-linecap="round" fill="none" style="display: none;" />
+
+              <!-- Curly Dark Hair (moves when petted!) -->
+              <g class="curls-group" id="curlsGroup">
+                <path d="M 62 94 C 52 80, 58 48, 85 42 C 105 36, 135 36, 155 42 C 182 48, 188 80, 178 94 C 174 80, 162 68, 150 68 C 136 68, 130 76, 120 74 C 110 76, 104 68, 90 68 C 78 68, 68 80, 62 94 Z" fill="url(#hairGrad)" />
+
+                <!-- Clustered Curls -->
+                <circle cx="66" cy="72" r="16" fill="url(#hairGrad)" class="curl-cluster" />
+                <circle cx="56" cy="92" r="13" fill="url(#hairGrad)" class="curl-cluster" />
+                <circle cx="73" cy="54" r="17" fill="url(#hairGrad)" class="curl-cluster" />
+                <circle cx="95" cy="44" r="18" fill="url(#hairGrad)" class="curl-cluster" />
+                <circle cx="120" cy="40" r="19" fill="url(#hairGrad)" class="curl-cluster" />
+                <circle cx="145" cy="44" r="18" fill="url(#hairGrad)" class="curl-cluster" />
+                <circle cx="167" cy="54" r="17" fill="url(#hairGrad)" class="curl-cluster" />
+                <circle cx="174" cy="72" r="16" fill="url(#hairGrad)" class="curl-cluster" />
+                <circle cx="184" cy="92" r="13" fill="url(#hairGrad)" class="curl-cluster" />
+                <circle cx="92" cy="70" r="13" fill="url(#hairGrad)" class="curl-cluster" />
+                <circle cx="114" cy="69" r="14" fill="url(#hairGrad)" class="curl-cluster" />
+                <circle cx="138" cy="70" r="13" fill="url(#hairGrad)" class="curl-cluster" />
+                <circle cx="156" cy="74" r="11" fill="url(#hairGrad)" class="curl-cluster" />
+                <circle cx="78" cy="76" r="11" fill="url(#hairGrad)" class="curl-cluster" />
+
+                <!-- Curl Wave Accents -->
+                <path d="M 94 46 A 6 6 0 1 1 98 52" stroke="#3D3633" stroke-width="2.5" fill="none" stroke-linecap="round" />
+                <path d="M 120 42 A 7 7 0 1 1 125 49" stroke="#3D3633" stroke-width="2.5" fill="none" stroke-linecap="round" />
+                <path d="M 144 46 A 6 6 0 1 1 148 52" stroke="#3D3633" stroke-width="2.5" fill="none" stroke-linecap="round" />
+              </g>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Immediate Anchoring Controls -->
+        <div class="anchoring-controls">
+          <button class="editorial-chip" id="patHeadBtn">
+            <span class="chip-text">Pet my curls</span>
+          </button>
+          <button class="editorial-chip" id="hugBtn">
+            <span class="chip-text">Give a hug</span>
+          </button>
+          <button class="editorial-chip chip-highlight" id="sosHandsBtn">
+            <span class="chip-text">Urge to twirl hair or bite nails</span>
+          </button>
         </div>
       </div>
     </section>

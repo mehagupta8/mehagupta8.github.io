@@ -154,107 +154,180 @@
   }
 
   // ==========================================================================
-  // 2. Hero Section: Co-Regulation & Interactive Avatar
+  // 2. Hero Section: Interactive Akshat Avatar & Companion Engine
+  // Curls bouncy animation, floating hearts on hugs, and sad urge state
   // ==========================================================================
   const avatarStage = document.getElementById('avatarStage');
   const speechText = document.getElementById('speechText');
+
+  // Avatar facial & body elements
+  const normalArms = document.getElementById('normalArms');
+  const distressedArms = document.getElementById('distressedArms');
+  const normalEyebrows = document.getElementById('normalEyebrows');
+  const sadEyebrows = document.getElementById('sadEyebrows');
   const avatarEyes = document.getElementById('avatarEyes');
-  const avatarCalmEyes = document.getElementById('avatarCalmEyes');
+  const avatarHappyEyes = document.getElementById('avatarHappyEyes');
+  const avatarSadEyes = document.getElementById('avatarSadEyes');
+  const avatarMouth = document.getElementById('avatarMouth');
+  const avatarSadMouth = document.getElementById('avatarSadMouth');
+  const curlsGroup = document.getElementById('curlsGroup');
+
   const patHeadBtn = document.getElementById('patHeadBtn');
   const hugBtn = document.getElementById('hugBtn');
   const sosHandsBtn = document.getElementById('sosHandsBtn');
 
-  const groundingReflections = [
-    'Pause for a moment, Akku. You do not need to solve the entire trajectory of this week today. Ground your hands, unseat the tension in your jaw, and take one deliberate breath.',
-    'Your worth is invariant, Akku. It is completely independent of today\'s task velocity, manager feedback, or unfinished laundry.',
-    'Sensory reset: Notice the support of your chair beneath you, the cool ambient air against your wrists, and the weight of your feet on the floor.',
-    'Executive fatigue is a biological constraint, not a personal flaw. Give your brain permission to slow down for three uninterrupted minutes.',
-    'You are safe, you are held in unconditional esteem, and Meha is standing with you through every single step of this afternoon.'
-  ];
+  let isDistressed = false;
+  let curlsTimer = null;
+  let happyEyesTimer = null;
 
-  let currentReflectionIndex = 0;
+  function spawnFloatingHeart(e) {
+    if (!avatarStage) return;
+    const heart = document.createElement('div');
+    heart.className = 'floating-heart-item';
+    heart.innerHTML = `<svg viewBox="0 0 24 24" width="22" height="22" fill="#D4AF37"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
 
-  function cycleReflection() {
-    currentReflectionIndex = (currentReflectionIndex + 1) % groundingReflections.length;
-    if (speechText) {
-      speechText.style.opacity = '0';
-      setTimeout(() => {
-        speechText.textContent = `"${groundingReflections[currentReflectionIndex]}"`;
-        speechText.style.opacity = '1';
-      }, 200);
+    const rect = avatarStage.getBoundingClientRect();
+    const x = e ? (e.clientX - rect.left) : (rect.width / 2);
+    const y = e ? (e.clientY - rect.top) : (rect.height / 2);
+
+    heart.style.left = `${Math.max(15, Math.min(rect.width - 35, x + (Math.random() * 40 - 20)))}px`;
+    heart.style.top = `${Math.max(15, Math.min(rect.height - 35, y + (Math.random() * 30 - 15)))}px`;
+
+    avatarStage.appendChild(heart);
+    setTimeout(() => heart.remove(), 1300);
+  }
+
+  function updateSpeech(text) {
+    if (!speechText) return;
+    speechText.style.opacity = '0';
+    setTimeout(() => {
+      speechText.textContent = text;
+      speechText.style.opacity = '1';
+    }, 180);
+  }
+
+  function showHappyEyes(duration = 2400) {
+    if (avatarEyes && avatarHappyEyes) {
+      if (avatarSadEyes) avatarSadEyes.style.display = 'none';
+      avatarEyes.style.display = 'none';
+      avatarHappyEyes.style.display = 'block';
+      clearTimeout(happyEyesTimer);
+      happyEyesTimer = setTimeout(() => {
+        if (!isDistressed) {
+          avatarEyes.style.display = 'block';
+          avatarHappyEyes.style.display = 'none';
+        }
+      }, duration);
     }
   }
 
-  function triggerCalmGaze() {
-    if (avatarEyes && avatarCalmEyes) {
-      avatarEyes.style.display = 'none';
-      avatarCalmEyes.style.display = 'block';
-      setTimeout(() => {
-        avatarEyes.style.display = 'block';
-        avatarCalmEyes.style.display = 'none';
-      }, 2400);
+  function comfortAkshat() {
+    isDistressed = false;
+    if (avatarStage) avatarStage.classList.remove('avatar-distressed');
+    if (normalArms) normalArms.style.display = 'block';
+    if (distressedArms) distressedArms.style.display = 'none';
+    if (normalEyebrows) normalEyebrows.style.display = 'block';
+    if (sadEyebrows) sadEyebrows.style.display = 'none';
+    if (avatarSadEyes) avatarSadEyes.style.display = 'none';
+    if (avatarSadMouth) avatarSadMouth.style.display = 'none';
+    if (avatarMouth) avatarMouth.style.display = 'block';
+    showHappyEyes(2500);
+  }
+
+  function triggerSadDistressed() {
+    isDistressed = true;
+    if (avatarStage) avatarStage.classList.add('avatar-distressed');
+    if (normalArms) normalArms.style.display = 'none';
+    if (distressedArms) distressedArms.style.display = 'block';
+    if (normalEyebrows) normalEyebrows.style.display = 'none';
+    if (sadEyebrows) sadEyebrows.style.display = 'block';
+    if (avatarEyes) avatarEyes.style.display = 'none';
+    if (avatarHappyEyes) avatarHappyEyes.style.display = 'none';
+    if (avatarSadEyes) avatarSadEyes.style.display = 'block';
+    if (avatarMouth) avatarMouth.style.display = 'none';
+    if (avatarSadMouth) avatarSadMouth.style.display = 'block';
+
+    updateSpeech("I'm feeling really anxious and overwhelmed right now... I have such a strong urge to bite my nails and twirl my hair. Let's take a deep breath together and surf this wave.");
+    playClick(600);
+  }
+
+  function triggerPetCurls(e) {
+    const wasSad = isDistressed;
+    comfortAkshat();
+
+    // Trigger curls movement animation
+    if (curlsGroup) {
+      curlsGroup.classList.remove('curls-moving');
+      void curlsGroup.offsetWidth; // trigger reflow
+      curlsGroup.classList.add('curls-moving');
+      clearTimeout(curlsTimer);
+      curlsTimer = setTimeout(() => {
+        curlsGroup.classList.remove('curls-moving');
+      }, 2500);
+    }
+
+    spawnFloatingHeart(e);
+    spawnFloatingHeart(e);
+    playChime(780, 1.4);
+
+    if (wasSad) {
+      updateSpeech("Mmm, thank you for comforting me and petting my curls. My hands feel safe and resting peacefully now.");
+    } else {
+      updateSpeech("Mmm, thank you for petting my curls! Keep your hands resting right here instead of twirling yours.");
+    }
+  }
+
+  function triggerGiveHug(e) {
+    const wasSad = isDistressed;
+    comfortAkshat();
+    playChime(528, 1.6);
+
+    for (let i = 0; i < 4; i++) {
+      setTimeout(() => spawnFloatingHeart(e), i * 160);
+    }
+
+    if (wasSad) {
+      updateSpeech("Thank you for the warm hug. Feeling you close melts the overwhelm away. I can let go of my hair and nails now.");
+    } else {
+      updateSpeech("Big warm hug wrapped tightly around you! Feel your shoulders melt. Meha has got you.");
     }
   }
 
   if (avatarStage) {
-    avatarStage.addEventListener('click', () => {
-      triggerCalmGaze();
-      cycleReflection();
-      playChime(528, 1.2);
+    avatarStage.addEventListener('click', (e) => {
+      triggerGiveHug(e);
     });
 
     avatarStage.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        triggerCalmGaze();
-        cycleReflection();
-        playChime(528, 1.2);
+        triggerGiveHug();
       }
     });
   }
 
   if (patHeadBtn) {
-    patHeadBtn.addEventListener('click', () => {
-      triggerCalmGaze();
-      playClick(900);
-      if (speechText) {
-        speechText.style.opacity = '0';
-        setTimeout(() => {
-          speechText.textContent = '"Sensory touch acknowledged. Notice the physical sensation of your hands resting peacefully on your desk or lap."';
-          speechText.style.opacity = '1';
-        }, 200);
-      }
+    patHeadBtn.addEventListener('click', (e) => {
+      triggerPetCurls(e);
     });
   }
 
   if (hugBtn) {
-    hugBtn.addEventListener('click', () => {
-      triggerCalmGaze();
-      playChime(440, 1.6);
-      if (speechText) {
-        speechText.style.opacity = '0';
-        setTimeout(() => {
-          speechText.textContent = '"Holding space with you, Akku. You are completely safe, deeply loved by Mehu, and never expected to carry everything in isolation."';
-          speechText.style.opacity = '1';
-        }, 200);
-      }
+    hugBtn.addEventListener('click', (e) => {
+      triggerGiveHug(e);
     });
   }
 
   if (sosHandsBtn) {
     sosHandsBtn.addEventListener('click', () => {
-      playClick(1400);
+      triggerSadDistressed();
       const busySection = document.getElementById('busyHandsSection');
       if (busySection) {
         busySection.scrollIntoView({ behavior: 'smooth' });
-        // Switch to Urge Surfer tab
         const surferTab = document.querySelector('.tactile-tab[data-tab="surfer"]');
         if (surferTab) {
           surferTab.click();
         }
-      }
-      if (speechText) {
-        speechText.textContent = '"Hands flat on the table. Notice the physiological urge rising like a wave, and let the 60-second timer ride it down."';
       }
     });
   }
@@ -1261,6 +1334,10 @@
     // Increment streak
     const newStreak = getStreak() + 1;
     setStreak(newStreak);
+
+    // Comfort Akshat and return to happy/calm
+    comfortAkshat();
+    updateSpeech("We surfed the entire 60-second wave together! The urge is gone and my hands are completely calm.");
 
     if (startSurferBtn) {
       startSurferBtn.style.display = 'inline-flex';
