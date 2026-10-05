@@ -2,727 +2,544 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Pocket Akshat 🧸 | Your Cozy Space</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sanctuary for Akku | Editorial Cognitive Space</title>
+  
+  <!-- Typography: Playfair Display & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧸</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%231A1A1A%22/><text y=%2265%22 x=%2225%22 font-family=%22serif%22 font-size=%2250%22 fill=%22%23D4AF37%22>A</text></svg>">
 </head>
 <body>
-  <!-- Inspira UI: Animated Aurora Background & Dot Matrix Grid -->
-  <div class="inspira-aurora-bg">
-    <div class="aurora-blob blob-1"></div>
-    <div class="aurora-blob blob-2"></div>
-    <div class="aurora-blob blob-3"></div>
-  </div>
-  <div class="inspira-dot-grid"></div>
-  <canvas id="stardustCanvas"></canvas>
 
-  <!-- Top Header Navigation (Inspira Floating Dock Style) -->
-  <header class="top-nav">
-    <div class="nav-brand">
-      <span class="heart-pulse">❤️</span>
-      <span>For Akshat (Akku), with love from Meha</span>
-    </div>
-    <div class="nav-controls">
-      <button id="soundToggle" class="icon-btn" title="Toggle Sound" aria-label="Toggle Sound">
-        <span class="icon">🔊</span>
-      </button>
-      <button id="nightToggle" class="icon-btn" title="Toggle Theme" aria-label="Toggle Theme">
-        <span class="icon">✨</span>
-      </button>
+  <!-- Minimal Archival Grid Background -->
+  <div class="editorial-grain"></div>
+
+  <!-- Top Navigation / Editorial Bar -->
+  <header class="editorial-nav">
+    <div class="nav-container">
+      <div class="nav-left">
+        <span class="overline-label">Sanctuary No. 01</span>
+        <h1 class="nav-title">For Akku, curated with love from Mehu</h1>
+      </div>
+      <div class="nav-right">
+        <button id="soundToggle" class="minimal-toggle" title="Toggle Acoustic Feedback" aria-label="Toggle Sound">
+          <span class="toggle-dot"></span>
+          <span class="toggle-text" id="soundStatusText">Sound: Off</span>
+        </button>
+      </div>
     </div>
   </header>
 
-  <main class="app-container">
+  <main class="page-layout">
     
-    <!-- Hero: Interactive Mini Akshat with Inspira Border Beam -->
-    <section class="avatar-hero-card spotlight-card">
-      <div class="border-beam"></div>
-      <div class="speech-bubble-wrapper">
-        <div id="speechBubble" class="speech-bubble">
-          <p id="speechText">Hey Akku! Tap me anytime you need a breath. I'm always right here with you.</p>
-          <div class="bubble-arrow"></div>
-        </div>
+    <!-- Hero Section: Portrait & Grounding Presence -->
+    <section class="editorial-card hero-section">
+      <div class="section-meta">
+        <span class="meta-number">01</span>
+        <span class="meta-label">Physical Presence & Co-Regulation</span>
       </div>
 
-      <!-- Mini Akshat Chibi Avatar -->
-      <div class="avatar-stage" id="avatarStage" role="button" tabindex="0" title="Tap to interact with Mini Akshat!">
-        <div class="floating-hearts" id="floatingHearts"></div>
+      <div class="hero-split">
+        <!-- Interactive Akshat Portrait -->
+        <div class="portrait-stage" id="avatarStage" tabindex="0" role="button" title="Interact for grounding">
+          <div class="portrait-frame">
+            <svg id="akshatAvatar" viewBox="0 0 240 280" class="portrait-svg" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="skinBase" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#FDFBF7" />
+                  <stop offset="100%" stop-color="#F2EBE1" />
+                </linearGradient>
+                <linearGradient id="charcoalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#262626" />
+                  <stop offset="100%" stop-color="#141414" />
+                </linearGradient>
+              </defs>
 
-        <svg id="akshatAvatar" viewBox="0 0 240 280" class="chibi-svg" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <radialGradient id="skinGrad" cx="50%" cy="40%" r="60%">
-              <stop offset="0%" stop-color="#FFF3EB" />
-              <stop offset="100%" stop-color="#FCDDCB" />
-            </radialGradient>
-            <linearGradient id="hairGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#262220" />
-              <stop offset="60%" stop-color="#181514" />
-              <stop offset="100%" stop-color="#0E0C0B" />
-            </linearGradient>
-            <!-- Cozy Charcoal Henley Shirt (matching his photo) -->
-            <linearGradient id="sweaterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#353139" />
-              <stop offset="60%" stop-color="#27232B" />
-              <stop offset="100%" stop-color="#1A171D" />
-            </linearGradient>
-            <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
-              <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.12"/>
-            </filter>
-          </defs>
+              <!-- Subtle Platform Base -->
+              <ellipse cx="120" cy="265" rx="60" ry="6" fill="#1A1A1A" opacity="0.06" />
 
-          <!-- Shadow underneath -->
-          <ellipse cx="120" cy="265" rx="55" ry="10" fill="#3A3845" opacity="0.15" class="ground-shadow" />
+              <!-- Broad Built Shoulders in Rich Charcoal Henley -->
+              <g class="body-group">
+                <path d="M 52 185 C 44 205, 38 235, 42 265 L 198 265 C 202 235, 196 205, 188 185 C 168 172, 72 172, 52 185 Z" fill="url(#charcoalGrad)" stroke="#1A1A1A" stroke-width="1.5" />
+                
+                <!-- Henley Neckline -->
+                <path d="M 94 176 Q 120 192 146 176 Q 134 200 106 200 Z" fill="#1A1A1A" stroke="#1A1A1A" stroke-width="1" />
+                
+                <!-- Placket & Metallic Stitch Detailing -->
+                <line x1="120" y1="198" x2="120" y2="238" stroke="#333333" stroke-width="2" />
+                <circle cx="120" cy="206" r="2" fill="#D4AF37" />
+                <circle cx="120" cy="218" r="2" fill="#D4AF37" />
+                <circle cx="120" cy="230" r="2" fill="#D4AF37" />
 
-          <!-- Broad Shoulders & Cozy Charcoal Henley Shirt -->
-          <g class="body-group">
-            <path d="M 60 178 C 50 195, 42 225, 46 260 L 194 260 C 198 225, 190 195, 180 178 C 160 168, 80 168, 60 178 Z" fill="url(#sweaterGrad)" />
-            <!-- Henley Collarless Curved Neckline -->
-            <path d="M 94 172 Q 120 186 146 172 Q 136 190 104 190 Z" fill="#1C1820" />
-            <!-- Henley Central Button Placket -->
-            <rect x="117" y="186" width="6" height="34" rx="3" fill="#151218" />
-            <!-- Cute Little Henley Buttons -->
-            <circle cx="120" cy="193" r="2.2" fill="#756E7B" />
-            <circle cx="120" cy="203" r="2.2" fill="#756E7B" />
-            <circle cx="120" cy="213" r="2.2" fill="#756E7B" />
+                <!-- Arms & Resting Hands -->
+                <path d="M 50 190 Q 36 220 46 252" stroke="#1A1A1A" stroke-width="12" stroke-linecap="square" fill="none" />
+                <path d="M 190 190 Q 204 220 194 252" stroke="#1A1A1A" stroke-width="12" stroke-linecap="square" fill="none" />
+                <circle cx="50" cy="254" r="7" fill="url(#skinBase)" stroke="#1A1A1A" stroke-width="1.2" />
+                <circle cx="190" cy="254" r="7" fill="url(#skinBase)" stroke="#1A1A1A" stroke-width="1.2" />
+              </g>
 
-            <!-- Cozy Sleeves & Broad Arms -->
-            <path d="M 58 185 Q 40 215 52 245" stroke="#221E26" stroke-width="14" stroke-linecap="round" fill="none" />
-            <path d="M 182 185 Q 200 215 188 245" stroke="#221E26" stroke-width="14" stroke-linecap="round" fill="none" />
+              <!-- Head & Square Jaw Structure -->
+              <g class="head-group" id="headGroup">
+                <rect x="68" y="82" width="104" height="96" rx="14" fill="url(#skinBase)" stroke="#1A1A1A" stroke-width="1.5" />
 
-            <!-- Little hands resting safely -->
-            <circle cx="55" cy="246" r="8" fill="url(#skinGrad)" />
-            <circle cx="185" cy="246" r="8" fill="url(#skinGrad)" />
-          </g>
+                <!-- Ears -->
+                <rect x="58" y="118" width="10" height="22" rx="4" fill="url(#skinBase)" stroke="#1A1A1A" stroke-width="1.2" />
+                <rect x="172" y="118" width="10" height="22" rx="4" fill="url(#skinBase)" stroke="#1A1A1A" stroke-width="1.2" />
 
-          <!-- Head Group (Square Jawline + Fair Skin + Memoji Details) -->
-          <g class="head-group" id="headGroup">
-            <rect x="66" y="80" width="108" height="96" rx="28" fill="url(#skinGrad)" filter="url(#softShadow)" />
-
-            <!-- Ears -->
-            <circle cx="62" cy="126" r="11" fill="url(#skinGrad)" />
-            <circle cx="178" cy="126" r="11" fill="url(#skinGrad)" />
-            <circle cx="62" cy="126" r="6" fill="#F4C7B5" opacity="0.6" />
-            <circle cx="178" cy="126" r="6" fill="#F4C7B5" opacity="0.6" />
-
-            <!-- Blush Cheeks -->
-            <ellipse cx="84" cy="138" rx="10" ry="6" fill="#FF9A9E" opacity="0.45" class="blush" id="leftBlush" />
-            <ellipse cx="156" cy="138" rx="10" ry="6" fill="#FF9A9E" opacity="0.45" class="blush" id="rightBlush" />
-
-            <!-- Brown Eyes -->
-            <g class="eyes" id="avatarEyes">
-              <ellipse cx="92" cy="122" rx="7" ry="8" fill="#4B2C1A" />
-              <circle cx="90" cy="119" r="3" fill="#FFFFFF" />
-              <circle cx="95" cy="124" r="1.5" fill="#FFFFFF" />
-              <ellipse cx="148" cy="122" rx="7" ry="8" fill="#4B2C1A" />
-              <circle cx="146" cy="119" r="3" fill="#FFFFFF" />
-              <circle cx="151" cy="124" r="1.5" fill="#FFFFFF" />
-            </g>
-
-            <!-- Happy Squinting Eyes -->
-            <g class="eyes-happy" id="avatarHappyEyes" style="display: none;">
-              <path d="M 85 124 Q 92 116 99 124" stroke="#4B2C1A" stroke-width="3.5" stroke-linecap="round" fill="none" />
-              <path d="M 141 124 Q 148 116 155 124" stroke="#4B2C1A" stroke-width="3.5" stroke-linecap="round" fill="none" />
-            </g>
-
-            <!-- Black Square Glasses (matching his photo) -->
-            <g class="glasses" id="glassesGroup">
-              <rect x="76" y="106" width="34" height="28" rx="7" fill="rgba(255,255,255,0.18)" stroke="#1F2421" stroke-width="4.5" />
-              <rect x="130" y="106" width="34" height="28" rx="7" fill="rgba(255,255,255,0.18)" stroke="#1F2421" stroke-width="4.5" />
-              <line x1="110" y1="118" x2="130" y2="118" stroke="#1F2421" stroke-width="4.5" stroke-linecap="round" />
-              <line x1="76" y1="116" x2="62" y2="120" stroke="#1F2421" stroke-width="3.5" stroke-linecap="round" />
-              <line x1="164" y1="116" x2="178" y2="120" stroke="#1F2421" stroke-width="3.5" stroke-linecap="round" />
-              <line x1="82" y1="111" x2="90" y2="111" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.75" />
-              <line x1="136" y1="111" x2="144" y2="111" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.75" />
-            </g>
-
-            <!-- Strong Dark Eyebrows -->
-            <path d="M 78 100 Q 93 96 104 100" stroke="#181514" stroke-width="4" stroke-linecap="round" fill="none" />
-            <path d="M 136 100 Q 147 96 162 100" stroke="#181514" stroke-width="4" stroke-linecap="round" fill="none" />
-
-            <!-- Nose -->
-            <path d="M 118 127 Q 120 131 123 131" stroke="#DDA892" stroke-width="2.5" stroke-linecap="round" fill="none" />
-
-            <!-- Akshat's Signature Cute Moustache! (from his photo) -->
-            <path id="avatarMoustache" d="M 103 138 C 109 133, 116 135, 120 137 C 124 135, 131 133, 137 138 C 132 143, 124 141, 120 140 C 116 141, 108 143, 103 138 Z" fill="#1C1819" />
-
-            <!-- Smile / Mouth -->
-            <path id="avatarMouth" d="M 114 146 Q 120 151 126 146" stroke="#4B2C1A" stroke-width="2.5" stroke-linecap="round" fill="none" />
-
-            <!-- Curly Black/Dark Hair (Full, wavy volume) -->
-            <g class="curls-group" id="curlsGroup">
-              <path d="M 62 94 C 52 80, 58 48, 85 42 C 105 36, 135 36, 155 42 C 182 48, 188 80, 178 94 C 174 80, 162 68, 150 68 C 136 68, 130 76, 120 74 C 110 76, 104 68, 90 68 C 78 68, 68 80, 62 94 Z" fill="url(#hairGrad)" />
-
-              <!-- Curly Curls Clustered Top & Sides -->
-              <circle cx="66" cy="72" r="16" fill="url(#hairGrad)" />
-              <circle cx="56" cy="92" r="13" fill="url(#hairGrad)" />
-              <circle cx="73" cy="54" r="17" fill="url(#hairGrad)" />
-              <circle cx="95" cy="44" r="18" fill="url(#hairGrad)" />
-              <circle cx="120" cy="40" r="19" fill="url(#hairGrad)" />
-              <circle cx="145" cy="44" r="18" fill="url(#hairGrad)" />
-              <circle cx="167" cy="54" r="17" fill="url(#hairGrad)" />
-              <circle cx="174" cy="72" r="16" fill="url(#hairGrad)" />
-              <circle cx="184" cy="92" r="13" fill="url(#hairGrad)" />
-              <circle cx="92" cy="70" r="13" fill="url(#hairGrad)" />
-              <circle cx="114" cy="69" r="14" fill="url(#hairGrad)" />
-              <circle cx="138" cy="70" r="13" fill="url(#hairGrad)" />
-              <circle cx="156" cy="74" r="11" fill="url(#hairGrad)" />
-              <circle cx="78" cy="76" r="11" fill="url(#hairGrad)" />
-
-              <!-- Wave/curl accents -->
-              <path d="M 94 46 A 6 6 0 1 1 98 52" stroke="#3D3633" stroke-width="2.5" fill="none" stroke-linecap="round" />
-              <path d="M 120 42 A 7 7 0 1 1 125 49" stroke="#3D3633" stroke-width="2.5" fill="none" stroke-linecap="round" />
-              <path d="M 144 46 A 6 6 0 1 1 148 52" stroke="#3D3633" stroke-width="2.5" fill="none" stroke-linecap="round" />
-            </g>
-          </g>
-        </svg>
-
-        <div class="tap-hint">
-          <span>✨ Tap Mini Akshat for hugs & reminders</span>
-        </div>
-      </div>
-
-      <!-- Quick Action Buttons under Avatar -->
-      <div class="quick-reaction-bar">
-        <button class="pill-btn" id="patHeadBtn">
-          <span>💆‍♂️ Pet my curls</span>
-        </button>
-        <button class="pill-btn" id="hugBtn">
-          <span>🤗 Hug Meha</span>
-        </button>
-        <button class="pill-btn urgent-btn" id="sosHandsBtn">
-          <span>🛡️ Urge to roll hair / bite nails?</span>
-        </button>
-      </div>
-
-      <!-- ==========================================================================
-           NEAR-HIM FEATURE: "What Are You Anxious About Today?" (ADHD Proven Research)
-           ========================================================================== -->
-      <div class="anxious-near-hero" id="anxiousNearSection">
-        <div class="near-hero-header">
-          <span class="badge badge-adhd">ADHD Psychological Support</span>
-          <h3>What are you anxious about today, Akku?</h3>
-          <p class="near-hero-desc">Tap what's weighing on you for research-backed executive function strategies:</p>
-        </div>
-
-        <!-- 5 Key Options requested by user -->
-        <div class="anxiety-buttons-grid">
-          <button class="anxiety-trigger-btn" data-trigger="assignments">
-            <span class="trigger-icon">📚</span>
-            <div class="trigger-meta">
-              <strong>Assignments</strong>
-              <small>ADHD paralysis & body doubling</small>
-            </div>
-          </button>
-
-          <button class="anxiety-trigger-btn" data-trigger="tony">
-            <span class="trigger-icon">💼</span>
-            <div class="trigger-meta">
-              <strong>Tony (Manager)</strong>
-              <small>Work anxiety & RSD protocol</small>
-            </div>
-          </button>
-
-          <button class="anxiety-trigger-btn" data-trigger="year_ending">
-            <span class="trigger-icon">⏳</span>
-            <div class="trigger-meta">
-              <strong>2026 is Ending</strong>
-              <small>Time blindness & urgency panic</small>
-            </div>
-          </button>
-
-          <button class="anxiety-trigger-btn" data-trigger="missing_girlfriend">
-            <span class="trigger-icon">🥺</span>
-            <div class="trigger-meta">
-              <strong>Missing My Girlfriend</strong>
-              <small>Meha's sensory anchor & warmth</small>
-            </div>
-          </button>
-
-          <button class="anxiety-trigger-btn" data-trigger="clean_house">
-            <span class="trigger-icon">🧹</span>
-            <div class="trigger-meta">
-              <strong>Need to Clean House</strong>
-              <small>Visual overwhelm & Junebugging</small>
-            </div>
-          </button>
-        </div>
-
-        <!-- Dynamic ADHD Evidence-Based Action Drawer -->
-        <div id="anxietyActionDrawer" class="anxiety-action-drawer" style="display: none;">
-          <div class="drawer-header">
-            <div class="drawer-title-group">
-              <span id="drawerIcon" class="drawer-big-icon">📚</span>
-              <div>
-                <h4 id="drawerTitle">Assignments & Executive Dysfunction</h4>
-                <span id="drawerResearchCitation" class="drawer-cite">Clinical Research: Dr. Russell Barkley (Executive Function Scaffolding)</span>
-              </div>
-            </div>
-            <button id="closeDrawerBtn" class="close-drawer-btn" aria-label="Close action drawer">✕</button>
-          </div>
-
-          <div class="drawer-body">
-            <!-- Neuro Explanation -->
-            <div class="science-callout">
-              <span class="callout-icon">🧠</span>
-              <p id="drawerNeuroExplanation">ADHD brains struggle with dopamine-gated task initiation. It's not laziness—it's an activation barrier.</p>
-            </div>
-
-            <!-- Evidence-Based Steps -->
-            <div class="adhd-protocol-box">
-              <h5>Proven Clinical Strategy:</h5>
-              <div id="drawerStepsList" class="protocol-steps">
-                <!-- Injected via JavaScript -->
-              </div>
-            </div>
-
-            <!-- Interactive Quick Tools inside drawer -->
-            <div id="drawerInteractiveAction" class="drawer-interactive-action">
-              <!-- Body Double mode, Script generator, or 5-min Junebugging -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==========================================================================
-         NEW SECTION: FEELINGS WHEEL ("Feel It, Don't Overthink It")
-         ========================================================================== -->
-    <section class="card spotlight-card feelings-wheel-card" id="feelingsWheelSection">
-      <div class="card-header">
-        <div class="card-title-group">
-          <span class="badge badge-feelings">Emotion Regulation</span>
-          <h2>The Feelings Wheel: Feel It, Don't Overthink It</h2>
-        </div>
-      </div>
-      <p class="section-desc">
-        ADHD brains often experience <em>Alexithymia</em>—overthinking thoughts in a spiral instead of identifying what the body actually feels. UCLA neuroscience shows that <strong>"naming it tames it"</strong> (affect labeling lowers amygdala activity by 40%).
-      </p>
-
-      <!-- Step 1: Core Primary Emotions -->
-      <div class="feelings-step-box">
-        <span class="step-label">Step 1: What is the primary raw sensation right now?</span>
-        <div class="feelings-core-grid" id="coreFeelingsGrid">
-          <button class="core-feel-btn" data-core="anxious" style="--feel-color: #E2847A;">
-            <div class="akku-emotion-face">
-              <svg viewBox="0 0 80 80" class="mini-face-svg">
-                <rect x="18" y="24" width="44" height="42" rx="14" fill="#FEEFE4" stroke="#F1CCA8" stroke-width="1.5"/>
-                <circle cx="16" cy="45" r="4.5" fill="#FEEFE4"/>
-                <circle cx="64" cy="45" r="4.5" fill="#FEEFE4"/>
-                <path d="M 16 32 C 14 18, 26 10, 40 10 C 54 10, 66 18, 64 32 C 58 25, 50 22, 40 22 C 30 22, 22 25, 16 32 Z" fill="#1B1715"/>
-                <circle cx="28" cy="18" r="6" fill="#1B1715"/>
-                <circle cx="40" cy="16" r="6.5" fill="#1B1715"/>
-                <circle cx="52" cy="18" r="6" fill="#1B1715"/>
-                <rect x="23" y="35" width="15" height="13" rx="3.5" stroke="#1D1D22" stroke-width="2.5" fill="rgba(255,255,255,0.25)"/>
-                <rect x="42" y="35" width="15" height="13" rx="3.5" stroke="#1D1D22" stroke-width="2.5" fill="rgba(255,255,255,0.25)"/>
-                <line x1="38" y1="41" x2="42" y2="41" stroke="#1D1D22" stroke-width="2.5"/>
-                <path d="M 24 32 Q 30 30 36 33" stroke="#1B1715" stroke-width="2.2" stroke-linecap="round"/>
-                <path d="M 44 33 Q 50 30 56 32" stroke="#1B1715" stroke-width="2.2" stroke-linecap="round"/>
-                <circle cx="30" cy="41" r="3" fill="#3A2214"/>
-                <circle cx="49" cy="41" r="3" fill="#3A2214"/>
-                <circle cx="29" cy="40" r="1" fill="#FFF"/>
-                <circle cx="48" cy="40" r="1" fill="#FFF"/>
-                <path d="M 64 28 C 66 26, 68 28, 66 31 C 64 32, 62 31, 64 28 Z" fill="#64B5F6"/>
-                <path d="M 33 54 Q 37 51 40 53 Q 43 51 47 54 Q 43 57 40 56 Q 37 57 33 54 Z" fill="#1B1715"/>
-                <path d="M 36 60 Q 38 58 40 60 Q 42 62 44 60" stroke="#3A2214" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-              </svg>
-            </div>
-            <span class="feel-label">Anxious / Scared</span>
-          </button>
-
-          <button class="core-feel-btn" data-core="overwhelmed" style="--feel-color: #E9A348;">
-            <div class="akku-emotion-face">
-              <svg viewBox="0 0 80 80" class="mini-face-svg">
-                <rect x="18" y="24" width="44" height="42" rx="14" fill="#FEEFE4" stroke="#F1CCA8" stroke-width="1.5"/>
-                <circle cx="16" cy="45" r="4.5" fill="#FEEFE4"/>
-                <circle cx="64" cy="45" r="4.5" fill="#FEEFE4"/>
-                <path d="M 16 32 C 14 18, 26 10, 40 10 C 54 10, 66 18, 64 32 C 58 25, 50 22, 40 22 C 30 22, 22 25, 16 32 Z" fill="#1B1715"/>
-                <circle cx="28" cy="18" r="6" fill="#1B1715"/>
-                <circle cx="40" cy="16" r="6.5" fill="#1B1715"/>
-                <circle cx="52" cy="18" r="6" fill="#1B1715"/>
-                <text x="32" y="11" font-size="12">💫</text>
-                <rect x="23" y="35" width="15" height="13" rx="3.5" stroke="#1D1D22" stroke-width="2.5" fill="rgba(255,255,255,0.25)"/>
-                <rect x="42" y="35" width="15" height="13" rx="3.5" stroke="#1D1D22" stroke-width="2.5" fill="rgba(255,255,255,0.25)"/>
-                <line x1="38" y1="41" x2="42" y2="41" stroke="#1D1D22" stroke-width="2.5"/>
-                <path d="M 28 41 A 2.5 2.5 0 0 1 33 41 A 1.8 1.8 0 0 1 30 42" stroke="#4A2F1B" stroke-width="1.8" fill="none"/>
-                <path d="M 47 41 A 2.5 2.5 0 0 1 52 41 A 1.8 1.8 0 0 1 49 42" stroke="#4A2F1B" stroke-width="1.8" fill="none"/>
-                <ellipse cx="27" cy="49" rx="4" ry="2.5" fill="#FFAAA6" opacity="0.6"/>
-                <ellipse cx="53" cy="49" rx="4" ry="2.5" fill="#FFAAA6" opacity="0.6"/>
-                <path d="M 33 54 Q 37 51 40 53 Q 43 51 47 54 Q 43 57 40 56 Q 37 57 33 54 Z" fill="#1B1715"/>
-                <ellipse cx="40" cy="60" rx="2.5" ry="3" fill="#4B2C1A"/>
-              </svg>
-            </div>
-            <span class="feel-label">Overstimulated</span>
-          </button>
-
-          <button class="core-feel-btn" data-core="lonely" style="--feel-color: #D97D73;">
-            <div class="akku-emotion-face">
-              <svg viewBox="0 0 80 80" class="mini-face-svg">
-                <rect x="18" y="24" width="44" height="42" rx="14" fill="#FEEFE4" stroke="#F1CCA8" stroke-width="1.5"/>
-                <circle cx="16" cy="45" r="4.5" fill="#FEEFE4"/>
-                <circle cx="64" cy="45" r="4.5" fill="#FEEFE4"/>
-                <path d="M 16 32 C 14 18, 26 10, 40 10 C 54 10, 66 18, 64 32 C 58 25, 50 22, 40 22 C 30 22, 22 25, 16 32 Z" fill="#1B1715"/>
-                <circle cx="28" cy="18" r="6" fill="#1B1715"/>
-                <circle cx="40" cy="16" r="6.5" fill="#1B1715"/>
-                <circle cx="52" cy="18" r="6" fill="#1B1715"/>
-                <text x="56" y="58" font-size="13">❤️</text>
-                <rect x="23" y="35" width="15" height="13" rx="3.5" stroke="#1D1D22" stroke-width="2.5" fill="rgba(255,255,255,0.25)"/>
-                <rect x="42" y="35" width="15" height="13" rx="3.5" stroke="#1D1D22" stroke-width="2.5" fill="rgba(255,255,255,0.25)"/>
-                <line x1="38" y1="41" x2="42" y2="41" stroke="#1D1D22" stroke-width="2.5"/>
-                <ellipse cx="30" cy="41" rx="4" ry="4.5" fill="#2E1C12"/>
-                <circle cx="28.5" cy="39.5" r="1.8" fill="#FFF"/>
-                <circle cx="32" cy="42.5" r="1" fill="#FFF"/>
-                <ellipse cx="49" cy="41" rx="4" ry="4.5" fill="#2E1C12"/>
-                <circle cx="47.5" cy="39.5" r="1.8" fill="#FFF"/>
-                <circle cx="51" cy="42.5" r="1" fill="#FFF"/>
-                <path d="M 33 54 Q 37 51 40 53 Q 43 51 47 54 Q 43 57 40 56 Q 37 57 33 54 Z" fill="#1B1715"/>
-                <path d="M 37 60 Q 40 58 43 60" stroke="#3A2214" stroke-width="2" stroke-linecap="round" fill="none"/>
-              </svg>
-            </div>
-            <span class="feel-label">Missing You</span>
-          </button>
-
-          <button class="core-feel-btn" data-core="depleted" style="--feel-color: #8E7CC3;">
-            <div class="akku-emotion-face">
-              <svg viewBox="0 0 80 80" class="mini-face-svg">
-                <g transform="rotate(3 40 40)">
-                  <rect x="18" y="24" width="44" height="42" rx="14" fill="#FEEFE4" stroke="#F1CCA8" stroke-width="1.5"/>
-                  <circle cx="16" cy="45" r="4.5" fill="#FEEFE4"/>
-                  <circle cx="64" cy="45" r="4.5" fill="#FEEFE4"/>
-                  <path d="M 16 32 C 14 18, 26 10, 40 10 C 54 10, 66 18, 64 32 C 58 25, 50 22, 40 22 C 30 22, 22 25, 16 32 Z" fill="#1B1715"/>
-                  <circle cx="28" cy="18" r="6" fill="#1B1715"/>
-                  <circle cx="40" cy="16" r="6.5" fill="#1B1715"/>
-                  <circle cx="52" cy="18" r="6" fill="#1B1715"/>
-                  <text x="56" y="22" font-size="11" fill="#8E7CC3" font-weight="900">Zzz</text>
-                  <rect x="23" y="35" width="15" height="13" rx="3.5" stroke="#1D1D22" stroke-width="2.5" fill="rgba(255,255,255,0.25)"/>
-                  <rect x="42" y="35" width="15" height="13" rx="3.5" stroke="#1D1D22" stroke-width="2.5" fill="rgba(255,255,255,0.25)"/>
-                  <line x1="38" y1="41" x2="42" y2="41" stroke="#1D1D22" stroke-width="2.5"/>
-                  <line x1="26" y1="41" x2="35" y2="41" stroke="#3A2214" stroke-width="2.5" stroke-linecap="round"/>
-                  <line x1="45" y1="41" x2="54" y2="41" stroke="#3A2214" stroke-width="2.5" stroke-linecap="round"/>
-                  <path d="M 33 54 Q 37 51 40 53 Q 43 51 47 54 Q 43 57 40 56 Q 37 57 33 54 Z" fill="#1B1715"/>
-                  <line x1="38" y1="60" x2="42" y2="60" stroke="#3A2214" stroke-width="2" stroke-linecap="round"/>
+                <!-- Refined High-Contrast Eyes -->
+                <g class="eyes" id="avatarEyes">
+                  <ellipse cx="94" cy="123" rx="6" ry="7" fill="#1A1A1A" />
+                  <circle cx="92" cy="120" r="2" fill="#FFFFFF" />
+                  <ellipse cx="146" cy="123" rx="6" ry="7" fill="#1A1A1A" />
+                  <circle cx="144" cy="120" r="2" fill="#FFFFFF" />
                 </g>
-              </svg>
-            </div>
-            <span class="feel-label">Depleted / Numb</span>
-          </button>
 
-          <button class="core-feel-btn" data-core="frustrated" style="--feel-color: #C05850;">
-            <div class="akku-emotion-face">
-              <svg viewBox="0 0 80 80" class="mini-face-svg">
-                <rect x="18" y="24" width="44" height="42" rx="14" fill="#FEEFE4" stroke="#F1CCA8" stroke-width="1.5"/>
-                <circle cx="16" cy="45" r="4.5" fill="#FEEFE4"/>
-                <circle cx="64" cy="45" r="4.5" fill="#FEEFE4"/>
-                <path d="M 16 32 C 14 18, 26 10, 40 10 C 54 10, 66 18, 64 32 C 58 25, 50 22, 40 22 C 30 22, 22 25, 16 32 Z" fill="#1B1715"/>
-                <circle cx="28" cy="18" r="6" fill="#1B1715"/>
-                <circle cx="40" cy="16" r="6.5" fill="#1B1715"/>
-                <circle cx="52" cy="18" r="6" fill="#1B1715"/>
-                <text x="57" y="23" font-size="12">💨</text>
-                <rect x="23" y="35" width="15" height="13" rx="3.5" stroke="#1D1D22" stroke-width="2.5" fill="rgba(255,255,255,0.25)"/>
-                <rect x="42" y="35" width="15" height="13" rx="3.5" stroke="#1D1D22" stroke-width="2.5" fill="rgba(255,255,255,0.25)"/>
-                <line x1="38" y1="41" x2="42" y2="41" stroke="#1D1D22" stroke-width="2.5"/>
-                <path d="M 24 33 Q 30 35 37 32" stroke="#1B1715" stroke-width="2.8" stroke-linecap="round"/>
-                <path d="M 43 32 Q 50 35 56 33" stroke="#1B1715" stroke-width="2.8" stroke-linecap="round"/>
-                <circle cx="30" cy="41" r="2.8" fill="#3A2214"/>
-                <circle cx="49" cy="41" r="2.8" fill="#3A2214"/>
-                <ellipse cx="25" cy="48" rx="4.5" ry="3" fill="#FF8A8A" opacity="0.7"/>
-                <ellipse cx="55" cy="48" rx="4.5" ry="3" fill="#FF8A8A" opacity="0.7"/>
-                <path d="M 33 54 Q 37 51 40 53 Q 43 51 47 54 Q 43 57 40 56 Q 37 57 33 54 Z" fill="#1B1715"/>
-                <line x1="37" y1="60" x2="43" y2="60" stroke="#3A2214" stroke-width="2.2" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <span class="feel-label">Stuck / Frustrated</span>
-          </button>
+                <!-- Calm Closed Eyes on Interaction -->
+                <g class="eyes-calm" id="avatarCalmEyes" style="display: none;">
+                  <line x1="88" y1="124" x2="100" y2="124" stroke="#1A1A1A" stroke-width="2.5" stroke-linecap="square" />
+                  <line x1="140" y1="124" x2="152" y2="124" stroke="#1A1A1A" stroke-width="2.5" stroke-linecap="square" />
+                </g>
 
-          <button class="core-feel-btn" data-core="tender" style="--feel-color: #5E8268;">
-            <div class="akku-emotion-face">
-              <svg viewBox="0 0 80 80" class="mini-face-svg">
-                <rect x="18" y="24" width="44" height="42" rx="14" fill="#FEEFE4" stroke="#F1CCA8" stroke-width="1.5"/>
-                <circle cx="16" cy="45" r="4.5" fill="#FEEFE4"/>
-                <circle cx="64" cy="45" r="4.5" fill="#FEEFE4"/>
-                <path d="M 16 32 C 14 18, 26 10, 40 10 C 54 10, 66 18, 64 32 C 58 25, 50 22, 40 22 C 30 22, 22 25, 16 32 Z" fill="#1B1715"/>
-                <circle cx="28" cy="18" r="6" fill="#1B1715"/>
-                <circle cx="40" cy="16" r="6.5" fill="#1B1715"/>
-                <circle cx="52" cy="18" r="6" fill="#1B1715"/>
-                <text x="56" y="24" font-size="12">✨</text>
-                <rect x="23" y="35" width="15" height="13" rx="3.5" stroke="#1D1D22" stroke-width="2.5" fill="rgba(255,255,255,0.25)"/>
-                <rect x="42" y="35" width="15" height="13" rx="3.5" stroke="#1D1D22" stroke-width="2.5" fill="rgba(255,255,255,0.25)"/>
-                <line x1="38" y1="41" x2="42" y2="41" stroke="#1D1D22" stroke-width="2.5"/>
-                <path d="M 27 42 Q 31 37 35 42" stroke="#3A2214" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-                <path d="M 45 42 Q 49 37 53 42" stroke="#3A2214" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-                <ellipse cx="25" cy="48" rx="5" ry="3.5" fill="#FF9A9E" opacity="0.75"/>
-                <ellipse cx="55" cy="48" rx="5" ry="3.5" fill="#FF9A9E" opacity="0.75"/>
-                <path d="M 33 54 Q 37 51 40 53 Q 43 51 47 54 Q 43 57 40 56 Q 37 57 33 54 Z" fill="#1B1715"/>
-                <path d="M 36 60 Q 40 63 44 60" stroke="#3A2214" stroke-width="2.2" stroke-linecap="round" fill="none"/>
-              </svg>
-            </div>
-            <span class="feel-label">Tender / Cozy</span>
-          </button>
-        </div>
-      </div>
+                <!-- Black Square Frames (Signature Spec) -->
+                <g class="glasses" id="glassesGroup">
+                  <rect x="74" y="106" width="36" height="30" rx="3" fill="none" stroke="#1A1A1A" stroke-width="4.2" />
+                  <rect x="130" y="106" width="36" height="30" rx="3" fill="none" stroke="#1A1A1A" stroke-width="4.2" />
+                  <line x1="110" y1="119" x2="130" y2="119" stroke="#1A1A1A" stroke-width="4.2" />
+                  <line x1="74" y1="117" x2="60" y2="121" stroke="#1A1A1A" stroke-width="3" />
+                  <line x1="166" y1="117" x2="180" y2="121" stroke="#1A1A1A" stroke-width="3" />
+                  <!-- Subtle Gold Temple Accent -->
+                  <circle cx="75" cy="117" r="1.5" fill="#D4AF37" />
+                  <circle cx="165" cy="117" r="1.5" fill="#D4AF37" />
+                </g>
 
-      <!-- Step 2: Nuanced Emotional Sub-Picks -->
-      <div class="feelings-sub-box" id="subFeelingsBox" style="display: none;">
-        <span class="step-label">Step 2: Let’s get precise (reduces cognitive spiral):</span>
-        <div class="sub-feelings-pills" id="subFeelingsPills">
-          <!-- Dynamically populated pills -->
-        </div>
-      </div>
+                <!-- Strong Defined Eyebrows -->
+                <path d="M 76 99 Q 92 95 104 99" stroke="#1A1A1A" stroke-width="4" stroke-linecap="square" fill="none" />
+                <path d="M 136 99 Q 148 95 164 99" stroke="#1A1A1A" stroke-width="4" stroke-linecap="square" fill="none" />
 
-      <!-- Step 3: Somatic Physical Body Scan -->
-      <div class="somatic-body-box" id="somaticBox" style="display: none;">
-        <span class="step-label">Step 3: Where is your body holding this sensation right now?</span>
-        <div class="body-scan-pills" id="bodyScanPills">
-          <button class="somatic-pill" data-somatic="chest">🫁 Tight chest / short breaths</button>
-          <button class="somatic-pill" data-somatic="hands">🖐️ Restless fingers / rolling hair / nail biting</button>
-          <button class="somatic-pill" data-somatic="jaw">😬 Clenched jaw / teeth pressing</button>
-          <button class="somatic-pill" data-somatic="shoulders">🏋️ Shoulders raised to ears</button>
-          <button class="somatic-pill" data-somatic="stomach">🦋 Butterflies / heavy stomach</button>
+                <!-- Nose Line -->
+                <path d="M 118 126 L 120 131 L 123 131" stroke="#8E857C" stroke-width="2" stroke-linecap="square" fill="none" />
+
+                <!-- Signature Moustache -->
+                <path id="avatarMoustache" d="M 102 139 C 108 134, 116 136, 120 138 C 124 136, 132 134, 138 139 C 133 144, 124 142, 120 141 C 116 142, 107 144, 102 139 Z" fill="#1A1A1A" />
+
+                <!-- Understated Mouth Line -->
+                <line x1="115" y1="148" x2="125" y2="148" stroke="#1A1A1A" stroke-width="2" stroke-linecap="square" />
+
+                <!-- Textured Wavy Hair -->
+                <g class="curls-group" id="curlsGroup">
+                  <path d="M 64 92 C 52 78, 56 46, 84 40 C 105 34, 135 34, 156 40 C 184 46, 188 78, 176 92 C 172 78, 162 66, 150 66 C 136 66, 130 74, 120 72 C 110 74, 104 66, 90 66 C 78 66, 68 78, 64 92 Z" fill="#1A1A1A" />
+                  <!-- Structured Wave Tufts -->
+                  <circle cx="68" cy="70" r="15" fill="#1A1A1A" />
+                  <circle cx="58" cy="88" r="12" fill="#1A1A1A" />
+                  <circle cx="76" cy="52" r="16" fill="#1A1A1A" />
+                  <circle cx="98" cy="42" r="17" fill="#1A1A1A" />
+                  <circle cx="120" cy="38" r="18" fill="#1A1A1A" />
+                  <circle cx="142" cy="42" r="17" fill="#1A1A1A" />
+                  <circle cx="164" cy="52" r="16" fill="#1A1A1A" />
+                  <circle cx="172" cy="70" r="15" fill="#1A1A1A" />
+                  <circle cx="182" cy="88" r="12" fill="#1A1A1A" />
+                  <circle cx="94" cy="68" r="12" fill="#1A1A1A" />
+                  <circle cx="116" cy="67" r="13" fill="#1A1A1A" />
+                  <circle cx="138" cy="68" r="12" fill="#1A1A1A" />
+                  <!-- Gold Texture Accents -->
+                  <line x1="96" y1="46" x2="104" y2="52" stroke="#D4AF37" stroke-width="1.2" opacity="0.6" />
+                  <line x1="120" y1="42" x2="128" y2="48" stroke="#D4AF37" stroke-width="1.2" opacity="0.6" />
+                  <line x1="144" y1="46" x2="152" y2="52" stroke="#D4AF37" stroke-width="1.2" opacity="0.6" />
+                </g>
+              </g>
+            </svg>
+          </div>
         </div>
 
-        <!-- Somatic Diagnosis & Prescription Card -->
-        <div id="somaticResultBox" class="somatic-result-box" style="display: none;">
-          <div class="result-bubble">
-            <span class="result-badge">Neuro-Regulation Prescription</span>
-            <h4 id="somaticResultTitle">You're feeling [Emotion] held in your [Body]</h4>
-            <p id="somaticResultDesc">Your nervous system is in sympathetic overdrive. Let's do the 1-Minute Physiological Sigh below to reset your vagus nerve.</p>
-            <button id="jumpToTimerBtn" class="pill-btn primary-pill">Jump to 1-Min Calming Reset 🫁</button>
+        <!-- Editorial Dialogue & Immediate Grounding Chips -->
+        <div class="hero-dialogue-pane">
+          <div class="author-note-wrapper">
+            <span class="overline-tag">Current Reflection</span>
+            <blockquote class="editorial-speech" id="speechText">
+              "Pause for a moment, Akku. You do not need to solve the entire trajectory of this week today. Ground your hands, unseat the tension in your jaw, and take one deliberate breath."
+            </blockquote>
+            <cite class="speech-author">— Presence Note</cite>
+          </div>
+
+          <div class="anchoring-controls">
+            <button class="editorial-chip" id="patHeadBtn">
+              <span class="chip-text">Pet Curls / Sensory Focus</span>
+            </button>
+            <button class="editorial-chip" id="hugBtn">
+              <span class="chip-text">Co-Regulate with Meha</span>
+            </button>
+            <button class="editorial-chip chip-highlight" id="sosHandsBtn">
+              <span class="chip-text">Urge to Twirl Hair or Bite Nails</span>
+            </button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ==========================================================================
-         NEW SECTION: CALMING TIMERS (Proven Short Meditation & Affirmations)
-         ========================================================================== -->
-    <section class="card spotlight-card timers-card" id="calmingTimersSection">
-      <div class="card-header">
-        <div class="card-title-group">
-          <span class="badge badge-care">ADHD Proven Neuroscience</span>
-          <h2>Calming Timers & Somatic Affirmations</h2>
-        </div>
-      </div>
-      <p class="section-desc">
-        Short, high-potency resets designed specifically for neurodivergent attention spans. No 30-minute quiet meditation required.
-      </p>
-
-      <!-- Timer Selector Buttons -->
-      <div class="timer-mode-selector">
-        <button class="timer-tab active" data-timertype="sigh">
-          <span class="timer-tab-time">1 Min</span>
-          <span class="timer-tab-name">Physiological Sigh (Panic Reset)</span>
-        </button>
-        <button class="timer-tab" data-timertype="adhd_reset">
-          <span class="timer-tab-time">3 Min</span>
-          <span class="timer-tab-name">ADHD Dopamine & Sensory Reset</span>
-        </button>
-        <button class="timer-tab" data-timertype="self_compassion">
-          <span class="timer-tab-time">5 Min</span>
-          <span class="timer-tab-name">Self-Compassion Meditation</span>
-        </button>
+    <!-- Section 2: Cognitive Restructuring & CBT Worksheets -->
+    <section class="editorial-card" id="anxietyWorksheetSection">
+      <div class="section-meta">
+        <span class="meta-number">02</span>
+        <span class="meta-label">Evidence-Based Cognitive Behavioral Protocols</span>
       </div>
 
-      <!-- Active Timer Canvas Area -->
-      <div class="active-timer-display">
-        <div class="timer-science-badge">
-          <span id="timerScienceCitation">Stanford Medicine (Huberman / Spiegel): 2 Inhales + 1 Long Exhale</span>
+      <div class="section-header-block">
+        <h2 class="section-headline">What is demanding your cognitive bandwidth right now?</h2>
+        <p class="section-subtext">Select an active point of friction to access four targeted, research-backed behavioral interventions.</p>
+      </div>
+
+      <!-- Stressor Selector Asymmetric Grid -->
+      <div class="stressor-grid">
+        <button class="stressor-tab active" data-stressor="assignments">
+          <span class="tab-index">I</span>
+          <span class="tab-name">Assignments</span>
+          <span class="tab-descriptor">Executive Dysfunction & Initiation Paralysis</span>
+        </button>
+        <button class="stressor-tab" data-stressor="tony">
+          <span class="tab-index">II</span>
+          <span class="tab-name">Tony (Manager)</span>
+          <span class="tab-descriptor">Evaluative Sensitivity & Workplace Friction</span>
+        </button>
+        <button class="stressor-tab" data-stressor="year_ending">
+          <span class="tab-index">III</span>
+          <span class="tab-name">2026 is Ending</span>
+          <span class="tab-descriptor">Temporal Discounting & Urgency Panic</span>
+        </button>
+        <button class="stressor-tab" data-stressor="missing_girlfriend">
+          <span class="tab-index">IV</span>
+          <span class="tab-name">Missing My Girlfriend</span>
+          <span class="tab-descriptor">Attachment Longing & Somatic Isolation</span>
+        </button>
+        <button class="stressor-tab" data-stressor="clean_house">
+          <span class="tab-index">V</span>
+          <span class="tab-name">Need to Clean House</span>
+          <span class="tab-descriptor">Visual Saturation & Environmental Fatigue</span>
+        </button>
+      </div>
+
+      <!-- Active CBT Worksheet Panel -->
+      <div class="cbt-workspace-panel" id="cbtWorkspace">
+        <div class="workspace-header">
+          <div class="workspace-title-group">
+            <span class="workspace-index-label" id="worksheetIndexLabel">Module I</span>
+            <h3 class="workspace-title" id="worksheetTitle">Assignments: Strategic Executive Scaffolding</h3>
+          </div>
+          <div class="workspace-progress">
+            <span class="progress-label">Completed Tasks:</span>
+            <span class="progress-count" id="cbtCompletedCount">0 / 4</span>
+          </div>
         </div>
 
-        <div class="breathing-circle-wrapper">
-          <div class="timer-circle" id="timerVisualCircle">
-            <div class="circle-inner-content">
-              <span id="timerPhaseText" class="phase-text">Ready</span>
-              <span id="timerClockDigits" class="clock-digits">01:00</span>
+        <!-- 4 Step CBT Action Grid -->
+        <div class="cbt-steps-container" id="cbtStepsList">
+          <!-- Dynamically populated via app.js -->
+        </div>
+
+        <!-- Interactive Worksheet Tool -->
+        <div class="worksheet-interactive-sub" id="worksheetInteractiveSub">
+          <!-- Dynamic custom tool container -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: The Hoffman Institute Feelings Wheel & Somatic Scan -->
+    <section class="editorial-card" id="feelingsWheelSection">
+      <div class="section-meta">
+        <span class="meta-number">03</span>
+        <span class="meta-label">Affect Labeling & Somatic Interoception</span>
+      </div>
+
+      <div class="section-header-block">
+        <h2 class="section-headline">The Feelings Spectrum: Name the State to Disarm the Spiral</h2>
+        <p class="section-subtext">Clinical studies verify that precise affective naming reduces amygdalar reactivity by transitioning neural recruitment toward the prefrontal cortex.</p>
+      </div>
+
+      <!-- Tier 1: Category Blocks -->
+      <div class="feelings-stage-block">
+        <div class="tier-label-row">
+          <span class="tier-title">Step 1: Primary Emotional Domain</span>
+          <span class="tier-caption">Select the dominant overarching frequency</span>
+        </div>
+        <div class="core-domain-grid" id="coreDomainGrid">
+          <!-- Populated by JS from Hoffman Institute List -->
+        </div>
+      </div>
+
+      <!-- Tier 2: Nuanced Emotional Granularity -->
+      <div class="feelings-stage-block" id="subDomainStage" style="display: none;">
+        <div class="tier-label-row">
+          <span class="tier-title">Step 2: Specific Emotional Granularity</span>
+          <span class="tier-caption">Choose any states that resonate with your internal landscape</span>
+        </div>
+        <div class="sub-emotions-wrap" id="subEmotionsWrap">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- Tier 3: Somatic Body Sensations -->
+      <div class="feelings-stage-block" id="somaticStage" style="display: none;">
+        <div class="tier-label-row">
+          <span class="tier-title">Step 3: Somatic Interoception</span>
+          <span class="tier-caption">Identify where tension or release is physically stored</span>
+        </div>
+        <div class="somatic-sensations-wrap" id="somaticSensationsWrap">
+          <!-- Body sensations list from Hoffman Institute -->
+        </div>
+      </div>
+
+      <!-- Tier 4: Archival Journal Note & Commit Entry -->
+      <div class="journal-commit-block" id="journalCommitBlock" style="display: none;">
+        <div class="tier-label-row">
+          <span class="tier-title">Step 4: Journal Inscription</span>
+          <span class="tier-caption">Underline-only contextual reflection</span>
+        </div>
+        
+        <div class="underline-input-wrap">
+          <input type="text" id="journalEntryNote" class="editorial-underline-input" placeholder="Add a tiny note or what triggered this state..." autocomplete="off">
+        </div>
+
+        <div class="commit-action-row">
+          <button id="submitProgressEntryBtn" class="luxury-action-btn">
+            <span>Commit Entry to Archival Log</span>
+          </button>
+          <div class="selected-summary-preview" id="selectedSummaryPreview">
+            <!-- Dynamic summary text -->
+          </div>
+        </div>
+      </div>
+
+      <!-- My Progress: Archival Journal Log -->
+      <div class="my-progress-archive" id="progressArchiveBox">
+        <div class="archive-header">
+          <div class="archive-title-meta">
+            <span class="archive-tag">Archival Record</span>
+            <h3 class="archive-headline">My Progress: Longitudinal Emotional Ledger</h3>
+          </div>
+          <button id="clearArchiveBtn" class="archive-clear-btn" title="Clear local log history">Reset Ledger</button>
+        </div>
+
+        <div class="archive-list" id="archiveEntriesList">
+          <!-- Dynamically populated or empty state -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Calming Timers Hub (Scientifically Paced Resets) -->
+    <section class="editorial-card" id="calmingTimersSection">
+      <div class="section-meta">
+        <span class="meta-number">04</span>
+        <span class="meta-label">Autonomic Nervous System Regulation</span>
+      </div>
+
+      <div class="section-header-block">
+        <h2 class="section-headline">Calibrated Timers & Somatic Reset Protocols</h2>
+        <p class="section-subtext">Brief, focused interventions engineered to rapidly engage the parasympathetic vagal brake without cognitive fatigue.</p>
+      </div>
+
+      <!-- Timer Selector Options -->
+      <div class="timer-category-selector">
+        <button class="timer-select-tab active" data-timer="sigh">
+          <span class="timer-tab-duration">01:00</span>
+          <span class="timer-tab-title">Physiological Sigh</span>
+          <span class="timer-tab-info">Rapid down-regulation via dual nasal inhale & prolonged oral exhale</span>
+        </button>
+        <button class="timer-select-tab" data-timer="adhd_reset">
+          <span class="timer-tab-duration">03:00</span>
+          <span class="timer-tab-title">Cognitive Working Memory Reset</span>
+          <span class="timer-tab-info">Physical shakeout, 5-point sensory scan, and calibrated box breath</span>
+        </button>
+        <button class="timer-select-tab" data-timer="self_compassion">
+          <span class="timer-tab-duration">05:00</span>
+          <span class="timer-tab-title">Non-Judgmental Compassion Break</span>
+          <span class="timer-tab-info">Neurological pacing to soften harsh executive self-criticism</span>
+        </button>
+      </div>
+
+      <!-- Active Timer Canvas -->
+      <div class="timer-execution-bay">
+        <div class="timer-visual-frame">
+          <div class="hairline-timer-circle" id="timerCircle">
+            <div class="circle-inner-data">
+              <span class="pacing-cue" id="timerPacingCue">Standby</span>
+              <span class="clock-readout" id="timerClockDigits">01:00</span>
             </div>
           </div>
         </div>
 
-        <p id="timerInstructionSubtitle" class="timer-sub-guide">
-          Fastest proven physiological method to reduce autonomic arousal in real-time.
+        <p class="timer-protocol-desc" id="timerProtocolDesc">
+          Two brief inhales through the nose followed by one long, slow, unforced exhalation through the mouth.
         </p>
 
-        <div class="timer-action-buttons">
-          <button id="startCalmingTimerBtn" class="action-btn primary-btn shimmer-btn">Begin 1-Min Reset 🫁</button>
-          <button id="resetCalmingTimerBtn" class="action-btn secondary-btn" style="display: none;">Stop</button>
+        <div class="timer-controls-row">
+          <button id="toggleTimerBtn" class="luxury-action-btn">
+            <span id="timerBtnText">Initiate Protocol</span>
+          </button>
+          <button id="cancelTimerBtn" class="secondary-plain-btn" style="display: none;">Cancel</button>
         </div>
       </div>
 
-      <!-- Proven ADHD Affirmations Box -->
-      <div class="adhd-affirmations-box">
-        <div class="affirmation-header">
-          <span class="badge badge-therapy">Compassionate Truth</span>
-          <button id="nextAffirmationBtn" class="text-btn">New Affirmation ↻</button>
+      <!-- Non-Toxic ADHD Affirmation Ledger -->
+      <div class="affirmation-ledger">
+        <div class="ledger-header">
+          <span class="ledger-overline">Clinical Reframing</span>
+          <button id="nextAffirmationBtn" class="ledger-refresh-btn">Advance Reflection</button>
         </div>
-        <blockquote id="affirmationQuote" class="affirmation-quote">
-          "Executive dysfunction is a neurological dopamine shortage, not a lack of willpower or moral discipline. You are doing the best you can with the brain chemistry you have today."
+        <blockquote class="ledger-quote" id="affirmationQuote">
+          "Executive dysfunction is a neurological shortage of chemical transmission, never a moral failing or character flaw. You are navigating reality with the neurotransmitters available to you today."
         </blockquote>
-        <span id="affirmationAuthor" class="affirmation-author">— Dr. Russell Barkley, ADHD Clinical Neuropsychologist</span>
       </div>
     </section>
 
-    <!-- SECTION 1: SOS BUSY HANDS SHIELD (Hero sensory tool) -->
-    <section class="card spotlight-card fidget-card" id="busyHandsSection">
-      <div class="card-header">
-        <div class="card-title-group">
-          <span class="badge badge-sos">Busy Hands Sanctuary</span>
-          <h2>Give Your Hands Something Else to Do</h2>
-        </div>
-        <div class="hands-streak-badge">
-          <span class="streak-icon">🛡️</span>
-          <span id="streakCount">0</span> urges resisted
+    <!-- Section 5: Tactile Redirection (Hair Twirling & Nail Biting Shield) -->
+    <section class="editorial-card" id="busyHandsSection">
+      <div class="section-meta">
+        <span class="meta-number">05</span>
+        <span class="meta-label">Body-Focused Repetitive Behavior Mitigation</span>
+      </div>
+
+      <div class="section-header-block">
+        <div class="streak-header-wrap">
+          <div>
+            <h2 class="section-headline">Tactile Redirection & Urge Surfing</h2>
+            <p class="section-subtext">When physical restlessness strikes, substitute destructive finger movements with non-damaging tactile inputs.</p>
+          </div>
+          <div class="streak-counter-box">
+            <span class="streak-digits" id="streakDigits">0</span>
+            <span class="streak-label">Urges Successfully Surfed</span>
+          </div>
         </div>
       </div>
 
-      <p class="section-desc">
-        When restless energy hits, twirling hair or biting nails is just your brain asking for sensory stimulation. Protect your hair and nails with these cozy tactile toys instead!
-      </p>
-
-      <!-- Fidget Tabs -->
-      <div class="fidget-tabs">
-        <button class="tab-btn active" data-tab="bubbleWrap">🫧 Bubble Popper</button>
-        <button class="tab-btn" data-tab="urgeSurfer">🌊 60s Urge Surfer</button>
-        <button class="tab-btn" data-tab="worryStone">🪨 Smooth Worry Stone</button>
+      <!-- Sub-Tool Navigation -->
+      <div class="tactile-tabs-row">
+        <button class="tactile-tab active" data-tab="matrix">Tactile Matrix</button>
+        <button class="tactile-tab" data-tab="surfer">60-Second Urge Surfer</button>
+        <button class="tactile-tab" data-tab="stone">Alabaster Worry Stone</button>
       </div>
 
-      <!-- Tab 1: Bubble Popper -->
-      <div class="tab-content active" id="tabBubbleWrap">
-        <div class="bubble-header">
-          <span id="bubbleCountText">Pop bubbles to release hand tension:</span>
-          <button id="resetBubblesBtn" class="text-btn">🔄 Reset all bubbles</button>
+      <!-- Tool 1: Tactile Matrix -->
+      <div class="tactile-panel active" id="panelMatrix">
+        <div class="matrix-bar">
+          <span class="matrix-instruction">Depress plates to release tactile motor charge:</span>
+          <button id="resetMatrixBtn" class="matrix-reset-link">Reset Plates</button>
         </div>
-        <div class="bubble-grid" id="bubbleGrid">
-          <!-- 24 tactile bubbles generated by JS -->
+        <div class="tactile-matrix-grid" id="matrixGrid">
+          <!-- 24 minimalist tactile cells -->
         </div>
       </div>
 
-      <!-- Tab 2: 60-Second Urge Surfer -->
-      <div class="tab-content" id="tabUrgeSurfer">
-        <div class="urge-surfer-box">
-          <div class="surfer-circle-wrap">
-            <svg class="progress-ring" width="160" height="160">
-              <circle class="progress-ring-bg" stroke="rgba(0,0,0,0.06)" stroke-width="10" fill="transparent" r="68" cx="80" cy="80"/>
-              <circle id="surferProgress" class="progress-ring-fill" stroke="#E2847A" stroke-width="10" stroke-linecap="round" fill="transparent" r="68" cx="80" cy="80"/>
-            </svg>
-            <div class="timer-display">
-              <span id="timerSeconds">60</span>
-              <span class="timer-label">sec</span>
+      <!-- Tool 2: 60-Second Urge Surfer -->
+      <div class="tactile-panel" id="panelSurfer">
+        <div class="surfer-editorial-box">
+          <div class="surfer-metric-frame">
+            <div class="surfer-radial-readout">
+              <span class="surfer-time-val" id="surferSecs">60</span>
+              <span class="surfer-unit">Seconds</span>
             </div>
           </div>
-          <div class="surfer-text-box">
-            <h3 id="surferStepTitle">Urges only peak for 60-90 seconds.</h3>
-            <p id="surferStepDesc">Put both hands flat on your thighs or desk. Breathe deeply. Ride the wave like a surfer until it settles.</p>
+          <div class="surfer-text-frame">
+            <h3 class="surfer-phase-title" id="surferTitle">Urges Peak Within 60 to 90 Seconds</h3>
+            <p class="surfer-phase-body" id="surferBody">Place both hands flat against your thighs or desktop. Observe the physiological urge without acting on it. Ride the crest until it dissolves.</p>
           </div>
-          <div class="surfer-controls">
-            <button id="startSurferBtn" class="action-btn primary-btn shimmer-btn">Ride the Urge Wave 🌊</button>
-            <button id="resetSurferBtn" class="action-btn secondary-btn" style="display: none;">Reset</button>
+          <div class="surfer-btn-row">
+            <button id="startSurferBtn" class="luxury-action-btn">Commence 60s Wave</button>
+            <button id="resetSurferBtn" class="secondary-plain-btn" style="display: none;">Reset Wave</button>
           </div>
         </div>
       </div>
 
-      <!-- Tab 3: Tactile Worry Stone -->
-      <div class="tab-content" id="tabWorryStone">
-        <div class="worry-stone-area">
-          <p class="stone-instructions">Rub and slide your thumb or finger smoothly across the stone to calm restless hands.</p>
-          <div class="worry-stone" id="worryStone">
-            <div class="stone-thumb-dent"></div>
-            <div class="stone-ripples" id="stoneRipples"></div>
-            <span class="stone-label">Smooth & Steady</span>
+      <!-- Tool 3: Alabaster Worry Stone -->
+      <div class="tactile-panel" id="panelStone">
+        <div class="worry-stone-editorial">
+          <p class="stone-instruction-line">Trace your thumb or pointer smoothly across the concave stone to ground physical restless impulses.</p>
+          <div class="alabaster-stone" id="alabasterStone">
+            <div class="stone-concave-groove"></div>
+            <span class="stone-inscription">Steadiness</span>
           </div>
-          <div class="stone-counter">
-            <span id="rubCount">0</span> gentle rubs
+          <div class="stone-metrics-line">
+            <span id="stoneRubCount">0</span> Deliberate Strokes Recorded
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 3: COZY SELF-CARE PRESCRIPTIONS -->
-    <section class="card spotlight-card self-care-card">
-      <div class="card-header">
-        <div class="card-title-group">
-          <span class="badge badge-care">Today's Cozy Quests</span>
-          <h2>Tiny Solutions for Big Relief</h2>
-        </div>
+    <!-- Section 6: Evening Rituals & Letters from Meha -->
+    <section class="editorial-card" id="eveningRitualSection">
+      <div class="section-meta">
+        <span class="meta-number">06</span>
+        <span class="meta-label">Evening Anchors & Notes of Warmth</span>
       </div>
 
-      <div class="quest-grid">
-        <!-- Quest 1: Light a Calming Candle -->
-        <div class="quest-card" id="candleCard">
-          <div class="quest-header">
-            <span class="quest-icon">🕯️</span>
-            <div class="quest-info">
-              <h3>Light a Cozy Candle</h3>
-              <p>Tap to bring warm light & comfort</p>
-            </div>
-          </div>
-
-          <div class="candle-interactive-box" id="candleWrapper">
-            <div class="candle-glow" id="candleGlow"></div>
-            <div class="virtual-candle" id="candleBody">
+      <div class="rituals-grid">
+        <!-- Minimalist Candle -->
+        <div class="ritual-box">
+          <span class="ritual-index">Anchor 01</span>
+          <h3 class="ritual-title">Illumination of Stillness</h3>
+          <p class="ritual-desc">A single virtual point of light to signal to the nervous system that demanding tasks are ended for the evening.</p>
+          
+          <div class="candle-stand" id="candleStand">
+            <div class="candle-glow-aura" id="candleGlow"></div>
+            <div class="candle-pillar">
               <div class="candle-wick"></div>
-              <div class="candle-flame" id="candleFlame"></div>
-              <div class="candle-wax"></div>
+              <div class="candle-flame-hairline" id="candleFlame"></div>
             </div>
-            <button id="lightCandleBtn" class="pill-btn">✨ Tap to light candle</button>
+          </div>
+          
+          <button id="lightCandleBtn" class="editorial-chip">
+            <span id="candleBtnLabel">Light Candle</span>
+          </button>
+        </div>
+
+        <!-- Call Mom Prompt -->
+        <div class="ritual-box">
+          <span class="ritual-index">Anchor 02</span>
+          <h3 class="ritual-title">Direct Maternal Connection</h3>
+          <p class="ritual-desc">Hearing a familiar voice for three minutes anchors cognitive perspective when external professional burdens feel excessive.</p>
+          <div class="ritual-actions-row">
+            <a href="tel:" class="editorial-chip">Telephone Link</a>
+            <button id="momLoggedBtn" class="editorial-chip">Acknowledge Call</button>
           </div>
         </div>
 
-        <!-- Quest 2: Call Your Mom Reminder -->
-        <div class="quest-card">
-          <div class="quest-header">
-            <span class="quest-icon">📞</span>
-            <div class="quest-info">
-              <h3>Call Your Mom</h3>
-              <p>Hear a loving voice for 5 minutes</p>
-            </div>
+        <!-- Letter from Meha -->
+        <div class="ritual-box">
+          <span class="ritual-index">Anchor 03</span>
+          <h3 class="ritual-title">Correspondence from Mehu</h3>
+          <p class="ritual-desc">An unchanging affirmation of unconditional safety, dignity, and partnership.</p>
+          
+          <div class="letter-display-box" id="letterBox" style="display: none;">
+            <p class="letter-content" id="letterContent">
+              "Akku, you do not have to carry the whole world today. Take it one gentle step at a time. I love you unconditionally, and believe in you through every season."
+            </p>
+            <span class="letter-signoff">— Forever yours, Mehu</span>
           </div>
-          <div class="mom-card-content">
-            <p>Moms have a way of putting the world back into perspective. Even a quick 3-minute "Hey Mom, thinking of you" will melt stress away.</p>
-            <div class="mom-actions">
-              <a href="tel:" class="pill-btn call-mom-btn">📱 Open Phone Call</a>
-              <button class="pill-btn check-done-btn" id="momDoneBtn">✓ I called her!</button>
-            </div>
+
+          <div class="letter-controls">
+            <button id="revealLetterBtn" class="editorial-chip">Unseal Letter</button>
+            <button id="cycleLetterBtn" class="secondary-plain-btn" style="display: none;">Advance Letter</button>
           </div>
         </div>
-
-        <!-- Quest 3: Secret Love Note from Meha -->
-        <div class="quest-card" id="loveNoteCard">
-          <div class="quest-header">
-            <span class="quest-icon">💌</span>
-            <div class="quest-info">
-              <h3>Love Note from Meha</h3>
-              <p>A personal reminder of how special you are</p>
-            </div>
-          </div>
-          <div class="envelope-box">
-            <div class="envelope" id="envelope">
-              <div class="envelope-flap"></div>
-              <div class="envelope-pocket"></div>
-              <div class="letter" id="letter">
-                <p id="loveNoteText">"Akku, you don't have to carry the whole world today. Take it one gentle step at a time. I love you so much and believe in you always!"</p>
-                <span class="letter-sig">— Forever yours, Meha ❤️</span>
-              </div>
-            </div>
-            <button id="openLetterBtn" class="pill-btn">💌 Open today's note</button>
-            <button id="newNoteBtn" class="text-btn" style="display: none;">Read another note ↻</button>
-          </div>
-        </div>
-
       </div>
     </section>
-
-    <!-- Footer -->
-    <footer class="app-footer">
-      <p>Made with all the love in the world by Meha for her favorite human, Akshat (Akku) 🧸</p>
-      <p class="footer-sub">Remember to unclench your jaw, drop your shoulders, and rest your hands.</p>
-    </footer>
 
   </main>
 
-  <!-- Confetti Canvas -->
-  <canvas id="confettiCanvas"></canvas>
+  <!-- Editorial Footer -->
+  <footer class="editorial-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <span class="footer-colophon">Curated by Mehu for Akshat (Akku)</span>
+        <span class="footer-subtext">Rest your shoulders. Release your hands. Breathe with intentional cadence.</span>
+      </div>
+      <div class="footer-right">
+        <span class="footer-year">Autumn 2026 Edition</span>
+      </div>
+    </div>
+  </footer>
 
   <script src="app.js"></script>
 </body>
