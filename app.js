@@ -1681,6 +1681,7 @@
 
   // Data Resilience: Export & Restore Backup Engine
   const exportBackupBtn = document.getElementById('exportBackupBtn');
+  const inpageExportBackupBtn = document.getElementById('inpageExportBackupBtn');
   const importBackupBtn = document.getElementById('importBackupBtn');
   const backupFileInput = document.getElementById('backupFileInput');
 
@@ -1710,6 +1711,12 @@
 
       playCuteBabySound();
       updateSpeech("Backup exported safely! Keep that file safe.");
+    });
+  }
+
+  if (inpageExportBackupBtn && exportBackupBtn) {
+    inpageExportBackupBtn.addEventListener('click', () => {
+      exportBackupBtn.click();
     });
   }
 
@@ -2741,8 +2748,10 @@
     sigh: {
       totalDuration: 60,
       name: 'Physiological Sigh',
-      desc: 'Two brief inhales through the nose followed by one long, slow, unforced exhalation through the mouth. Clinical research verifies this instantly resets carbon dioxide balance and triggers the parasympathetic vagal brake.',
-      // Cycle: Inhale (2s), Top-off Inhale (1.5s), Slow Exhale (5s), Rest (1.5s) = 10s per cycle
+      title: 'The Physiological Sigh',
+      image: 'images/timer-sigh.jpg',
+      desc: 'Two quick inhales through your nose, then a long, slow sigh out your mouth. Resets carbon dioxide balance and calms your nervous system.',
+      coaching: 'Sit with dropped shoulders. Inhale deeply through your nose, take a second quick sharp inhale to expand your lungs fully, then release a slow, soothing unforced sigh through your mouth.',
       cyclePattern: [
         { phase: 'Inhale through nose', duration: 2.0, visualClass: 'inhale' },
         { phase: 'Top-off inhale', duration: 1.5, visualClass: 'inhale' },
@@ -2752,8 +2761,11 @@
     },
     adhd_reset: {
       totalDuration: 180,
-      name: 'Cognitive Working Memory Reset',
-      desc: 'Physical shakeout, 5-point sensory scan, and calibrated box breath. Systematically clears working memory buffers to eliminate attentional tunneling.',
+      name: 'ADHD Brain Reset',
+      title: 'ADHD Brain Reset & Grounding',
+      image: 'images/timer-brain-reset.jpg',
+      desc: 'Shake out your hands and wrists, plant your feet flat, and take steady grounding breaths to clear mental fog.',
+      coaching: 'Plant your feet flat on the floor. Shake out your hands and wrists gently to release physical restlessness. Look gently around the room and breathe in a calm 4-4-4 rhythm.',
       cyclePattern: [
         { phase: 'Inhale smoothly', duration: 4.0, visualClass: 'inhale' },
         { phase: 'Stillness hold', duration: 4.0, visualClass: 'hold' },
@@ -2763,8 +2775,11 @@
     },
     self_compassion: {
       totalDuration: 300,
-      name: 'Non-Judgmental Compassion Break',
-      desc: 'Neurological pacing to soften harsh executive self-criticism. Places hands gently on chest or lap, acknowledging emotional discomfort without moral blame.',
+      name: 'Be Kind to Yourself',
+      title: 'Self-Compassion Break',
+      image: 'images/timer-compassion.jpg',
+      desc: 'Place a warm hand tenderly on your chest, soften your face, and breathe slowly. Give yourself permission to be human.',
+      coaching: 'Rest a warm hand flat over the center of your chest. Close your eyes or soften your gaze downward. Remind yourself that this moment is hard, and you deserve gentle patience.',
       cyclePattern: [
         { phase: 'Gentle inhale', duration: 5.0, visualClass: 'inhale' },
         { phase: 'Soft presence', duration: 3.0, visualClass: 'hold' },
@@ -2787,6 +2802,11 @@
   const toggleTimerBtn = document.getElementById('toggleTimerBtn');
   const timerBtnText = document.getElementById('timerBtnText');
   const cancelTimerBtn = document.getElementById('cancelTimerBtn');
+  const completeTimerEarlyBtn = document.getElementById('completeTimerEarlyBtn');
+  const calmSavedNotice = document.getElementById('calmSavedNotice');
+  const activeProtocolHeroImg = document.getElementById('activeProtocolHeroImg');
+  const activeCoachingTitle = document.getElementById('activeCoachingTitle');
+  const activeCoachingDesc = document.getElementById('activeCoachingDesc');
   const timerSelectTabs = document.querySelectorAll('.timer-select-tab');
 
   function formatTime(secs) {
@@ -2805,6 +2825,17 @@
     if (timerClockDigits) timerClockDigits.textContent = formatTime(remainingSeconds);
     if (timerProtocolDesc) timerProtocolDesc.textContent = protocol.desc;
     if (timerPacingCue) timerPacingCue.textContent = 'Standby';
+
+    if (activeProtocolHeroImg && protocol.image) {
+      activeProtocolHeroImg.src = protocol.image;
+      activeProtocolHeroImg.alt = protocol.title;
+    }
+    if (activeCoachingTitle && protocol.title) {
+      activeCoachingTitle.textContent = protocol.title;
+    }
+    if (activeCoachingDesc && protocol.coaching) {
+      activeCoachingDesc.textContent = protocol.coaching;
+    }
 
     if (timerCircle) {
       timerCircle.className = 'hairline-timer-circle';
@@ -2828,7 +2859,7 @@
 
     timerInterval = setInterval(() => {
       if (remainingSeconds <= 0) {
-        completeTimer();
+        completeTimer(false);
         return;
       }
 
@@ -2883,9 +2914,9 @@
     if (timerCircle) timerCircle.className = 'hairline-timer-circle';
   }
 
-  function completeTimer() {
+  function completeTimer(isManual = false) {
     stopTimer();
-    if (timerPacingCue) timerPacingCue.textContent = 'Protocol Complete';
+    if (timerPacingCue) timerPacingCue.textContent = isManual ? 'Session Saved' : 'Protocol Complete';
     if (timerClockDigits) timerClockDigits.textContent = '00:00';
     if (timerCircle) {
       timerCircle.className = 'hairline-timer-circle hold';
@@ -2894,11 +2925,23 @@
     const protocol = timerProtocols[activeTimerKey];
     const protoName = protocol ? protocol.name : 'Breathing Session';
     const protoDur = protocol ? protocol.totalDuration : 60;
+    
     recordActivityCompleted(
       `Calming Timer - ${protoName}`,
-      `Completed full ${formatTime(protoDur)} pacing cycle. Nervous system regulated.`,
+      isManual 
+        ? `Completed early calming session. Grounded nervous system and prevented body damage.`
+        : `Completed full ${formatTime(protoDur)} pacing cycle. Nervous system regulated.`,
       ['Autonomic Regulation']
     );
+
+    updateSpeech("Proud of you for taking a breath Akku! Your body and mind thank you.");
+
+    if (calmSavedNotice) {
+      calmSavedNotice.style.display = 'block';
+      setTimeout(() => {
+        calmSavedNotice.style.display = 'none';
+      }, 4000);
+    }
 
     setTimeout(() => {
       selectTimer(activeTimerKey);
@@ -2925,12 +2968,22 @@
     });
   }
 
+  if (completeTimerEarlyBtn) {
+    completeTimerEarlyBtn.addEventListener('click', () => {
+      playClick(1200);
+      completeTimer(true);
+    });
+  }
+
   timerSelectTabs.forEach(tab => {
     tab.addEventListener('click', () => {
       playClick(1100);
       selectTimer(tab.dataset.timer);
     });
   });
+
+  // Initialize active timer state
+  selectTimer('sigh');
 
   // Affirmation Ledger (Non-Toxic, Research-Backed Reframings - Strict Zero Emojis)
   const affirmationsList = [

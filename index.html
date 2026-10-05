@@ -632,7 +632,10 @@
             <span class="archive-tag">History</span>
             <h3 class="archive-headline">My Progress: What you've done & felt</h3>
           </div>
-          <button id="clearArchiveBtn" class="archive-clear-btn" title="Clear history">Clear History</button>
+          <div class="archive-actions-header">
+            <button id="inpageExportBackupBtn" class="backup-pill-btn" title="Download backup of all progress and notes">Export Backup</button>
+            <button id="clearArchiveBtn" class="archive-clear-btn" title="Clear history">Clear History</button>
+          </div>
         </div>
 
         <!-- Section 04 Summary Stats Ribbon -->
@@ -672,27 +675,73 @@
         <h2 class="section-headline">Quick calm timers</h2>
       </div>
 
-      <!-- Timer Selector Options -->
+      <!-- Timer Selector Options with Visual Instructional Cards -->
       <div class="timer-category-selector">
         <button class="timer-select-tab active" data-timer="sigh">
-          <span class="timer-tab-duration">01:00</span>
-          <span class="timer-tab-title">Reset breath</span>
+          <div class="timer-card-top">
+            <span class="timer-tab-duration">01:00</span>
+            <span class="timer-tab-title">Reset breath</span>
+          </div>
+          <div class="timer-instruction-img-wrap">
+            <img src="images/timer-sigh.jpg" alt="Instructional illustration for Physiological Sigh: two quick inhales, slow sigh out" class="timer-card-img" />
+          </div>
           <span class="timer-tab-info">Two quick inhales through your nose, then a slow sigh out your mouth</span>
+          <div class="timer-mini-steps">
+            <span class="timer-step-tag">1. Double Inhale</span>
+            <span class="timer-step-tag">2. Drop Shoulders</span>
+            <span class="timer-step-tag">3. Gentle Sigh</span>
+          </div>
         </button>
+
         <button class="timer-select-tab" data-timer="adhd_reset">
-          <span class="timer-tab-duration">03:00</span>
-          <span class="timer-tab-title">Brain reset</span>
+          <div class="timer-card-top">
+            <span class="timer-tab-duration">03:00</span>
+            <span class="timer-tab-title">Brain reset</span>
+          </div>
+          <div class="timer-instruction-img-wrap">
+            <img src="images/timer-brain-reset.jpg" alt="Instructional illustration for ADHD Brain Reset: shake hands, feet flat, orient gaze" class="timer-card-img" />
+          </div>
           <span class="timer-tab-info">Shake your hands out, look around the room, and take even breaths</span>
+          <div class="timer-mini-steps">
+            <span class="timer-step-tag">1. Shake Wrists</span>
+            <span class="timer-step-tag">2. Ground Feet</span>
+            <span class="timer-step-tag">3. Orient Gaze</span>
+          </div>
         </button>
+
         <button class="timer-select-tab" data-timer="self_compassion">
-          <span class="timer-tab-duration">05:00</span>
-          <span class="timer-tab-title">Be kind to yourself</span>
+          <div class="timer-card-top">
+            <span class="timer-tab-duration">05:00</span>
+            <span class="timer-tab-title">Be kind to yourself</span>
+          </div>
+          <div class="timer-instruction-img-wrap">
+            <img src="images/timer-compassion.jpg" alt="Instructional illustration for Self-Compassion Break: hand on heart, slow breath" class="timer-card-img" />
+          </div>
           <span class="timer-tab-info">Slow down, place a hand on your chest, and take a gentle break</span>
+          <div class="timer-mini-steps">
+            <span class="timer-step-tag">1. Hand on Heart</span>
+            <span class="timer-step-tag">2. Slow Breath</span>
+            <span class="timer-step-tag">3. Warm Kindness</span>
+          </div>
         </button>
       </div>
 
       <!-- Active Timer Canvas -->
       <div class="timer-execution-bay">
+        <!-- Visual Instruction Guide for Active Timer -->
+        <div class="active-protocol-visual-bar" id="activeProtocolVisualBar">
+          <div class="active-protocol-img-wrap">
+            <img id="activeProtocolHeroImg" src="images/timer-sigh.jpg" alt="How to do this breath" class="active-hero-instruction-img" />
+          </div>
+          <div class="active-protocol-coaching">
+            <span class="active-coaching-overline" id="activeCoachingOverline">Active Coaching</span>
+            <h4 class="active-coaching-title" id="activeCoachingTitle">The Physiological Sigh</h4>
+            <p class="active-coaching-desc" id="activeCoachingDesc">
+              Sit with dropped shoulders. Inhale deeply through your nose, take a second quick sharp inhale to expand your lungs fully, then release a slow, soothing unforced sigh through your mouth.
+            </p>
+          </div>
+        </div>
+
         <div class="timer-visual-frame">
           <div class="hairline-timer-circle" id="timerCircle">
             <div class="circle-inner-data">
@@ -710,8 +759,12 @@
           <button id="toggleTimerBtn" class="luxury-action-btn">
             <span id="timerBtnText">Start timer</span>
           </button>
+          <button id="completeTimerEarlyBtn" class="luxury-action-btn complete-btn" title="Complete this calming session and record progress">
+            <span>Complete &amp; save to progress</span>
+          </button>
           <button id="cancelTimerBtn" class="secondary-plain-btn" style="display: none;">Cancel</button>
         </div>
+        <span id="calmSavedNotice" class="step-done-notice" style="display: none; margin-top: 0.8rem;">Calming session saved to your progress ledger!</span>
       </div>
 
       <!-- Affirmation Ledger -->
