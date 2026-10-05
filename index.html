@@ -29,6 +29,16 @@
         <h1 class="nav-title">For Akku, curated with love from Mehu</h1>
       </div>
       <div class="nav-right">
+        <button id="topProgressBtn" class="editorial-nav-btn" title="View all saved progress with dates and times" aria-label="Progress Log">
+          <span class="nav-btn-tag">Ledger</span>
+          <span class="nav-btn-text">Progress</span>
+          <span class="nav-btn-badge" id="progressCountBadge">0</span>
+        </button>
+        <button id="topNotesBtn" class="editorial-nav-btn" title="View all saved notes to Meha" aria-label="Notes to Meha">
+          <span class="nav-btn-tag">Dear Mehu</span>
+          <span class="nav-btn-text">Notes to Meha</span>
+          <span class="nav-btn-badge" id="notesCountBadge">0</span>
+        </button>
         <button id="soundToggle" class="minimal-toggle" title="Toggle Acoustic Feedback" aria-label="Toggle Sound">
           <span class="toggle-dot"></span>
           <span class="toggle-text" id="soundStatusText">Sound: Off</span>
@@ -36,6 +46,57 @@
       </div>
     </div>
   </header>
+
+  <!-- Editorial Slide-Over Drawer: Progress & Notes to Meha -->
+  <div class="editorial-drawer-overlay" id="drawerOverlay" style="display: none;">
+    <div class="editorial-drawer" id="editorialDrawer">
+      <div class="drawer-header">
+        <div class="drawer-tabs-row">
+          <button class="drawer-tab active" id="drawerTabProgress" data-tab="progress">
+            <span>Progress Ledger</span>
+            <span class="drawer-count-badge" id="drawerProgressBadge">0</span>
+          </button>
+          <button class="drawer-tab" id="drawerTabNotes" data-tab="notes">
+            <span>Notes to Meha</span>
+            <span class="drawer-count-badge" id="drawerNotesBadge">0</span>
+          </button>
+        </div>
+        <button class="drawer-close-btn" id="drawerCloseBtn" aria-label="Close panel">Close</button>
+      </div>
+
+      <!-- Panel 1: Progress Ledger with Date & Time -->
+      <div class="drawer-panel active" id="drawerPanelProgress">
+        <div class="drawer-panel-intro">
+          <p class="drawer-intro-text">Every action step, calming timer, feelings reflection, and safe urge wave is tracked here with exact dates and times.</p>
+          <button class="drawer-clear-btn" id="drawerClearProgressBtn">Clear Progress</button>
+        </div>
+        <div class="drawer-entries-list" id="drawerProgressList">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Panel 2: Notes to Meha -->
+      <div class="drawer-panel" id="drawerPanelNotes">
+        <div class="notes-composer-box">
+          <span class="composer-overline">Leave a love note</span>
+          <h4 class="composer-title">Write a note to Meha</h4>
+          <textarea id="drawerNoteInput" class="composer-textarea" rows="3" placeholder="Write a sweet thought, gratitude, memory, or feeling for Mehu..."></textarea>
+          <div class="composer-actions">
+            <button id="saveDrawerNoteBtn" class="luxury-action-btn">Save Note to Meha</button>
+            <span id="drawerNoteSavedNotice" class="step-done-notice" style="display: none;">Saved for Meha!</span>
+          </div>
+        </div>
+
+        <div class="notes-history-header">
+          <span class="history-label">Saved Love Notes</span>
+          <button class="drawer-clear-btn" id="drawerClearNotesBtn">Clear Notes</button>
+        </div>
+        <div class="drawer-entries-list" id="drawerNotesList">
+          <!-- Dynamically populated with saved notes -->
+        </div>
+      </div>
+    </div>
+  </div>
 
   <main class="page-layout">
     
@@ -620,6 +681,16 @@
         </div>
         <div class="tactile-matrix-grid" id="matrixGrid">
           <!-- 24 3D tactile silicone bubbles -->
+        </div>
+
+        <!-- Completion Card: "Better than hurting your body, huh?" -->
+        <div class="matrix-completion-card" id="matrixCompletionCard" style="display: none;">
+          <div class="completion-card-inner">
+            <span class="completion-pill">Protected your hands</span>
+            <h3 class="completion-headline">Better than hurting your body, huh?</h3>
+            <p class="completion-subtext">All 24 bubbles popped safely. Your hands found calm without any harm.</p>
+            <button id="resetAfterCompleteBtn" class="matrix-reset-prominent-btn">Reset bubbles & pop again</button>
+          </div>
         </div>
       </div>
 

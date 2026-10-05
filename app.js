@@ -867,6 +867,389 @@
   let activeProblemKey = null;
   let activeStepIdx = 0;
 
+  // ==========================================================================
+  // Global Helpers, Ledger & Notes to Meha Engine
+  // Saves all progress with date & time, Notes to Meha drawer, and live badges
+  // Strict Zero Emojis.
+  // ==========================================================================
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/[&<>"']/g, function (m) {
+      switch (m) {
+        case '&': return '&amp;';
+        case '<': return '&lt;';
+        case '>': return '&gt;';
+        case '"': return '&quot;';
+        case "'": return '&#039;';
+        default: return m;
+      }
+    });
+  }
+
+  function getFormattedDateTime() {
+    const now = new Date();
+    const options = { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' };
+    return now.toLocaleDateString('en-US', options);
+  }
+
+  const PROGRESS_ARCHIVE_KEY = 'akku_progress_ledger_v2';
+  const NOTES_MEHA_KEY = 'akku_notes_to_meha_v1';
+
+  function getArchiveEntries() {
+    try {
+      const data = localStorage.getItem(PROGRESS_ARCHIVE_KEY);
+      return data ? JSON.parse(data) : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function setArchiveEntries(entries) {
+    try {
+      localStorage.setItem(PROGRESS_ARCHIVE_KEY, JSON.stringify(entries));
+    } catch (e) {}
+  }
+
+  function logProgressEvent(domain, note = '', subEmotions = ['Completed'], somaticSensations = []) {
+    const entries = getArchiveEntries();
+    const formattedDate = getFormattedDateTime();
+
+    const newEntry = {
+      id: 'prog_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6),
+      timestamp: formattedDate,
+      domain: domain,
+      subEmotions: Array.isArray(subEmotions) ? subEmotions : [subEmotions],
+      somaticSensations: Array.isArray(somaticSensations) ? somaticSensations : [],
+      note: note
+    };
+
+    entries.unshift(newEntry);
+    setArchiveEntries(entries);
+    renderArchiveLedger();
+    return newEntry;
+  }
+
+  function getNotesToMeha() {
+    try {
+      const data = localStorage.getItem(NOTES_MEHA_KEY);
+      return data ? JSON.parse(data) : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function setNotesToMeha(notes) {
+    try {
+      localStorage.setItem(NOTES_MEHA_KEY, JSON.stringify(notes));
+    } catch (e) {}
+  }
+
+  function addNoteToMeha(text) {
+    if (!text || !text.trim()) return null;
+    const notes = getNotesToMeha();
+    const formattedDate = getFormattedDateTime();
+
+    const newNote = {
+      id: 'note_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6),
+      timestamp: formattedDate,
+      text: text.trim()
+    };
+
+    notes.unshift(newNote);
+    setNotesToMeha(notes);
+    renderNotesList();
+
+    // Also log event to the central progress ledger
+    logProgressEvent('Love Note to Meha', `"${text.trim()}"`, ['Dear Mehu']);
+    return newNote;
+  }
+
+  function renderArchiveLedger() {
+    const entries = getArchiveEntries();
+
+    // Update top nav badge and drawer badge
+    const progressCountBadge = document.getElementById('progressCountBadge');
+    const drawerProgressBadge = document.getElementById('drawerProgressBadge');
+    if (progressCountBadge) progressCountBadge.textContent = String(entries.length);
+    if (drawerProgressBadge) drawerProgressBadge.textContent = String(entries.length);
+
+    // 1. Render in Section 04 Feelings Wheel Ledger
+    const archiveList = document.getElementById('archiveEntriesList');
+    if (archiveList) {
+      if (entries.length === 0) {
+        archiveList.innerHTML = `
+          <div class="empty-archive-msg">
+            The ledger is awaiting your first reflection. Select a domain above to record an affective observation.
+          </div>
+        `;
+      } else {
+        archiveList.innerHTML = '';
+        entries.forEach(entry => {
+          const row = document.createElement('div');
+          row.className = 'archive-entry-row';
+
+          const subTagsHtml = entry.subEmotions && entry.subEmotions.length > 0
+            ? entry.subEmotions.map(sub => `<span class="entry-tag-item">${escapeHtml(sub)}</span>`).join('')
+            : '<span class="entry-tag-item" style="color: var(--muted);">Completed</span>';
+
+          const somaticTagsHtml = entry.somaticSensations && entry.somaticSensations.length > 0
+            ? `<div class="entry-somatic-item">Physical sensations: ${escapeHtml(entry.somaticSensations.join(', '))}</div>`
+            : '';
+
+          const noteHtml = entry.note
+            ? `<blockquote class="entry-note-quote">"${escapeHtml(entry.note)}"</blockquote>`
+            : '';
+
+          row.innerHTML = `
+            <div class="entry-timestamp">${escapeHtml(entry.timestamp)}</div>
+            <div class="entry-detail-group">
+              <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                <strong style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--fg); font-weight: 500;">${escapeHtml(entry.domain)}</strong>
+                <button class="archive-delete-btn" data-id="${entry.id}" style="background: none; border: none; font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); cursor: pointer;" title="Remove entry">Delete</button>
+              </div>
+              <div class="entry-tags-row">
+                ${subTagsHtml}
+              </div>
+              ${somaticTagsHtml}
+              ${noteHtml}
+            </div>
+          `;
+
+          const delBtn = row.querySelector('.archive-delete-btn');
+          if (delBtn) {
+            delBtn.addEventListener('click', () => {
+              const updated = getArchiveEntries().filter(e => e.id !== entry.id);
+              setArchiveEntries(updated);
+              playClick(800);
+              renderArchiveLedger();
+            });
+          }
+
+          archiveList.appendChild(row);
+        });
+      }
+    }
+
+    // 2. Render in Top-Right Slide-Over Drawer Progress Ledger
+    const drawerList = document.getElementById('drawerProgressList');
+    if (drawerList) {
+      if (entries.length === 0) {
+        drawerList.innerHTML = `
+          <div class="empty-archive-msg">
+            No activities recorded yet. When you complete action steps, surf urges, pop bubbles, or take mindful breaths, they are automatically logged here with exact dates and times.
+          </div>
+        `;
+      } else {
+        drawerList.innerHTML = '';
+        entries.forEach(entry => {
+          const card = document.createElement('div');
+          card.className = 'drawer-entry-card';
+
+          const tag = (entry.subEmotions && entry.subEmotions[0]) ? entry.subEmotions[0] : 'Progress';
+          const somaticHtml = (entry.somaticSensations && entry.somaticSensations.length > 0)
+            ? `<div style="font-size: 11.5px; color: var(--muted); margin-top: 0.4rem; font-style: italic;">Sensations: ${escapeHtml(entry.somaticSensations.join(', '))}</div>`
+            : '';
+
+          card.innerHTML = `
+            <div class="drawer-entry-meta">
+              <span class="drawer-entry-time">${escapeHtml(entry.timestamp)}</span>
+              <span class="drawer-entry-badge">${escapeHtml(tag)}</span>
+            </div>
+            <h5 class="drawer-entry-title">${escapeHtml(entry.domain)}</h5>
+            ${entry.note ? `<p class="drawer-entry-note">${escapeHtml(entry.note)}</p>` : ''}
+            ${somaticHtml}
+            <button class="drawer-entry-delete" data-id="${entry.id}">Remove</button>
+          `;
+
+          const delBtn = card.querySelector('.drawer-entry-delete');
+          if (delBtn) {
+            delBtn.addEventListener('click', () => {
+              const updated = getArchiveEntries().filter(e => e.id !== entry.id);
+              setArchiveEntries(updated);
+              playClick(800);
+              renderArchiveLedger();
+            });
+          }
+
+          drawerList.appendChild(card);
+        });
+      }
+    }
+  }
+
+  function renderNotesList() {
+    const notes = getNotesToMeha();
+    const notesCountBadge = document.getElementById('notesCountBadge');
+    const drawerNotesBadge = document.getElementById('drawerNotesBadge');
+    if (notesCountBadge) notesCountBadge.textContent = String(notes.length);
+    if (drawerNotesBadge) drawerNotesBadge.textContent = String(notes.length);
+
+    const notesList = document.getElementById('drawerNotesList');
+    if (!notesList) return;
+
+    if (notes.length === 0) {
+      notesList.innerHTML = `
+        <div class="empty-archive-msg">
+          No love notes saved yet. Write your first sweet thought or reminder for Mehu above, and it will be preserved here with exact timestamps.
+        </div>
+      `;
+      return;
+    }
+
+    notesList.innerHTML = '';
+    notes.forEach(note => {
+      const card = document.createElement('div');
+      card.className = 'drawer-entry-card';
+
+      card.innerHTML = `
+        <div class="drawer-entry-meta">
+          <span class="drawer-entry-time">${escapeHtml(note.timestamp)}</span>
+          <span class="drawer-entry-badge">Dear Mehu</span>
+        </div>
+        <p class="drawer-entry-note">${escapeHtml(note.text)}</p>
+        <button class="drawer-entry-delete" data-id="${note.id}">Remove</button>
+      `;
+
+      const delBtn = card.querySelector('.drawer-entry-delete');
+      if (delBtn) {
+        delBtn.addEventListener('click', () => {
+          const updated = getNotesToMeha().filter(n => n.id !== note.id);
+          setNotesToMeha(updated);
+          playClick(800);
+          renderNotesList();
+        });
+      }
+
+      notesList.appendChild(card);
+    });
+  }
+
+  // Slide-Over Drawer Navigation
+  const topProgressBtn = document.getElementById('topProgressBtn');
+  const topNotesBtn = document.getElementById('topNotesBtn');
+  const drawerOverlay = document.getElementById('drawerOverlay');
+  const drawerCloseBtn = document.getElementById('drawerCloseBtn');
+  const drawerTabProgress = document.getElementById('drawerTabProgress');
+  const drawerTabNotes = document.getElementById('drawerTabNotes');
+  const drawerPanelProgress = document.getElementById('drawerPanelProgress');
+  const drawerPanelNotes = document.getElementById('drawerPanelNotes');
+  const drawerNoteInput = document.getElementById('drawerNoteInput');
+  const saveDrawerNoteBtn = document.getElementById('saveDrawerNoteBtn');
+  const drawerNoteSavedNotice = document.getElementById('drawerNoteSavedNotice');
+  const drawerClearProgressBtn = document.getElementById('drawerClearProgressBtn');
+  const drawerClearNotesBtn = document.getElementById('drawerClearNotesBtn');
+
+  function openDrawer(tabName = 'progress') {
+    if (!drawerOverlay) return;
+    drawerOverlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    switchDrawerTab(tabName);
+    playClick(1000);
+  }
+
+  function closeDrawer() {
+    if (!drawerOverlay) return;
+    drawerOverlay.style.display = 'none';
+    document.body.style.overflow = '';
+    playClick(800);
+  }
+
+  function switchDrawerTab(tabName) {
+    if (tabName === 'progress') {
+      if (drawerTabProgress) drawerTabProgress.classList.add('active');
+      if (drawerTabNotes) drawerTabNotes.classList.remove('active');
+      if (drawerPanelProgress) drawerPanelProgress.classList.add('active');
+      if (drawerPanelNotes) drawerPanelNotes.classList.remove('active');
+      renderArchiveLedger();
+    } else {
+      if (drawerTabProgress) drawerTabProgress.classList.remove('active');
+      if (drawerTabNotes) drawerTabNotes.classList.add('active');
+      if (drawerPanelProgress) drawerPanelProgress.classList.remove('active');
+      if (drawerPanelNotes) drawerPanelNotes.classList.add('active');
+      renderNotesList();
+      if (drawerNoteInput) {
+        setTimeout(() => drawerNoteInput.focus(), 150);
+      }
+    }
+  }
+
+  if (topProgressBtn) {
+    topProgressBtn.addEventListener('click', () => openDrawer('progress'));
+  }
+
+  if (topNotesBtn) {
+    topNotesBtn.addEventListener('click', () => openDrawer('notes'));
+  }
+
+  if (drawerCloseBtn) {
+    drawerCloseBtn.addEventListener('click', closeDrawer);
+  }
+
+  if (drawerOverlay) {
+    drawerOverlay.addEventListener('click', (e) => {
+      if (e.target === drawerOverlay) closeDrawer();
+    });
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawerOverlay && drawerOverlay.style.display !== 'none') {
+      closeDrawer();
+    }
+  });
+
+  if (drawerTabProgress) {
+    drawerTabProgress.addEventListener('click', () => {
+      switchDrawerTab('progress');
+      playClick(1100);
+    });
+  }
+
+  if (drawerTabNotes) {
+    drawerTabNotes.addEventListener('click', () => {
+      switchDrawerTab('notes');
+      playClick(1100);
+    });
+  }
+
+  if (saveDrawerNoteBtn && drawerNoteInput) {
+    saveDrawerNoteBtn.addEventListener('click', () => {
+      const text = drawerNoteInput.value.trim();
+      if (!text) {
+        drawerNoteInput.focus();
+        return;
+      }
+      addNoteToMeha(text);
+      drawerNoteInput.value = '';
+      playChime(660, 1.4);
+      if (drawerNoteSavedNotice) {
+        drawerNoteSavedNotice.style.display = 'inline-block';
+        setTimeout(() => {
+          drawerNoteSavedNotice.style.display = 'none';
+        }, 2500);
+      }
+    });
+  }
+
+  if (drawerClearProgressBtn) {
+    drawerClearProgressBtn.addEventListener('click', () => {
+      if (confirm('Clear all entries from your progress ledger?')) {
+        setArchiveEntries([]);
+        playClick(700);
+        renderArchiveLedger();
+      }
+    });
+  }
+
+  if (drawerClearNotesBtn) {
+    drawerClearNotesBtn.addEventListener('click', () => {
+      if (confirm('Clear all saved love notes to Meha?')) {
+        setNotesToMeha([]);
+        playClick(700);
+        renderNotesList();
+      }
+    });
+  }
+
   // Persistence keys
   const CBT_STORAGE_KEY = 'akku_cbt_progress_v2';
   const STEP_WORK_STORAGE_PREFIX = 'akku_step_work_v2_';
@@ -1019,22 +1402,17 @@
       progress[`${activeProblemKey}_step_${activeStepIdx}`] = true;
       setCbtProgress(progress);
 
-      const entries = getArchiveEntries();
-      const now = new Date();
-      const options = { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' };
-      const formattedDate = now.toLocaleDateString('en-US', options);
+      // Log to central progress ledger
+      logProgressEvent(
+        `${data.title} - ${step.name}`,
+        text || `Completed "${step.name}"`,
+        ['CBT Action Step']
+      );
 
-      const newEntry = {
-        id: 'work_' + Date.now(),
-        timestamp: formattedDate,
-        domain: `${data.title} - ${step.name}`,
-        subEmotions: ['Completed Step'],
-        somaticSensations: [],
-        note: text || `Completed "${step.name}"`
-      };
-      entries.unshift(newEntry);
-      setArchiveEntries(entries);
-      renderArchiveLedger();
+      // If this was writing a note to Meha in Missing My Girlfriend, also save to Notes to Meha!
+      if (activeProblemKey === 'missing_girlfriend' && activeStepIdx === 3 && text) {
+        addNoteToMeha(text);
+      }
 
       const notice = document.getElementById('stepDoneNotice');
       if (notice) {
@@ -1173,23 +1551,6 @@
 
   const archiveEntriesList = document.getElementById('archiveEntriesList');
   const clearArchiveBtn = document.getElementById('clearArchiveBtn');
-
-  const PROGRESS_ARCHIVE_KEY = 'akku_progress_ledger_v2';
-
-  function getArchiveEntries() {
-    try {
-      const data = localStorage.getItem(PROGRESS_ARCHIVE_KEY);
-      return data ? JSON.parse(data) : [];
-    } catch (e) {
-      return [];
-    }
-  }
-
-  function setArchiveEntries(entries) {
-    try {
-      localStorage.setItem(PROGRESS_ARCHIVE_KEY, JSON.stringify(entries));
-    } catch (e) {}
-  }
 
   const SVG_NS = 'http://www.w3.org/2000/svg';
   function createSvgEl(tag, attrs = {}) {
@@ -1516,27 +1877,17 @@
       const noteInput = document.getElementById('journalEntryNote');
       const noteText = noteInput ? noteInput.value.trim() : '';
 
-      const now = new Date();
-      const options = { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' };
-      const formattedDate = now.toLocaleDateString('en-US', options);
-
       const pathArray = [selectedWheelEmotion.core];
       if (selectedWheelEmotion.sec) pathArray.push(selectedWheelEmotion.sec);
       if (selectedWheelEmotion.tert) pathArray.push(selectedWheelEmotion.tert);
       const fullPath = pathArray.join(' - ');
 
-      const newEntry = {
-        id: 'wheel_' + Date.now(),
-        timestamp: formattedDate,
-        domain: fullPath,
-        subEmotions: ['Feelings Wheel'],
-        somaticSensations: Array.from(selectedSomaticSensations),
-        note: noteText || `Reflected on ${fullPath}`
-      };
-
-      const entries = getArchiveEntries();
-      entries.unshift(newEntry);
-      setArchiveEntries(entries);
+      logProgressEvent(
+        fullPath,
+        noteText || `Reflected on ${fullPath}`,
+        ['Feelings Wheel'],
+        Array.from(selectedSomaticSensations)
+      );
 
       playChime(660, 1.4);
 
@@ -1553,72 +1904,10 @@
           notice.style.display = 'none';
         }, 3000);
       }
-
-      renderArchiveLedger();
     });
   }
 
-  // Render My Progress Ledger
-  function renderArchiveLedger() {
-    if (!archiveEntriesList) return;
-    const entries = getArchiveEntries();
-
-    if (entries.length === 0) {
-      archiveEntriesList.innerHTML = `
-        <div class="empty-archive-msg">
-          The ledger is awaiting your first reflection. Select a domain above to record an affective observation.
-        </div>
-      `;
-      return;
-    }
-
-    archiveEntriesList.innerHTML = '';
-    entries.forEach((entry, idx) => {
-      const row = document.createElement('div');
-      row.className = 'archive-entry-row';
-
-      const subTagsHtml = entry.subEmotions.length > 0
-        ? entry.subEmotions.map(sub => `<span class="entry-tag-item">${sub}</span>`).join('')
-        : '<span class="entry-tag-item" style="color: var(--muted);">No granular states selected</span>';
-
-      const somaticTagsHtml = entry.somaticSensations.length > 0
-        ? `<div class="entry-somatic-item">Physical sensations: ${entry.somaticSensations.join(', ')}</div>`
-        : '';
-
-      const noteHtml = entry.note
-        ? `<blockquote class="entry-note-quote">"${entry.note}"</blockquote>`
-        : '';
-
-      row.innerHTML = `
-        <div class="entry-timestamp">${entry.timestamp}</div>
-        <div class="entry-detail-group">
-          <div style="display: flex; justify-content: space-between; align-items: baseline;">
-            <strong style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--fg); font-weight: 500;">${entry.domain}</strong>
-            <button class="archive-delete-btn" data-id="${entry.id}" style="background: none; border: none; font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); cursor: pointer;" title="Remove entry">Delete</button>
-          </div>
-          <div class="entry-tags-row">
-            ${subTagsHtml}
-          </div>
-          ${somaticTagsHtml}
-          ${noteHtml}
-        </div>
-      `;
-
-      const deleteBtn = row.querySelector('.archive-delete-btn');
-      if (deleteBtn) {
-        deleteBtn.addEventListener('click', () => {
-          const updated = getArchiveEntries().filter(e => e.id !== entry.id);
-          setArchiveEntries(updated);
-          playClick(800);
-          renderArchiveLedger();
-        });
-      }
-
-      archiveEntriesList.appendChild(row);
-    });
-  }
-
-  // Clear Ledger Button
+  // Clear Ledger Button in Section 04
   if (clearArchiveBtn) {
     clearArchiveBtn.addEventListener('click', () => {
       if (confirm('Reset entire archival emotional ledger?')) {
@@ -1790,6 +2079,16 @@
     if (timerCircle) {
       timerCircle.className = 'hairline-timer-circle hold';
     }
+
+    const protocol = timerProtocols[activeTimerKey];
+    if (protocol) {
+      logProgressEvent(
+        `Calming Timer - ${protocol.name}`,
+        `Completed full ${formatTime(protocol.totalDuration)} pacing cycle. Nervous system regulated.`,
+        ['Autonomic Regulation']
+      );
+    }
+
     setTimeout(() => {
       selectTimer(activeTimerKey);
     }, 4000);
@@ -1903,20 +2202,31 @@
     });
   });
 
-  // Tool 1: 24 Tactile Silicone Bubble Pop Pad
+  // Tool 1: 24 Tactile Silicone Bubble Pop Pad (Round & Glossy)
   const matrixGrid = document.getElementById('matrixGrid');
   const matrixPopCounter = document.getElementById('matrixPopCounter');
   const popAllMatrixBtn = document.getElementById('popAllMatrixBtn');
   const resetMatrixBtn = document.getElementById('resetMatrixBtn');
+  const matrixCompletionCard = document.getElementById('matrixCompletionCard');
+  const resetAfterCompleteBtn = document.getElementById('resetAfterCompleteBtn');
 
   function updateMatrixPopCounter() {
     if (!matrixGrid || !matrixPopCounter) return;
     const poppedCount = matrixGrid.querySelectorAll('.tactile-cell.depressed').length;
     matrixPopCounter.textContent = `${poppedCount} / 24 popped`;
+
     if (poppedCount === 24) {
-      playChime(660, 1.2);
+      playChime(660, 1.8);
       comfortAkshat();
-      updateSpeech("All 24 bubbles popped! Your hands are doing great.");
+      updateSpeech("Better than hurting your body, huh?");
+      if (matrixCompletionCard) {
+        matrixCompletionCard.style.display = 'block';
+      }
+      logProgressEvent('Preventing Damage', 'Popped all 24 bubbles safely. Better than hurting your body!', ['Tactile Calming']);
+    } else {
+      if (matrixCompletionCard && poppedCount < 24) {
+        matrixCompletionCard.style.display = 'none';
+      }
     }
   }
 
@@ -1977,8 +2287,24 @@
     resetMatrixBtn.addEventListener('click', () => {
       const cells = matrixGrid.querySelectorAll('.tactile-cell');
       cells.forEach(c => c.classList.remove('depressed'));
+      if (matrixCompletionCard) {
+        matrixCompletionCard.style.display = 'none';
+      }
       updateMatrixPopCounter();
       playChime(620, 0.7);
+    });
+  }
+
+  if (resetAfterCompleteBtn && matrixGrid) {
+    resetAfterCompleteBtn.addEventListener('click', () => {
+      const cells = matrixGrid.querySelectorAll('.tactile-cell');
+      cells.forEach(c => c.classList.remove('depressed'));
+      if (matrixCompletionCard) {
+        matrixCompletionCard.style.display = 'none';
+      }
+      updateMatrixPopCounter();
+      playChime(620, 0.8);
+      updateSpeech("Ready to pop again! Whenever you feel an urge to bite or twirl, use these bubbles instead.");
     });
   }
 
@@ -2052,6 +2378,9 @@
     const newStreak = getStreak() + 1;
     setStreak(newStreak);
 
+    // Log progress to the ledger
+    logProgressEvent('Urge Surfer', `Successfully surfed full 60-second urge wave without harm. Protected streak: ${newStreak}`, ['Impulse Surfing']);
+
     // Comfort Akshat and return to happy/calm
     comfortAkshat();
     updateSpeech("We surfed the entire 60-second wave together! The urge is gone and my hands are completely calm.");
@@ -2116,6 +2445,11 @@
           if (rubsCount === 50) {
             comfortAkshat();
             updateSpeech("50 gentle strokes. Your mind is quiet and your hands are at rest.");
+            logProgressEvent(
+              'Alabaster Worry Stone',
+              'Completed 50 mindful tactile rubs for sensory regulation.',
+              ['Physical Anchoring']
+            );
           }
         } else if (rubsCount > 50 && rubsCount % 15 === 0) {
           const extraCues = [
@@ -2149,6 +2483,12 @@
 
     alabasterStone.addEventListener('click', recordRub);
   }
+
+  // ==========================================================================
+  // 7. Initial Bootstrap
+  // ==========================================================================
+  renderArchiveLedger();
+  renderNotesList();
 
 })();
 
