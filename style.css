@@ -1226,21 +1226,21 @@ body {
   font-family: var(--font-sans);
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
 }
 
 .wheel-text-sec {
   font-family: var(--font-sans);
-  font-size: 9.5px;
+  font-size: 8.5px;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
 }
 
 .wheel-text-tert {
   font-family: var(--font-sans);
-  font-size: 8px;
+  font-size: 7.2px;
   font-weight: 500;
-  letter-spacing: 0.02em;
+  letter-spacing: 0em;
 }
 
 .wheel-hub-circle {
@@ -2117,142 +2117,432 @@ body {
   gap: 0.8rem;
 }
 
-/* Tool 3: Alabaster Worry Stone (Tactile Ergonomic Pebble) */
-.worry-stone-editorial {
+/* Tool 3: Mechanical Haptic Switch Deck */
+.switch-editorial-box {
   border: 1px solid #EDCEBF;
   background: #FAF2EE;
-  padding: 2.4rem;
+  padding: 2.2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
 }
 
-.stone-instruction-line {
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 1.5rem;
+.switch-deck-chassis {
+  width: 100%;
+  max-width: 620px;
+  background: #FFFFFF;
+  border: 1px solid #E6C4B4;
+  box-shadow: 0 8px 24px rgba(180, 110, 95, 0.12), inset 0 1px 0 #FFFFFF;
+  padding: 1.6rem;
+  margin-top: 1rem;
 }
 
-.stone-container {
+.switch-deck-top-bar {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  margin: 1rem 0;
+  border-bottom: 1px solid #F0D5C9;
+  padding-bottom: 0.8rem;
+  margin-bottom: 1.4rem;
 }
 
-.alabaster-stone {
-  width: 175px;
-  height: 235px;
-  border-radius: 75px 75px 60px 60px / 100px 100px 85px 85px;
-  background: radial-gradient(circle at 35% 25%, #FFFFFF 0%, #FCF8F4 45%, #F2E8E0 80%, #E8D9CE 100%);
-  border: 1px solid rgba(212, 175, 55, 0.35);
+.switch-chassis-label {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.switch-counter-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #FDF6F2;
+  border: 1px solid #ECC9BA;
+  padding: 0.25rem 0.7rem;
+}
+
+.switch-counter-digits {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--fg);
+}
+
+.switch-counter-label {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.switch-keys-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.4rem;
+}
+
+@media (max-width: 600px) {
+  .switch-keys-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.mech-key-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mech-key {
+  width: 100%;
+  aspect-ratio: 1 / 1.1;
+  background: #FAF7F4;
+  border: 2px solid #E0C0B0;
   box-shadow:
-    0 16px 40px rgba(180, 140, 120, 0.2),
-    0 4px 12px rgba(0, 0, 0, 0.05),
-    inset 0 3px 8px rgba(255, 255, 255, 0.95),
-    inset 0 -5px 12px rgba(190, 160, 140, 0.18);
+    0 8px 0 #C99E8C,
+    0 12px 18px rgba(160, 90, 75, 0.22);
+  cursor: pointer;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  cursor: grab;
+  padding: 0.6rem;
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
   user-select: none;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-  touch-action: none;
+  -webkit-user-select: none;
 }
 
-.alabaster-stone:hover {
-  box-shadow:
-    0 20px 48px rgba(212, 175, 55, 0.25),
-    0 6px 16px rgba(0, 0, 0, 0.06),
-    inset 0 2px 8px rgba(255, 255, 255, 1);
+.mech-key:hover {
+  border-color: #D4AF37;
   transform: translateY(-2px);
+  box-shadow:
+    0 10px 0 #C99E8C,
+    0 14px 22px rgba(160, 90, 75, 0.28);
 }
 
-.alabaster-stone:active {
-  cursor: grabbing;
-  transform: scale(0.97);
+.mech-key:active,
+.mech-key.pressed {
+  transform: translateY(6px);
+  box-shadow:
+    0 2px 0 #C99E8C,
+    0 4px 8px rgba(160, 90, 75, 0.18);
+  border-color: #D4AF37;
 }
 
-.stone-concave-groove {
-  width: 85px;
-  height: 115px;
-  border-radius: 50%;
-  background: radial-gradient(ellipse at 50% 45%, rgba(190, 155, 135, 0.25) 0%, rgba(200, 170, 150, 0.1) 60%, transparent 85%);
-  box-shadow: inset 0 4px 14px rgba(120, 90, 75, 0.16), 0 2px 4px rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(190, 160, 140, 0.25);
+.mech-keycap {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0.2rem;
+  width: 100%;
 }
 
-.stone-groove-cue {
+.key-shortcut-tag {
   font-family: var(--font-sans);
   font-size: 9px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(140, 110, 95, 0.65);
-  pointer-events: none;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  background: rgba(0, 0, 0, 0.04);
+  padding: 0.1rem 0.35rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-.stone-inscription {
-  margin-top: 1.2rem;
+.key-profile-name {
   font-family: var(--font-serif);
   font-size: 13px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: #A08272;
+  font-weight: 600;
+  color: var(--fg);
+  white-space: nowrap;
 }
 
-.stone-glow-point {
-  position: absolute;
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 245, 230, 0.8) 0%, rgba(212, 175, 55, 0.25) 50%, transparent 70%);
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.alabaster-stone:active .stone-glow-point {
-  opacity: 1;
-}
-
-.stone-metrics-line {
-  margin-top: 1.4rem;
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.stone-count-badge {
-  font-family: var(--font-serif);
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #B46B55;
-}
-
-.stone-count-text {
+.key-force-spec {
   font-family: var(--font-sans);
-  font-size: 10px;
-  letter-spacing: 0.18em;
+  font-size: 9px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
 }
 
-.stone-milestone-cue {
+.key-subdesc {
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* Individual Key Accent Colors */
+.mech-key-blue {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F0F4FA 100%);
+  border-top: 3px solid #2B6CB0;
+}
+.mech-key-jade {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F0F8F4 100%);
+  border-top: 3px solid #2E7D32;
+}
+.mech-key-thock {
+  background: linear-gradient(180deg, #FFFFFF 0%, #FAF2ED 100%);
+  border-top: 3px solid #C05621;
+}
+.mech-key-cream {
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFFDF9 100%);
+  border-top: 3px solid #D4AF37;
+}
+
+.switch-deck-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #F0D5C9;
+  padding-top: 1rem;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.switch-milestone-text {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--muted);
+  font-style: italic;
+  text-align: left;
+  flex: 1;
+}
+
+.switch-reset-btn {
+  background: none;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.switch-reset-btn:hover {
+  color: #B44A36;
+}
+
+/* Streak Bump Animation for Urges Surfed */
+.streak-digits.streak-bump {
+  animation: streakBumpAnim 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes streakBumpAnim {
+  0% { transform: scale(1); color: var(--fg); }
+  35% { transform: scale(1.4); color: #B44A36; text-shadow: 0 0 16px rgba(212, 175, 55, 0.5); }
+  100% { transform: scale(1); color: var(--fg); }
+}
+
+/* Phone Lock Box Drawer Panel */
+.lockbox-container-box {
+  background: #FFFDF9;
+  border: 1px solid #EFE4D2;
+  padding: 1.4rem;
+  margin-bottom: 1.8rem;
+}
+
+.lockbox-desc {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 1.2rem;
+}
+
+.vault-visual-card {
+  background: #1A1A1A;
+  color: #FAF8F5;
+  border: 1px solid #333333;
+  padding: 1.8rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 1.4rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.vault-safe-door {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.vault-dial {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #3A3A3A 0%, #1A1A1A 70%, #0F0F0F 100%);
+  border: 2px solid #D4AF37;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.8rem;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.dial-notch {
+  position: absolute;
+  top: 5px;
+  width: 4px;
+  height: 12px;
+  background: #D4AF37;
+  border-radius: 2px;
+}
+
+.dial-center {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #1A1A1A;
+  border: 1px solid #666666;
+}
+
+.vault-dial.locked {
+  transform: rotate(180deg);
+  border-color: #557E55;
+}
+
+.vault-status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.vault-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #D4AF37;
+  box-shadow: 0 0 8px #D4AF37;
+}
+
+.vault-status-dot.active {
+  background: #4ADE80;
+  box-shadow: 0 0 10px #4ADE80;
+  animation: pulseDot 1.5s infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.7; }
+}
+
+.vault-status-label {
+  font-family: var(--font-sans);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #CCCCCC;
+}
+
+.vault-timer-display {
+  font-family: var(--font-serif);
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 0.05em;
+  margin: 0.4rem 0;
+}
+
+.vault-subcue {
   font-family: var(--font-sans);
   font-size: 11px;
-  color: #8C4430;
-  font-style: italic;
-  margin-left: 0.5rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #999999;
+}
+
+.lockbox-presets-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.lockbox-preset-btn {
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  padding: 0.55rem 0.2rem;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--fg);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.lockbox-preset-btn:hover {
+  border-color: var(--gold);
+}
+
+.lockbox-preset-btn.active {
+  background: #1A1A1A;
+  color: #FFFFFF;
+  border-color: #1A1A1A;
+}
+
+.lockbox-custom-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.2rem;
+}
+
+.custom-mins-label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.custom-mins-input {
+  width: 90px;
+  border: 1px solid var(--border);
+  background: #FFFFFF;
+  padding: 0.45rem 0.6rem;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--fg);
+}
+
+.custom-mins-set-btn {
+  background: #FAF7F2;
+  border: 1px solid var(--border);
+  padding: 0.45rem 0.8rem;
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.custom-mins-set-btn:hover {
+  border-color: var(--gold);
+}
+
+.lockbox-rules-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  padding: 1.2rem;
 }
 
 /* ==========================================================================

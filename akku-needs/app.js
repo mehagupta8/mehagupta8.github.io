@@ -12,7 +12,7 @@
   // 1. Acoustic Synthesizer (Web Audio API - Minimalist, Deliberate, Restrained)
   // ==========================================================================
   let audioCtx = null;
-  let isSoundEnabled = false; // Default off for quiet editorial sanctuary, toggled by user
+  let isSoundEnabled = true; // Enabled by default so all baby sounds and clicks work immediately on user gesture
 
   function initAudio() {
     if (!audioCtx) {
@@ -111,26 +111,209 @@
     } catch (e) {}
   }
 
-  // Subtle friction texture sound for stone rubbing
-  function playStoneFriction() {
+  // Mechanical switch acoustic synthesizer
+  function playMechSwitchSound(profile = 'blue') {
     if (!isSoundEnabled) return;
     initAudio();
     if (!audioCtx) return;
 
     try {
+      const now = audioCtx.currentTime;
+
+      if (profile === 'blue') {
+        // High-pitch crisp mechanical leaf click (2400Hz to 1400Hz snap + bottom out)
+        const snapOsc = audioCtx.createOscillator();
+        const snapGain = audioCtx.createGain();
+        snapOsc.type = 'triangle';
+        snapOsc.frequency.setValueAtTime(2400, now);
+        snapOsc.frequency.exponentialRampToValueAtTime(1400, now + 0.018);
+
+        snapGain.gain.setValueAtTime(0.26, now);
+        snapGain.gain.exponentialRampToValueAtTime(0.001, now + 0.022);
+
+        snapOsc.connect(snapGain);
+        snapGain.connect(audioCtx.destination);
+        snapOsc.start(now);
+        snapOsc.stop(now + 0.022);
+
+        const thudOsc = audioCtx.createOscillator();
+        const thudGain = audioCtx.createGain();
+        thudOsc.type = 'sine';
+        thudOsc.frequency.setValueAtTime(480, now + 0.005);
+        thudOsc.frequency.exponentialRampToValueAtTime(120, now + 0.045);
+
+        thudGain.gain.setValueAtTime(0.2, now + 0.005);
+        thudGain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+
+        thudOsc.connect(thudGain);
+        thudGain.connect(audioCtx.destination);
+        thudOsc.start(now + 0.005);
+        thudOsc.stop(now + 0.05);
+
+      } else if (profile === 'jade') {
+        // Heavy thick clickbar snap + stiff spring clack
+        const barOsc = audioCtx.createOscillator();
+        const barGain = audioCtx.createGain();
+        barOsc.type = 'sawtooth';
+        barOsc.frequency.setValueAtTime(1350, now);
+        barOsc.frequency.exponentialRampToValueAtTime(600, now + 0.025);
+
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(2800, now);
+
+        barGain.gain.setValueAtTime(0.3, now);
+        barGain.gain.exponentialRampToValueAtTime(0.001, now + 0.035);
+
+        barOsc.connect(filter);
+        filter.connect(barGain);
+        barGain.connect(audioCtx.destination);
+        barOsc.start(now);
+        barOsc.stop(now + 0.035);
+
+      } else if (profile === 'thock') {
+        // Hollow, deep acoustic thock (wooden/POM cavity resonance)
+        const thockOsc = audioCtx.createOscillator();
+        const thockGain = audioCtx.createGain();
+        thockOsc.type = 'sine';
+        thockOsc.frequency.setValueAtTime(360, now);
+        thockOsc.frequency.exponentialRampToValueAtTime(75, now + 0.065);
+
+        thockGain.gain.setValueAtTime(0.36, now);
+        thockGain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+
+        thockOsc.connect(thockGain);
+        thockGain.connect(audioCtx.destination);
+        thockOsc.start(now);
+        thockOsc.stop(now + 0.07);
+
+      } else if (profile === 'cream') {
+        // Cream linear: muted, butter-smooth cushioned slide and landing
+        const creamOsc = audioCtx.createOscillator();
+        const creamGain = audioCtx.createGain();
+        creamOsc.type = 'sine';
+        creamOsc.frequency.setValueAtTime(260, now);
+        creamOsc.frequency.exponentialRampToValueAtTime(90, now + 0.04);
+
+        creamGain.gain.setValueAtTime(0.2, now);
+        creamGain.gain.exponentialRampToValueAtTime(0.001, now + 0.045);
+
+        creamOsc.connect(creamGain);
+        creamGain.connect(audioCtx.destination);
+        creamOsc.start(now);
+        creamOsc.stop(now + 0.045);
+      }
+    } catch (e) {}
+  }
+
+  // Heavy vault locking bolt sound (clunk - latch - bolt)
+  function playVaultLockSound(isLocking = true) {
+    if (!isSoundEnabled) return;
+    initAudio();
+    if (!audioCtx) return;
+
+    try {
+      const now = audioCtx.currentTime;
+
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
-
       osc.type = 'triangle';
-      osc.frequency.setValueAtTime(180 + Math.random() * 50, audioCtx.currentTime);
-      gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.08);
+      osc.frequency.setValueAtTime(isLocking ? 180 : 260, now);
+      osc.frequency.exponentialRampToValueAtTime(isLocking ? 60 : 120, now + 0.09);
+
+      gain.gain.setValueAtTime(0.28, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
 
       osc.connect(gain);
       gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.1);
 
-      osc.start();
-      osc.stop(audioCtx.currentTime + 0.08);
+      const boltOsc = audioCtx.createOscillator();
+      const boltGain = audioCtx.createGain();
+      boltOsc.type = 'sine';
+      boltOsc.frequency.setValueAtTime(isLocking ? 420 : 540, now + 0.06);
+      boltOsc.frequency.exponentialRampToValueAtTime(isLocking ? 800 : 300, now + 0.14);
+
+      boltGain.gain.setValueAtTime(0.22, now + 0.06);
+      boltGain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+
+      boltOsc.connect(boltGain);
+      boltGain.connect(audioCtx.destination);
+      boltOsc.start(now + 0.06);
+      boltOsc.stop(now + 0.15);
+    } catch (e) {}
+  }
+
+  // Adorable, cheerful baby giggle / coo acoustic synthesizer
+  function playCuteBabySound() {
+    if (!isSoundEnabled) return;
+    initAudio();
+    if (!audioCtx) return;
+
+    try {
+      const now = audioCtx.currentTime;
+
+      // 3 bubbly, joyful, high-pitched baby giggles ("he-he-hee!")
+      const giggles = [
+        { start: 0.00, fStart: 580, fPeak: 840, fEnd: 680, dur: 0.12, vol: 0.24 },
+        { start: 0.13, fStart: 660, fPeak: 940, fEnd: 740, dur: 0.13, vol: 0.26 },
+        { start: 0.27, fStart: 740, fPeak: 1080, fEnd: 820, dur: 0.17, vol: 0.28 }
+      ];
+
+      giggles.forEach(g => {
+        const t0 = now + g.start;
+        const dur = g.dur;
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        // Formant filter (vocal acoustic warmth)
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(1750, t0);
+        filter.Q.setValueAtTime(3.2, t0);
+
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(g.fStart, t0);
+        osc.frequency.linearRampToValueAtTime(g.fPeak, t0 + dur * 0.45);
+        osc.frequency.exponentialRampToValueAtTime(g.fEnd, t0 + dur);
+
+        gain.gain.setValueAtTime(0.0001, t0);
+        gain.gain.linearRampToValueAtTime(g.vol, t0 + dur * 0.2);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+
+        // Subtle sweet vibrato for natural baby inflection
+        const vib = audioCtx.createOscillator();
+        const vibGain = audioCtx.createGain();
+        vib.frequency.setValueAtTime(12, t0);
+        vibGain.gain.setValueAtTime(20, t0);
+        vib.connect(osc.frequency);
+        vib.start(t0);
+        vib.stop(t0 + dur);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(t0);
+        osc.stop(t0 + dur);
+      });
+
+      // Playful gentle sparkle chime underneath
+      const chimeOsc = audioCtx.createOscillator();
+      const chimeGain = audioCtx.createGain();
+      chimeOsc.type = 'sine';
+      chimeOsc.frequency.setValueAtTime(1174.66, now + 0.08); // D6
+      chimeOsc.frequency.exponentialRampToValueAtTime(1760, now + 0.42); // A6
+      chimeGain.gain.setValueAtTime(0.0001, now + 0.08);
+      chimeGain.gain.linearRampToValueAtTime(0.12, now + 0.2);
+      chimeGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.52);
+
+      chimeOsc.connect(chimeGain);
+      chimeGain.connect(audioCtx.destination);
+      chimeOsc.start(now + 0.08);
+      chimeOsc.stop(now + 0.52);
     } catch (e) {}
   }
 
@@ -313,18 +496,27 @@
   const soundStatusText = document.getElementById('soundStatusText');
 
   if (soundToggleBtn && soundStatusText) {
+    if (isSoundEnabled) {
+      soundToggleBtn.classList.add('sound-on');
+      soundStatusText.textContent = 'Sound: On';
+    }
+
     soundToggleBtn.addEventListener('click', () => {
       isSoundEnabled = !isSoundEnabled;
       if (isSoundEnabled) {
         initAudio();
         soundToggleBtn.classList.add('sound-on');
         soundStatusText.textContent = 'Sound: On';
-        playChime(640, 0.8);
+        playCuteBabySound();
       } else {
         soundToggleBtn.classList.remove('sound-on');
         soundStatusText.textContent = 'Sound: Off';
       }
     });
+
+    window.addEventListener('pointerdown', () => {
+      if (isSoundEnabled) initAudio();
+    }, { once: true });
   }
 
   // ==========================================================================
@@ -894,6 +1086,28 @@
 
   const PROGRESS_ARCHIVE_KEY = 'akku_progress_ledger_v2';
   const NOTES_MEHA_KEY = 'akku_notes_to_meha_v1';
+  const STREAK_KEY = 'akku_urge_streak_v2';
+  const streakDigits = document.getElementById('streakDigits');
+
+  function getStreak() {
+    try {
+      const val = localStorage.getItem(STREAK_KEY);
+      return val ? parseInt(val, 10) : 0;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  function setStreak(num) {
+    try {
+      localStorage.setItem(STREAK_KEY, String(num));
+    } catch (e) {}
+    if (streakDigits) streakDigits.textContent = String(num);
+  }
+
+  if (streakDigits) {
+    streakDigits.textContent = String(getStreak());
+  }
 
   function getArchiveEntries() {
     try {
@@ -929,6 +1143,34 @@
     return newEntry;
   }
 
+  // Central Completion Handler: Increments streak, animates streak counter, plays baby giggle chime, comforts Akku, and logs event
+  function recordActivityCompleted(activityName, note = '', subEmotions = ['Accomplished'], somaticSensations = []) {
+    // 1. Increment streak
+    const newStreak = getStreak() + 1;
+    setStreak(newStreak);
+
+    // 2. Animate streak counter with pulse
+    if (streakDigits) {
+      streakDigits.classList.remove('streak-bump');
+      void streakDigits.offsetWidth;
+      streakDigits.classList.add('streak-bump');
+      setTimeout(() => {
+        if (streakDigits) streakDigits.classList.remove('streak-bump');
+      }, 700);
+    }
+
+    // 3. Play cute cheerful baby giggle / coo
+    playCuteBabySound();
+
+    // 4. Comfort Akku if currently distressed
+    comfortAkshat();
+
+    // 5. Record to central ledger
+    logProgressEvent(activityName, note, subEmotions, somaticSensations);
+
+    return newStreak;
+  }
+
   function getNotesToMeha() {
     try {
       const data = localStorage.getItem(NOTES_MEHA_KEY);
@@ -959,8 +1201,8 @@
     setNotesToMeha(notes);
     renderNotesList();
 
-    // Also log event to the central progress ledger
-    logProgressEvent('Love Note to Meha', `"${text.trim()}"`, ['Dear Mehu']);
+    // Also log event to the central progress ledger and increment streak
+    recordActivityCompleted('Love Note to Meha', `"${text.trim()}"`, ['Dear Mehu']);
     return newNote;
   }
 
@@ -1127,12 +1369,16 @@
   // Slide-Over Drawer Navigation
   const topProgressBtn = document.getElementById('topProgressBtn');
   const topNotesBtn = document.getElementById('topNotesBtn');
+  const topLockboxBtn = document.getElementById('topLockboxBtn');
+  const lockboxStatusBadge = document.getElementById('lockboxStatusBadge');
   const drawerOverlay = document.getElementById('drawerOverlay');
   const drawerCloseBtn = document.getElementById('drawerCloseBtn');
   const drawerTabProgress = document.getElementById('drawerTabProgress');
   const drawerTabNotes = document.getElementById('drawerTabNotes');
+  const drawerTabLockbox = document.getElementById('drawerTabLockbox');
   const drawerPanelProgress = document.getElementById('drawerPanelProgress');
   const drawerPanelNotes = document.getElementById('drawerPanelNotes');
+  const drawerPanelLockbox = document.getElementById('drawerPanelLockbox');
   const drawerNoteInput = document.getElementById('drawerNoteInput');
   const saveDrawerNoteBtn = document.getElementById('saveDrawerNoteBtn');
   const drawerNoteSavedNotice = document.getElementById('drawerNoteSavedNotice');
@@ -1158,18 +1404,30 @@
     if (tabName === 'progress') {
       if (drawerTabProgress) drawerTabProgress.classList.add('active');
       if (drawerTabNotes) drawerTabNotes.classList.remove('active');
+      if (drawerTabLockbox) drawerTabLockbox.classList.remove('active');
       if (drawerPanelProgress) drawerPanelProgress.classList.add('active');
       if (drawerPanelNotes) drawerPanelNotes.classList.remove('active');
+      if (drawerPanelLockbox) drawerPanelLockbox.classList.remove('active');
       renderArchiveLedger();
-    } else {
+    } else if (tabName === 'notes') {
       if (drawerTabProgress) drawerTabProgress.classList.remove('active');
       if (drawerTabNotes) drawerTabNotes.classList.add('active');
+      if (drawerTabLockbox) drawerTabLockbox.classList.remove('active');
       if (drawerPanelProgress) drawerPanelProgress.classList.remove('active');
       if (drawerPanelNotes) drawerPanelNotes.classList.add('active');
+      if (drawerPanelLockbox) drawerPanelLockbox.classList.remove('active');
       renderNotesList();
       if (drawerNoteInput) {
         setTimeout(() => drawerNoteInput.focus(), 150);
       }
+    } else if (tabName === 'lockbox') {
+      if (drawerTabProgress) drawerTabProgress.classList.remove('active');
+      if (drawerTabNotes) drawerTabNotes.classList.remove('active');
+      if (drawerTabLockbox) drawerTabLockbox.classList.add('active');
+      if (drawerPanelProgress) drawerPanelProgress.classList.remove('active');
+      if (drawerPanelNotes) drawerPanelNotes.classList.remove('active');
+      if (drawerPanelLockbox) drawerPanelLockbox.classList.add('active');
+      updateLockboxDisplay();
     }
   }
 
@@ -1179,6 +1437,10 @@
 
   if (topNotesBtn) {
     topNotesBtn.addEventListener('click', () => openDrawer('notes'));
+  }
+
+  if (topLockboxBtn) {
+    topLockboxBtn.addEventListener('click', () => openDrawer('lockbox'));
   }
 
   if (drawerCloseBtn) {
@@ -1211,6 +1473,13 @@
     });
   }
 
+  if (drawerTabLockbox) {
+    drawerTabLockbox.addEventListener('click', () => {
+      switchDrawerTab('lockbox');
+      playClick(1100);
+    });
+  }
+
   if (saveDrawerNoteBtn && drawerNoteInput) {
     saveDrawerNoteBtn.addEventListener('click', () => {
       const text = drawerNoteInput.value.trim();
@@ -1220,7 +1489,6 @@
       }
       addNoteToMeha(text);
       drawerNoteInput.value = '';
-      playChime(660, 1.4);
       if (drawerNoteSavedNotice) {
         drawerNoteSavedNotice.style.display = 'inline-block';
         setTimeout(() => {
@@ -1248,6 +1516,241 @@
         renderNotesList();
       }
     });
+  }
+
+  // ==========================================================================
+  // Phone Lock Box Timer Engine (Cognitive RAM Protection)
+  // ==========================================================================
+  const vaultDial = document.getElementById('vaultDial');
+  const vaultStatusDot = document.getElementById('vaultStatusDot');
+  const vaultStatusLabel = document.getElementById('vaultStatusLabel');
+  const vaultTimerDisplay = document.getElementById('vaultTimerDisplay');
+  const vaultSubcue = document.getElementById('vaultSubcue');
+  const drawerLockboxBadge = document.getElementById('drawerLockboxBadge');
+  const startLockboxBtn = document.getElementById('startLockboxBtn');
+  const cancelLockboxBtn = document.getElementById('cancelLockboxBtn');
+  const lockboxPresetBtns = document.querySelectorAll('.lockbox-preset-btn');
+  const customMinsInput = document.getElementById('customMinsInput');
+  const setCustomMinsBtn = document.getElementById('setCustomMinsBtn');
+
+  let lockboxDurationMins = 15;
+  let lockboxRemainingSecs = 15 * 60;
+  let lockboxInterval = null;
+  let isLockboxRunning = false;
+
+  function formatLockboxTime(secs) {
+    const m = Math.floor(secs / 60);
+    const s = secs % 60;
+    return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  }
+
+  function updateLockboxDisplay() {
+    if (vaultTimerDisplay) {
+      vaultTimerDisplay.textContent = formatLockboxTime(lockboxRemainingSecs);
+    }
+    if (isLockboxRunning) {
+      const timeStr = formatLockboxTime(lockboxRemainingSecs);
+      if (lockboxStatusBadge) {
+        lockboxStatusBadge.textContent = timeStr;
+        lockboxStatusBadge.style.color = 'var(--gold)';
+      }
+      if (drawerLockboxBadge) {
+        drawerLockboxBadge.textContent = timeStr;
+        drawerLockboxBadge.style.color = 'var(--gold)';
+      }
+    }
+  }
+
+  function setLockboxDuration(mins) {
+    if (isLockboxRunning) return;
+    mins = Math.max(1, Math.min(180, parseInt(mins, 10) || 15));
+    lockboxDurationMins = mins;
+    lockboxRemainingSecs = mins * 60;
+    updateLockboxDisplay();
+
+    lockboxPresetBtns.forEach(btn => {
+      const bMins = parseInt(btn.dataset.mins, 10);
+      if (bMins === mins) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    if (vaultStatusLabel) vaultStatusLabel.textContent = 'VAULT UNLOCKED // STANDBY';
+    if (vaultStatusDot) vaultStatusDot.classList.remove('active');
+    if (vaultSubcue) vaultSubcue.textContent = 'Select duration and seal phone away';
+    if (startLockboxBtn) startLockboxBtn.textContent = 'Lock Phone in Vault';
+    if (cancelLockboxBtn) cancelLockboxBtn.style.display = 'none';
+  }
+
+  function startLockboxTimer() {
+    if (isLockboxRunning) {
+      pauseLockboxTimer();
+      return;
+    }
+
+    if (lockboxRemainingSecs <= 0) {
+      lockboxRemainingSecs = lockboxDurationMins * 60;
+    }
+
+    isLockboxRunning = true;
+    playVaultLockSound(true);
+
+    if (vaultDial) {
+      vaultDial.style.transform = 'rotate(180deg)';
+    }
+    if (vaultStatusDot) {
+      vaultStatusDot.classList.add('active');
+    }
+    if (vaultStatusLabel) {
+      vaultStatusLabel.textContent = 'VAULT SEALED // DISTRACTIONS BLOCKED';
+    }
+    if (vaultSubcue) {
+      vaultSubcue.textContent = 'Phone is locked in vault. Cognitive focus active.';
+    }
+    if (startLockboxBtn) {
+      startLockboxBtn.textContent = 'Pause Focus Timer';
+    }
+    if (cancelLockboxBtn) {
+      cancelLockboxBtn.style.display = 'block';
+    }
+
+    updateLockboxDisplay();
+
+    lockboxInterval = setInterval(() => {
+      if (lockboxRemainingSecs <= 1) {
+        completeLockboxTimer();
+        return;
+      }
+      lockboxRemainingSecs--;
+      updateLockboxDisplay();
+    }, 1000);
+  }
+
+  function pauseLockboxTimer() {
+    isLockboxRunning = false;
+    clearInterval(lockboxInterval);
+    if (startLockboxBtn) {
+      startLockboxBtn.textContent = 'Resume Focus Timer';
+    }
+    if (vaultStatusLabel) {
+      vaultStatusLabel.textContent = 'VAULT SEALED // TIMER PAUSED';
+    }
+    if (lockboxStatusBadge) {
+      lockboxStatusBadge.textContent = 'Paused';
+    }
+    if (drawerLockboxBadge) {
+      drawerLockboxBadge.textContent = 'Paused';
+    }
+    playClick(900);
+  }
+
+  function resetLockboxStandby() {
+    isLockboxRunning = false;
+    clearInterval(lockboxInterval);
+    lockboxRemainingSecs = lockboxDurationMins * 60;
+    updateLockboxDisplay();
+
+    if (vaultDial) {
+      vaultDial.style.transform = 'rotate(0deg)';
+    }
+    if (vaultStatusDot) {
+      vaultStatusDot.classList.remove('active');
+    }
+    if (vaultStatusLabel) {
+      vaultStatusLabel.textContent = 'VAULT UNLOCKED // STANDBY';
+    }
+    if (vaultSubcue) {
+      vaultSubcue.textContent = 'Select duration and seal phone away';
+    }
+    if (startLockboxBtn) {
+      startLockboxBtn.textContent = 'Lock Phone in Vault';
+    }
+    if (cancelLockboxBtn) {
+      cancelLockboxBtn.style.display = 'none';
+    }
+    if (lockboxStatusBadge) {
+      lockboxStatusBadge.textContent = 'Safe';
+      lockboxStatusBadge.style.color = '';
+    }
+    if (drawerLockboxBadge) {
+      drawerLockboxBadge.textContent = 'Ready';
+      drawerLockboxBadge.style.color = '';
+    }
+    playVaultLockSound(false);
+  }
+
+  function completeLockboxTimer() {
+    isLockboxRunning = false;
+    clearInterval(lockboxInterval);
+    lockboxRemainingSecs = 0;
+    updateLockboxDisplay();
+
+    if (vaultDial) {
+      vaultDial.style.transform = 'rotate(0deg)';
+    }
+    if (vaultStatusDot) {
+      vaultStatusDot.classList.remove('active');
+    }
+    if (vaultStatusLabel) {
+      vaultStatusLabel.textContent = 'VAULT UNLOCKED // SESSION COMPLETE';
+    }
+    if (vaultSubcue) {
+      vaultSubcue.textContent = 'Congratulations! Prefrontal bandwidth protected.';
+    }
+    if (startLockboxBtn) {
+      startLockboxBtn.textContent = 'Lock Phone Again';
+    }
+    if (cancelLockboxBtn) {
+      cancelLockboxBtn.style.display = 'none';
+    }
+    if (lockboxStatusBadge) {
+      lockboxStatusBadge.textContent = 'Done!';
+      lockboxStatusBadge.style.color = 'var(--gold)';
+    }
+    if (drawerLockboxBadge) {
+      drawerLockboxBadge.textContent = 'Done';
+      drawerLockboxBadge.style.color = 'var(--gold)';
+    }
+
+    playVaultLockSound(false);
+    recordActivityCompleted('Phone in Lock Box', `Protected ${lockboxDurationMins} minutes of cognitive focus`);
+    updateSpeech(`Phone safely locked away for ${lockboxDurationMins} minutes! Your cognitive focus is thriving.`);
+  }
+
+  lockboxPresetBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const mins = parseInt(btn.dataset.mins, 10);
+      setLockboxDuration(mins);
+      playClick(1000);
+    });
+  });
+
+  if (setCustomMinsBtn && customMinsInput) {
+    const handleCustom = () => {
+      const val = parseInt(customMinsInput.value, 10);
+      if (val > 0) {
+        setLockboxDuration(val);
+        customMinsInput.value = '';
+        playClick(1000);
+      }
+    };
+    setCustomMinsBtn.addEventListener('click', handleCustom);
+    customMinsInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleCustom();
+      }
+    });
+  }
+
+  if (startLockboxBtn) {
+    startLockboxBtn.addEventListener('click', startLockboxTimer);
+  }
+
+  if (cancelLockboxBtn) {
+    cancelLockboxBtn.addEventListener('click', resetLockboxStandby);
   }
 
   // Persistence keys
@@ -1402,16 +1905,16 @@
       progress[`${activeProblemKey}_step_${activeStepIdx}`] = true;
       setCbtProgress(progress);
 
-      // Log to central progress ledger
-      logProgressEvent(
-        `${data.title} - ${step.name}`,
-        text || `Completed "${step.name}"`,
-        ['CBT Action Step']
-      );
-
-      // If this was writing a note to Meha in Missing My Girlfriend, also save to Notes to Meha!
+      // If this was writing a note to Meha in Missing My Girlfriend, also save to Notes to Meha (which calls recordActivityCompleted)!
       if (activeProblemKey === 'missing_girlfriend' && activeStepIdx === 3 && text) {
         addNoteToMeha(text);
+      } else {
+        // Track activity in central progress ledger and increment streak
+        recordActivityCompleted(
+          `${data.title} - ${step.name}`,
+          text || `Completed "${step.name}"`,
+          ['CBT Action Step']
+        );
       }
 
       const notice = document.getElementById('stepDoneNotice');
@@ -1423,7 +1926,6 @@
         }, 3000);
       }
 
-      playChime(660, 1.4);
       renderProblemWorkspace(activeProblemKey, activeStepIdx);
     });
   }
@@ -1448,96 +1950,122 @@
   // ==========================================================================
   const feelingsWheelData = [
     {
-      core: 'Joyful',
-      colors: {
-        core: '#E6C265',
-        sec: ['#EDD38A', '#F0DC9C', '#F3E5AE', '#F6EEC0'],
-        tert: ['#F7EBC6', '#FBF3D9', '#F8EDCD', '#FCF5DF', '#F9EFD3', '#FDF7E5', '#FAF1D9', '#FEF9EB']
-      },
-      textColor: '#2C2416',
+      core: 'Fearful',
+      color: '#00A5B5',
+      secColor: '#17BACB',
+      tertColor: '#38D1E0',
+      textColor: '#FFFFFF',
       secondaries: [
-        { name: 'Playful', tertiaries: ['Aroused', 'Cheeky'] },
-        { name: 'Content', tertiaries: ['Free', 'Joyful'] },
-        { name: 'Proud', tertiaries: ['Successful', 'Confident'] },
-        { name: 'Peaceful', tertiaries: ['Loving', 'Thankful'] }
+        { name: 'Scared', tertiaries: ['Helpless', 'Frightened'] },
+        { name: 'Anxious', tertiaries: ['Overwhelmed', 'Worried'] },
+        { name: 'Insecure', tertiaries: ['Inadequate', 'Inferior'] },
+        { name: 'Weak', tertiaries: ['Worthless', 'Insignificant'] },
+        { name: 'Rejected', tertiaries: ['Excluded', 'Persecuted'] },
+        { name: 'Threatened', tertiaries: ['Nervous', 'Exposed'] }
       ]
     },
     {
-      core: 'Powerful',
-      colors: {
-        core: '#D99462',
-        sec: ['#E4AD86', '#E9BA97', '#EEC7A8', '#F3D4B9'],
-        tert: ['#EFC9AD', '#F5DCB7', '#F1D0B7', '#F7E2C3', '#F3D8C1', '#F8E8CF', '#F5E0CB', '#FAEFDC']
-      },
-      textColor: '#2E1E14',
+      core: 'Angry',
+      color: '#686DAE',
+      secColor: '#7D82C4',
+      tertColor: '#959ADB',
+      textColor: '#FFFFFF',
       secondaries: [
-        { name: 'Courageous', tertiaries: ['Adventurous', 'Brave'] },
-        { name: 'Confident', tertiaries: ['Capable', 'Grounded'] },
-        { name: 'Hopeful', tertiaries: ['Optimistic', 'Inspired'] },
-        { name: 'Appreciated', tertiaries: ['Valued', 'Grateful'] }
+        { name: 'Let down', tertiaries: ['Betrayed', 'Disrespected'] },
+        { name: 'Humiliated', tertiaries: ['Disrespected', 'Ridiculed'] },
+        { name: 'Bitter', tertiaries: ['Indignant', 'Violated'] },
+        { name: 'Mad', tertiaries: ['Furious', 'Jealous'] },
+        { name: 'Aggressive', tertiaries: ['Provoked', 'Hostile'] },
+        { name: 'Frustrated', tertiaries: ['Infuriated', 'Annoyed'] },
+        { name: 'Distant', tertiaries: ['Withdrawn', 'Numb'] },
+        { name: 'Critical', tertiaries: ['Sceptical', 'Dismissive'] }
       ]
     },
     {
-      core: 'Peaceful',
-      colors: {
-        core: '#7EA47E',
-        sec: ['#99BA99', '#A8C4A8', '#B7CEB7', '#C6D9C6'],
-        tert: ['#B8CFB8', '#CADBCA', '#C1D6C1', '#D2E1D2', '#C9DCC9', '#D9E6D9', '#D2E2D2', '#E1ECE1']
-      },
-      textColor: '#1A281A',
+      core: 'Disgusted',
+      color: '#8F6E9F',
+      secColor: '#A482B4',
+      tertColor: '#BC9BCB',
+      textColor: '#FFFFFF',
       secondaries: [
-        { name: 'Calm', tertiaries: ['Serene', 'Centered'] },
-        { name: 'Relaxed', tertiaries: ['Present', 'Rested'] },
-        { name: 'Loving', tertiaries: ['Gentle', 'Warm'] },
-        { name: 'Trusting', tertiaries: ['Safe', 'Relieved'] }
+        { name: 'Disapproving', tertiaries: ['Judgmental', 'Embarrassed'] },
+        { name: 'Disappointed', tertiaries: ['Appalled', 'Revolted'] },
+        { name: 'Awful', tertiaries: ['Nauseated', 'Detestable'] },
+        { name: 'Repelled', tertiaries: ['Horrified', 'Hesitant'] }
       ]
     },
     {
       core: 'Sad',
-      colors: {
-        core: '#6B8CA8',
-        sec: ['#8BA7BD', '#9BB3C7', '#ABBFD1', '#BBCEDB'],
-        tert: ['#ACC1D3', '#C0D2E1', '#B6C9D9', '#C8D8E5', '#C0D1DF', '#D0DEE9', '#CAC9E5', '#D8E4ED']
-      },
-      textColor: '#15222E',
+      color: '#BC6379',
+      secColor: '#CF778D',
+      tertColor: '#E68FA4',
+      textColor: '#FFFFFF',
       secondaries: [
-        { name: 'Lonely', tertiaries: ['Isolated', 'Abandoned'] },
-        { name: 'Vulnerable', tertiaries: ['Fragile', 'Helpless'] },
-        { name: 'Despair', tertiaries: ['Grief', 'Heartbroken'] },
-        { name: 'Hurt', tertiaries: ['Disappointed', 'Embarrassed'] }
+        { name: 'Hurt', tertiaries: ['Embarrassed', 'Disappointed'] },
+        { name: 'Depressed', tertiaries: ['Inferior', 'Empty'] },
+        { name: 'Guilty', tertiaries: ['Remorseful', 'Ashamed'] },
+        { name: 'Despair', tertiaries: ['Powerless', 'Grief'] },
+        { name: 'Vulnerable', tertiaries: ['Fragile', 'Victimised'] },
+        { name: 'Lonely', tertiaries: ['Abandoned', 'Isolated'] }
       ]
     },
     {
-      core: 'Mad',
-      colors: {
-        core: '#C76E6E',
-        sec: ['#D68E8E', '#DD9E9E', '#E4AEAE', '#EBBEBE'],
-        tert: ['#E1A2A2', '#ECC0C0', '#E7AEAE', '#F0CACA', '#ECBABA', '#F3D4D4', '#F1C6C6', '#F7DEDE']
-      },
-      textColor: '#2E1414',
+      core: 'Happy',
+      color: '#E26D5C',
+      secColor: '#F28373',
+      tertColor: '#FA9E90',
+      textColor: '#FFFFFF',
       secondaries: [
-        { name: 'Frustrated', tertiaries: ['Annoyed', 'Agitated'] },
-        { name: 'Aggressive', tertiaries: ['Hostile', 'Provocative'] },
-        { name: 'Bitter', tertiaries: ['Resentful', 'Indignant'] },
-        { name: 'Critical', tertiaries: ['Skeptical', 'Sarcastic'] }
+        { name: 'Optimistic', tertiaries: ['Inspired', 'Hopeful'] },
+        { name: 'Trusting', tertiaries: ['Intimate', 'Sensitive'] },
+        { name: 'Peaceful', tertiaries: ['Thankful', 'Loving'] },
+        { name: 'Powerful', tertiaries: ['Creative', 'Courageous'] },
+        { name: 'Accepted', tertiaries: ['Valued', 'Respected'] },
+        { name: 'Proud', tertiaries: ['Confident', 'Successful'] },
+        { name: 'Interested', tertiaries: ['Inquisitive', 'Curious'] },
+        { name: 'Content', tertiaries: ['Joyful', 'Free'] },
+        { name: 'Playful', tertiaries: ['Cheeky', 'Aroused'] }
       ]
     },
     {
-      core: 'Scared',
-      colors: {
-        core: '#967FA6',
-        sec: ['#AC99BB', '#B7A6C4', '#C3B4CE', '#CEC2D7'],
-        tert: ['#BCACCA', '#D1C5DC', '#C4B5D1', '#D7CCE2', '#CCBFE7', '#DED4E8', '#D4C8DE', '#E5DCED']
-      },
-      textColor: '#221829',
+      core: 'Surprised',
+      color: '#E79E38',
+      secColor: '#F2B052',
+      tertColor: '#FCC87A',
+      textColor: '#2D1F00',
       secondaries: [
-        { name: 'Anxious', tertiaries: ['Overwhelmed', 'Worried'] },
-        { name: 'Insecure', tertiaries: ['Inadequate', 'Inferior'] },
-        { name: 'Helpless', tertiaries: ['Frightened', 'Paralyzed'] },
-        { name: 'Threatened', tertiaries: ['Nervous', 'Exposed'] }
+        { name: 'Excited', tertiaries: ['Energetic', 'Eager'] },
+        { name: 'Amazed', tertiaries: ['Awe', 'Astonished'] },
+        { name: 'Confused', tertiaries: ['Perplexed', 'Disillusioned'] },
+        { name: 'Startled', tertiaries: ['Dismayed', 'Shocked'] }
+      ]
+    },
+    {
+      core: 'Bad',
+      color: '#27B08B',
+      secColor: '#3DC29D',
+      tertColor: '#58DAB6',
+      textColor: '#FFFFFF',
+      secondaries: [
+        { name: 'Tired', tertiaries: ['Unfocused', 'Sleepy'] },
+        { name: 'Stressed', tertiaries: ['Out of control', 'Overwhelmed'] },
+        { name: 'Busy', tertiaries: ['Rushed', 'Pressured'] },
+        { name: 'Bored', tertiaries: ['Apathetic', 'Indifferent'] }
       ]
     }
   ];
+
+  function adjustColorBrightness(hex, percent) {
+    let num = parseInt(hex.replace('#', ''), 16);
+    let amt = Math.round(2.55 * percent);
+    let R = (num >> 16) + amt;
+    let G = (num >> 8 & 0x00FF) + amt;
+    let B = (num & 0x0000FF) + amt;
+    R = Math.max(0, Math.min(255, R));
+    G = Math.max(0, Math.min(255, G));
+    B = Math.max(0, Math.min(255, B));
+    return '#' + ((1 << 24) + (R << 16) + (G << 8) + B).toString(16).slice(1);
+  }
 
   const somaticSensationsList = [
     'Tense jaw', 'Tight shoulders', 'Shallow breath', 'Heavy chest',
@@ -1590,10 +2118,10 @@
 
     const cx = 320;
     const cy = 320;
-    const r0 = 55;
-    const r1 = 125;
-    const r2 = 210;
-    const r3 = 300;
+    const r0 = 48;
+    const r1 = 118;
+    const r2 = 205;
+    const r3 = 305;
 
     const layerTert = createSvgEl('g', { id: 'layerTert' });
     const layerSec = createSvgEl('g', { id: 'layerSec' });
@@ -1605,14 +2133,21 @@
     svg.appendChild(layerCore);
     svg.appendChild(layerHub);
 
-    feelingsWheelData.forEach((coreData, cIdx) => {
-      const coreStart = -90 + cIdx * 60;
-      const coreEnd = coreStart + 60;
+    // Total 82 tertiaries across 7 core emotions
+    const TOTAL_TERTIARIES = 82;
+    const degPerTert = 360 / TOTAL_TERTIARIES; // ~4.3902 deg per wedge
+
+    let currentAngle = -90; // Start at 12 o'clock (boundary between Bad and Fearful)
+
+    feelingsWheelData.forEach((coreData) => {
+      const coreTertCount = coreData.secondaries.reduce((sum, s) => sum + s.tertiaries.length, 0);
+      const coreStart = currentAngle;
+      const coreEnd = coreStart + coreTertCount * degPerTert;
 
       // 1. Core Wedge
       const corePath = createSvgEl('path', {
         d: describeArc(cx, cy, r0, r1, coreStart, coreEnd),
-        fill: coreData.colors.core,
+        fill: coreData.color,
         class: 'wheel-wedge wheel-wedge-core',
         'data-core': coreData.core,
         'data-tier': 'core'
@@ -1641,14 +2176,19 @@
       layerCore.appendChild(corePath);
       layerCore.appendChild(coreText);
 
-      // 2. Secondary Wedges
+      // 2. Secondary & Tertiary Wedges
+      let secCurrentAngle = coreStart;
+
       coreData.secondaries.forEach((secData, sIdx) => {
-        const secStart = coreStart + sIdx * 15;
-        const secEnd = secStart + 15;
+        const secTertCount = secData.tertiaries.length; // exactly 2
+        const secStart = secCurrentAngle;
+        const secEnd = secStart + secTertCount * degPerTert;
+
+        const secFill = (sIdx % 2 === 0) ? coreData.secColor : adjustColorBrightness(coreData.secColor, -7);
 
         const secPath = createSvgEl('path', {
           d: describeArc(cx, cy, r1, r2, secStart, secEnd),
-          fill: coreData.colors.sec[sIdx],
+          fill: secFill,
           class: 'wheel-wedge wheel-wedge-sec',
           'data-core': coreData.core,
           'data-sec': secData.name,
@@ -1669,7 +2209,7 @@
           x: secTx.toFixed(1),
           y: secTy.toFixed(1),
           transform: `rotate(${secRot.toFixed(1)}, ${secTx.toFixed(1)}, ${secTy.toFixed(1)})`,
-          fill: coreData.textColor,
+          fill: coreData.textColor === '#2D1F00' ? '#2D1F00' : '#FFFFFF',
           class: 'wheel-text wheel-text-sec'
         });
         secText.textContent = secData.name;
@@ -1680,13 +2220,13 @@
 
         // 3. Tertiary Wedges
         secData.tertiaries.forEach((tertName, tIdx) => {
-          const tertStart = secStart + tIdx * 7.5;
-          const tertEnd = tertStart + 7.5;
-          const colorIdx = sIdx * 2 + tIdx;
+          const tertStart = secStart + tIdx * degPerTert;
+          const tertEnd = tertStart + degPerTert;
+          const tertFill = (tIdx % 2 === 0) ? coreData.tertColor : adjustColorBrightness(coreData.tertColor, -7);
 
           const tertPath = createSvgEl('path', {
             d: describeArc(cx, cy, r2, r3, tertStart, tertEnd),
-            fill: coreData.colors.tert[colorIdx],
+            fill: tertFill,
             class: 'wheel-wedge wheel-wedge-tert',
             'data-core': coreData.core,
             'data-sec': secData.name,
@@ -1708,7 +2248,7 @@
             x: tertTx.toFixed(1),
             y: tertTy.toFixed(1),
             transform: `rotate(${tertRot.toFixed(1)}, ${tertTx.toFixed(1)}, ${tertTy.toFixed(1)})`,
-            fill: coreData.textColor,
+            fill: coreData.textColor === '#2D1F00' ? '#2D1F00' : '#FFFFFF',
             class: 'wheel-text wheel-text-tert'
           });
           tertText.textContent = tertName;
@@ -1717,7 +2257,11 @@
           layerTert.appendChild(tertPath);
           layerTert.appendChild(tertText);
         });
+
+        secCurrentAngle = secEnd;
       });
+
+      currentAngle = coreEnd;
     });
 
     // 4. Center Hub Group
@@ -1882,14 +2426,13 @@
       if (selectedWheelEmotion.tert) pathArray.push(selectedWheelEmotion.tert);
       const fullPath = pathArray.join(' - ');
 
-      logProgressEvent(
+      // Track activity in central progress ledger, increment streak, and play baby sound
+      recordActivityCompleted(
         fullPath,
         noteText || `Reflected on ${fullPath}`,
         ['Feelings Wheel'],
         Array.from(selectedSomaticSensations)
       );
-
-      playChime(660, 1.4);
 
       if (noteInput) noteInput.value = '';
       selectedSomaticSensations.clear();
@@ -2073,7 +2616,6 @@
 
   function completeTimer() {
     stopTimer();
-    playChime(660, 2.5);
     if (timerPacingCue) timerPacingCue.textContent = 'Protocol Complete';
     if (timerClockDigits) timerClockDigits.textContent = '00:00';
     if (timerCircle) {
@@ -2081,13 +2623,13 @@
     }
 
     const protocol = timerProtocols[activeTimerKey];
-    if (protocol) {
-      logProgressEvent(
-        `Calming Timer - ${protocol.name}`,
-        `Completed full ${formatTime(protocol.totalDuration)} pacing cycle. Nervous system regulated.`,
-        ['Autonomic Regulation']
-      );
-    }
+    const protoName = protocol ? protocol.name : 'Breathing Session';
+    const protoDur = protocol ? protocol.totalDuration : 60;
+    recordActivityCompleted(
+      `Calming Timer - ${protoName}`,
+      `Completed full ${formatTime(protoDur)} pacing cycle. Nervous system regulated.`,
+      ['Autonomic Regulation']
+    );
 
     setTimeout(() => {
       selectTimer(activeTimerKey);
@@ -2153,25 +2695,6 @@
   // Replaces Hair Twirling & Nail Biting impulses with Non-Damaging Tactile Inputs
   // Strict Zero Emojis. Streak Counter. 24 Tactile Plates. Alabaster Stone.
   // ==========================================================================
-  const STREAK_KEY = 'akku_urge_streak_v2';
-  const streakDigits = document.getElementById('streakDigits');
-
-  function getStreak() {
-    try {
-      const val = localStorage.getItem(STREAK_KEY);
-      return val ? parseInt(val, 10) : 0;
-    } catch (e) {
-      return 0;
-    }
-  }
-
-  function setStreak(num) {
-    try {
-      localStorage.setItem(STREAK_KEY, String(num));
-    } catch (e) {}
-    if (streakDigits) streakDigits.textContent = String(num);
-  }
-
   if (streakDigits) {
     streakDigits.textContent = String(getStreak());
   }
@@ -2216,13 +2739,11 @@
     matrixPopCounter.textContent = `${poppedCount} / 24 popped`;
 
     if (poppedCount === 24) {
-      playChime(660, 1.8);
-      comfortAkshat();
       updateSpeech("Better than hurting your body, huh?");
       if (matrixCompletionCard) {
         matrixCompletionCard.style.display = 'block';
       }
-      logProgressEvent('Preventing Damage', 'Popped all 24 bubbles safely. Better than hurting your body!', ['Tactile Calming']);
+      recordActivityCompleted('Preventing Damage', 'Popped all 24 bubbles safely. Better than hurting your body!', ['Tactile Calming']);
     } else {
       if (matrixCompletionCard && poppedCount < 24) {
         matrixCompletionCard.style.display = 'none';
@@ -2372,17 +2893,9 @@
     clearInterval(surferInterval);
     isSurferActive = false;
     stopOceanWaveAudio();
-    playChime(660, 2.2);
 
-    // Increment streak
-    const newStreak = getStreak() + 1;
-    setStreak(newStreak);
-
-    // Log progress to the ledger
-    logProgressEvent('Urge Surfer', `Successfully surfed full 60-second urge wave without harm. Protected streak: ${newStreak}`, ['Impulse Surfing']);
-
-    // Comfort Akshat and return to happy/calm
-    comfortAkshat();
+    // Track in central ledger, increment streak, play baby sound
+    recordActivityCompleted('Urge Surfer', 'Successfully surfed full 60-second urge wave without harm.', ['Impulse Surfing']);
     updateSpeech("We surfed the entire 60-second wave together! The urge is gone and my hands are completely calm.");
 
     if (startSurferBtn) {
@@ -2400,88 +2913,92 @@
     resetSurferBtn.addEventListener('click', resetUrgeSurfer);
   }
 
-  // Tool 3: Alabaster Worry Stone (Tactile Ergonomic Pebble)
-  const alabasterStone = document.getElementById('alabasterStone');
-  const stoneGlowPoint = document.getElementById('stoneGlowPoint');
-  const stoneRubCount = document.getElementById('stoneRubCount');
-  const stoneMilestoneCue = document.getElementById('stoneMilestoneCue');
-  let rubsCount = 0;
-  let lastRubTime = 0;
+  // Tool 3: Mechanical Haptic Switch Deck
+  const switchClickDigits = document.getElementById('switchClickDigits');
+  const switchResetBtn = document.getElementById('switchResetBtn');
+  const switchMilestoneCue = document.getElementById('switchMilestoneCue');
 
-  const stoneMilestones = [
-    { count: 10, cue: "Shoulders dropping into ease...", freq: 440 },
-    { count: 20, cue: "Hands feeling safe and resting...", freq: 528 },
-    { count: 30, cue: "Breathing deep, calm, and steady...", freq: 587 },
-    { count: 40, cue: "You are completely safe right now...", freq: 659 },
-    { count: 50, cue: "Gentle peace throughout your mind...", freq: 784 }
+  const mechKeys = [
+    { el: document.getElementById('mechKey0'), profile: 'blue', name: 'Blue Clicky', force: '60g' },
+    { el: document.getElementById('mechKey1'), profile: 'jade', name: 'Heavy Jade', force: '75g' },
+    { el: document.getElementById('mechKey2'), profile: 'thock', name: 'Bubble Thock', force: '55g' },
+    { el: document.getElementById('mechKey3'), profile: 'cream', name: 'Cream Linear', force: '45g' }
   ];
 
-  if (alabasterStone) {
-    const handleMove = (e) => {
-      const rect = alabasterStone.getBoundingClientRect();
-      const clientX = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
-      const clientY = e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : 0);
-      if (stoneGlowPoint && clientX && clientY) {
-        const x = clientX - rect.left;
-        const y = clientY - rect.top;
-        stoneGlowPoint.style.left = `${x}px`;
-        stoneGlowPoint.style.top = `${y}px`;
+  let switchClicksCount = 0;
+
+  function handleMechKeyPress(idx) {
+    const item = mechKeys[idx];
+    if (!item || !item.el) return;
+
+    item.el.classList.add('depressed');
+    setTimeout(() => {
+      item.el.classList.remove('depressed');
+    }, 120);
+
+    playMechSwitchSound(item.profile);
+
+    switchClicksCount++;
+    if (switchClickDigits) {
+      switchClickDigits.textContent = String(switchClicksCount);
+    }
+
+    if (switchClicksCount % 50 === 0) {
+      recordActivityCompleted(
+        'Mechanical Switch Deck',
+        `Conquered ${switchClicksCount} tactile impulses with haptic switch resistance.`
+      );
+      if (switchMilestoneCue) {
+        switchMilestoneCue.textContent = `${switchClicksCount} tactile clicks surfed! Hands safe, mind calm and grounded.`;
       }
-    };
+      updateSpeech("Awesome job clicking the switch deck instead of biting or twirling! Hands are safe.");
+    } else if (switchClicksCount % 10 === 0) {
+      const cues = [
+        "Tactile resistance conquering the urge...",
+        "Hands busy and safe, prefrontal cortex resting...",
+        "Physical energy safely redirected...",
+        "Feel the mechanical snap instead of picking..."
+      ];
+      const cue = cues[Math.floor((switchClicksCount / 10) % cues.length)];
+      if (switchMilestoneCue) switchMilestoneCue.textContent = cue;
+    }
+  }
 
-    const recordRub = (e) => {
-      handleMove(e);
-      const now = Date.now();
-      if (now - lastRubTime > 120) {
-        lastRubTime = now;
-        rubsCount++;
-        if (stoneRubCount) stoneRubCount.textContent = String(rubsCount);
-        playStoneFriction();
-
-        const milestone = stoneMilestones.find(m => m.count === rubsCount);
-        if (milestone) {
-          if (stoneMilestoneCue) stoneMilestoneCue.textContent = milestone.cue;
-          playChime(milestone.freq, 1.4);
-          if (rubsCount === 50) {
-            comfortAkshat();
-            updateSpeech("50 gentle strokes. Your mind is quiet and your hands are at rest.");
-            logProgressEvent(
-              'Alabaster Worry Stone',
-              'Completed 50 mindful tactile rubs for sensory regulation.',
-              ['Physical Anchoring']
-            );
-          }
-        } else if (rubsCount > 50 && rubsCount % 15 === 0) {
-          const extraCues = [
-            "Stillness returning to your fingers...",
-            "Quiet strength in this moment...",
-            "Every breath softens your heart...",
-            "You are doing wonderfully well..."
-          ];
-          const cueIdx = Math.floor(rubsCount / 15) % extraCues.length;
-          if (stoneMilestoneCue) stoneMilestoneCue.textContent = extraCues[cueIdx];
-          playChime(528, 1.0);
+  mechKeys.forEach((item, idx) => {
+    if (item.el) {
+      item.el.addEventListener('click', () => handleMechKeyPress(idx));
+      item.el.addEventListener('pointerdown', (e) => {
+        if (e.pointerType === 'touch') {
+          handleMechKeyPress(idx);
         }
+      });
+    }
+  });
 
-        alabasterStone.style.boxShadow = '0 14px 34px rgba(212, 175, 55, 0.28)';
-        setTimeout(() => {
-          alabasterStone.style.boxShadow = '';
-        }, 180);
-      }
-    };
+  window.addEventListener('keydown', (e) => {
+    const tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+    if (tag === 'input' || tag === 'textarea') return;
 
-    alabasterStone.addEventListener('pointermove', (e) => {
-      handleMove(e);
-      if (e.buttons > 0) {
-        recordRub(e);
+    if (e.key === '1') {
+      handleMechKeyPress(0);
+    } else if (e.key === '2') {
+      handleMechKeyPress(1);
+    } else if (e.key === '3') {
+      handleMechKeyPress(2);
+    } else if (e.key === '4') {
+      handleMechKeyPress(3);
+    }
+  });
+
+  if (switchResetBtn) {
+    switchResetBtn.addEventListener('click', () => {
+      switchClicksCount = 0;
+      if (switchClickDigits) switchClickDigits.textContent = '0';
+      if (switchMilestoneCue) {
+        switchMilestoneCue.textContent = 'Press keys repeatedly whenever you feel the urge to bite or twirl...';
       }
+      playClick(800);
     });
-
-    alabasterStone.addEventListener('touchmove', (e) => {
-      recordRub(e);
-    }, { passive: true });
-
-    alabasterStone.addEventListener('click', recordRub);
   }
 
   // ==========================================================================

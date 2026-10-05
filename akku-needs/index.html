@@ -39,15 +39,20 @@
           <span class="nav-btn-text">Notes to Meha</span>
           <span class="nav-btn-badge" id="notesCountBadge">0</span>
         </button>
-        <button id="soundToggle" class="minimal-toggle" title="Toggle Acoustic Feedback" aria-label="Toggle Sound">
+        <button id="topLockboxBtn" class="editorial-nav-btn" title="Phone in Lock Box timer" aria-label="Phone Lock Box">
+          <span class="nav-btn-tag">Containment</span>
+          <span class="nav-btn-text">Lock Box</span>
+          <span class="nav-btn-badge" id="lockboxStatusBadge">Safe</span>
+        </button>
+        <button id="soundToggle" class="minimal-toggle sound-on" title="Toggle Acoustic Feedback" aria-label="Toggle Sound">
           <span class="toggle-dot"></span>
-          <span class="toggle-text" id="soundStatusText">Sound: Off</span>
+          <span class="toggle-text" id="soundStatusText">Sound: On</span>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Editorial Slide-Over Drawer: Progress & Notes to Meha -->
+  <!-- Editorial Slide-Over Drawer: Progress & Notes to Meha & Lock Box -->
   <div class="editorial-drawer-overlay" id="drawerOverlay" style="display: none;">
     <div class="editorial-drawer" id="editorialDrawer">
       <div class="drawer-header">
@@ -59,6 +64,10 @@
           <button class="drawer-tab" id="drawerTabNotes" data-tab="notes">
             <span>Notes to Meha</span>
             <span class="drawer-count-badge" id="drawerNotesBadge">0</span>
+          </button>
+          <button class="drawer-tab" id="drawerTabLockbox" data-tab="lockbox">
+            <span>Phone Lock Box</span>
+            <span class="drawer-count-badge" id="drawerLockboxBadge">Ready</span>
           </button>
         </div>
         <button class="drawer-close-btn" id="drawerCloseBtn" aria-label="Close panel">Close</button>
@@ -93,6 +102,69 @@
         </div>
         <div class="drawer-entries-list" id="drawerNotesList">
           <!-- Dynamically populated with saved notes -->
+        </div>
+      </div>
+
+      <!-- Panel 3: Phone Lock Box Timer -->
+      <div class="drawer-panel" id="drawerPanelLockbox">
+        <div class="lockbox-container-box">
+          <span class="composer-overline">Cognitive RAM Protection</span>
+          <h4 class="composer-title">Phone in Lock Box</h4>
+          <p class="lockbox-desc">
+            Place your phone out of sight (in a drawer, bag, or another room). Set your focus duration below to lock away digital distraction and protect your working memory.
+          </p>
+
+          <!-- Visual Vault Graphic -->
+          <div class="vault-visual-card" id="vaultVisualCard">
+            <div class="vault-safe-door" id="vaultSafeDoor">
+              <div class="vault-dial" id="vaultDial">
+                <div class="dial-notch"></div>
+                <div class="dial-center"></div>
+              </div>
+              <div class="vault-status-indicator">
+                <span class="vault-status-dot" id="vaultStatusDot"></span>
+                <span class="vault-status-label" id="vaultStatusLabel">VAULT UNLOCKED // STANDBY</span>
+              </div>
+            </div>
+            <div class="vault-timer-display" id="vaultTimerDisplay">15:00</div>
+            <span class="vault-subcue" id="vaultSubcue">Select duration and seal phone away</span>
+          </div>
+
+          <!-- Preset Duration Buttons -->
+          <div class="lockbox-presets-row">
+            <button class="lockbox-preset-btn active" data-mins="15">15 Min</button>
+            <button class="lockbox-preset-btn" data-mins="25">25 Min</button>
+            <button class="lockbox-preset-btn" data-mins="45">45 Min</button>
+            <button class="lockbox-preset-btn" data-mins="60">60 Min</button>
+          </div>
+
+          <!-- Custom Minutes Input -->
+          <div class="lockbox-custom-row">
+            <label class="custom-mins-label" for="customMinsInput">Custom Minutes:</label>
+            <input type="number" id="customMinsInput" class="custom-mins-input" min="1" max="180" placeholder="e.g. 30" />
+            <button id="setCustomMinsBtn" class="custom-mins-set-btn">Set</button>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="lockbox-actions">
+            <button id="startLockboxBtn" class="luxury-action-btn" style="width: 100%;">Lock Phone in Vault</button>
+            <button id="cancelLockboxBtn" class="cancel-timer-btn" style="display: none; width: 100%; margin-top: 0.6rem;">Unlock Vault Early</button>
+          </div>
+
+          <div id="lockboxCompletionNotice" class="step-done-notice" style="display: none; margin-top: 1rem; width: 100%; text-align: center;">
+            Phone Unlocked! Successfully protected your focus.
+          </div>
+        </div>
+
+        <div class="notes-history-header">
+          <span class="history-label">Lock Box Rules for Akku</span>
+        </div>
+        <div class="lockbox-rules-card">
+          <p class="drawer-entry-note">
+            1. Once the vault is sealed, your phone remains completely untouched.<br>
+            2. If an urgent urge to check notifications appears, use the 24 bubble pad or mechanical switches instead.<br>
+            3. When the lock timer rings, you have officially protected your prefrontal bandwidth.
+          </p>
         </div>
       </div>
     </div>
@@ -664,7 +736,7 @@
       <div class="tactile-tabs-row">
         <button class="tactile-tab active" data-tab="matrix">Bubble pop pad</button>
         <button class="tactile-tab" data-tab="surfer">60-Second urge wave</button>
-        <button class="tactile-tab" data-tab="stone">Smooth worry stone</button>
+        <button class="tactile-tab" data-tab="switch">Haptic switches</button>
       </div>
 
       <!-- Tool 1: Tactile Bubble Pop Matrix -->
@@ -727,23 +799,78 @@
         </div>
       </div>
 
-      <!-- Tool 3: Alabaster Worry Stone -->
-      <div class="tactile-panel" id="panelStone">
-        <div class="worry-stone-editorial">
-          <p class="stone-instruction-line">Glide your thumb across the smooth indentation. Feel the physical tension melt away.</p>
-          <div class="stone-container">
-            <div class="alabaster-stone" id="alabasterStone" role="button" aria-label="Smooth worry stone">
-              <div class="stone-concave-groove">
-                <span class="stone-groove-cue">Thumb rest</span>
+      <!-- Tool 3: Mechanical Haptic Switch Deck -->
+      <div class="tactile-panel" id="panelSwitch">
+        <div class="switch-editorial-box">
+          <p class="stone-instruction-line">Heavy tactile click resistance designed to conquer nail-biting and hair-pulling impulses. Click with mouse, tap on touch, or press keyboard keys 1, 2, 3, 4.</p>
+          
+          <div class="switch-deck-chassis">
+            <div class="switch-deck-top-bar">
+              <span class="switch-chassis-label">Haptic Switch Deck</span>
+              <div class="switch-counter-badge">
+                <span class="switch-counter-digits" id="switchClickDigits">0</span>
+                <span class="switch-counter-label">Clicks</span>
               </div>
-              <span class="stone-inscription">Steadiness</span>
-              <div class="stone-glow-point" id="stoneGlowPoint"></div>
             </div>
-          </div>
-          <div class="stone-metrics-line">
-            <span class="stone-count-badge" id="stoneRubCount">0</span>
-            <span class="stone-count-text">Gentle strokes</span>
-            <span class="stone-milestone-cue" id="stoneMilestoneCue">Rub smoothly to relax</span>
+
+            <div class="switch-keys-grid">
+              <!-- Switch 1: Blue Clicky -->
+              <div class="mech-key-wrap" data-key-idx="0">
+                <button class="mech-key mech-key-blue" id="mechKey0" aria-label="Blue Clicky Switch (Key 1)">
+                  <span class="mech-keycap">
+                    <span class="key-shortcut-tag">1</span>
+                    <span class="key-profile-name">Blue Clicky</span>
+                    <span class="key-force-spec">60g Snap</span>
+                  </span>
+                  <span class="mech-stem mech-stem-blue"></span>
+                </button>
+                <span class="key-subdesc">Crisp leaf click</span>
+              </div>
+
+              <!-- Switch 2: Heavy Jade -->
+              <div class="mech-key-wrap" data-key-idx="1">
+                <button class="mech-key mech-key-jade" id="mechKey1" aria-label="Heavy Jade Switch (Key 2)">
+                  <span class="mech-keycap">
+                    <span class="key-shortcut-tag">2</span>
+                    <span class="key-profile-name">Heavy Jade</span>
+                    <span class="key-force-spec">75g Clack</span>
+                  </span>
+                  <span class="mech-stem mech-stem-jade"></span>
+                </button>
+                <span class="key-subdesc">Deep tactile clack</span>
+              </div>
+
+              <!-- Switch 3: Bubble Thock -->
+              <div class="mech-key-wrap" data-key-idx="2">
+                <button class="mech-key mech-key-thock" id="mechKey2" aria-label="Bubble Thock Switch (Key 3)">
+                  <span class="mech-keycap">
+                    <span class="key-shortcut-tag">3</span>
+                    <span class="key-profile-name">Bubble Thock</span>
+                    <span class="key-force-spec">55g Hollow</span>
+                  </span>
+                  <span class="mech-stem mech-stem-thock"></span>
+                </button>
+                <span class="key-subdesc">Acoustic deep thock</span>
+              </div>
+
+              <!-- Switch 4: Cream Linear -->
+              <div class="mech-key-wrap" data-key-idx="3">
+                <button class="mech-key mech-key-cream" id="mechKey3" aria-label="Cream Linear Switch (Key 4)">
+                  <span class="mech-keycap">
+                    <span class="key-shortcut-tag">4</span>
+                    <span class="key-profile-name">Cream Linear</span>
+                    <span class="key-force-spec">45g Butter</span>
+                  </span>
+                  <span class="mech-stem mech-stem-cream"></span>
+                </button>
+                <span class="key-subdesc">Silky smooth glide</span>
+              </div>
+            </div>
+
+            <div class="switch-deck-footer">
+              <span class="switch-milestone-text" id="switchMilestoneCue">Press keys repeatedly whenever you feel the urge to bite or twirl...</span>
+              <button class="switch-reset-btn" id="switchResetBtn">Reset Clicks</button>
+            </div>
           </div>
         </div>
       </div>
