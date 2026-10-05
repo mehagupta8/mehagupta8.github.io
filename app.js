@@ -2908,6 +2908,11 @@
       remainingSeconds--;
       cycleTimeElapsed++;
 
+      // Advance 30-minute calm goal live with every second of meditation
+      if (typeof addCalmGoalSeconds === 'function') {
+        addCalmGoalSeconds(1);
+      }
+
       if (timerClockDigits) {
         timerClockDigits.textContent = formatTime(remainingSeconds);
       }
@@ -2968,6 +2973,11 @@
     const protoName = protocol ? protocol.name : 'Breathing Session';
     const protoDur = protocol ? protocol.totalDuration : 60;
     
+    // If completed manually without running ticks, credit the session duration
+    if (isManual && cycleTimeElapsed === 0 && typeof addCalmGoalSeconds === 'function') {
+      addCalmGoalSeconds(protoDur);
+    }
+
     recordActivityCompleted(
       `Calming Timer - ${protoName}`,
       isManual 
@@ -3026,6 +3036,142 @@
 
   // Initialize active timer state
   selectTimer('sigh');
+
+  // ==========================================================================
+  // 30-Minute Calm Goal: The Reunion Journey (Akku & Mehu)
+  // Shows a boy and girl coming close across a line slowly as he calms.
+  // When he reaches 30 minutes, they finally meet with a glowing gold heart.
+  // Strict Zero Emojis. Full cross-device sync and local persistence.
+  // ==========================================================================
+  const CALM_GOAL_SECONDS = 1800; // 30 minutes
+  const CALM_GOAL_STORAGE_KEY = 'akku_calm_goal_seconds_v2';
+
+  const journeyMinsDigits = document.getElementById('journeyMinsDigits');
+  const journeyRemainingSub = document.getElementById('journeyRemainingSub');
+  const journeyLineLeft = document.getElementById('journeyLineLeft');
+  const journeyLineRight = document.getElementById('journeyLineRight');
+  const journeyBoyCharacter = document.getElementById('journeyBoyCharacter');
+  const journeyGirlCharacter = document.getElementById('journeyGirlCharacter');
+  const journeyReunionHeart = document.getElementById('journeyReunionHeart');
+  const journeyCelebrationCard = document.getElementById('journeyCelebrationCard');
+  const resetJourneyCycleBtn = document.getElementById('resetJourneyCycleBtn');
+
+  function getCalmGoalSeconds() {
+    try {
+      const saved = localStorage.getItem(CALM_GOAL_STORAGE_KEY);
+      if (saved !== null) {
+        return Math.max(0, parseInt(saved, 10) || 0);
+      }
+      // Initial seed from existing progress ledger calm sessions
+      const entries = getArchiveEntries();
+      let totalSecs = 0;
+      entries.forEach(e => {
+        if (e && e.activity && e.activity.includes('Calming Timer')) {
+          if (e.activity.includes('Physiological Sigh')) totalSecs += 60;
+          else if (e.activity.includes('Brain Reset')) totalSecs += 180;
+          else if (e.activity.includes('Compassion') || e.activity.includes('Be Kind')) totalSecs += 300;
+          else totalSecs += 60;
+        }
+      });
+      localStorage.setItem(CALM_GOAL_STORAGE_KEY, String(totalSecs));
+      return totalSecs;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  function setCalmGoalSeconds(secs) {
+    try {
+      localStorage.setItem(CALM_GOAL_STORAGE_KEY, String(Math.max(0, Math.floor(secs))));
+    } catch (e) {}
+  }
+
+  function addCalmGoalSeconds(deltaSecs) {
+    const current = getCalmGoalSeconds();
+    const updated = current + deltaSecs;
+    setCalmGoalSeconds(updated);
+    updateCalmJourneyDisplay();
+    return updated;
+  }
+
+  function updateCalmJourneyDisplay() {
+    const totalSecs = getCalmGoalSeconds();
+    const fraction = Math.min(1.0, totalSecs / CALM_GOAL_SECONDS);
+
+    const completedMins = Math.floor(totalSecs / 60);
+    const remainingMins = Math.max(0, Math.ceil((CALM_GOAL_SECONDS - totalSecs) / 60));
+
+    if (journeyMinsDigits) {
+      journeyMinsDigits.textContent = `${completedMins} / 30m`;
+    }
+
+    if (journeyRemainingSub) {
+      if (fraction >= 1.0) {
+        journeyRemainingSub.textContent = 'Reunited in calm!';
+      } else {
+        journeyRemainingSub.textContent = `${remainingMins} mins to reunion`;
+      }
+    }
+
+    // Proportional positioning: 0% to ~44% so their fronts meet at 50%
+    const maxOffsetPercent = 44;
+    const offsetPercent = fraction * maxOffsetPercent;
+    const linePercent = fraction * 48;
+
+    if (journeyBoyCharacter) {
+      if (fraction >= 1.0) {
+        journeyBoyCharacter.style.left = 'calc(50% - 28px)';
+      } else {
+        journeyBoyCharacter.style.left = `${offsetPercent}%`;
+      }
+    }
+
+    if (journeyGirlCharacter) {
+      if (fraction >= 1.0) {
+        journeyGirlCharacter.style.right = 'calc(50% - 28px)';
+      } else {
+        journeyGirlCharacter.style.right = `${offsetPercent}%`;
+      }
+    }
+
+    if (journeyLineLeft) {
+      if (fraction >= 1.0) {
+        journeyLineLeft.style.width = 'calc(50% - 20px)';
+      } else {
+        journeyLineLeft.style.width = `${linePercent}%`;
+      }
+    }
+
+    if (journeyLineRight) {
+      if (fraction >= 1.0) {
+        journeyLineRight.style.width = 'calc(50% - 20px)';
+      } else {
+        journeyLineRight.style.width = `${linePercent}%`;
+      }
+    }
+
+    if (fraction >= 1.0) {
+      if (journeyReunionHeart) journeyReunionHeart.style.display = 'block';
+      if (journeyCelebrationCard) journeyCelebrationCard.style.display = 'block';
+    } else {
+      if (journeyReunionHeart) journeyReunionHeart.style.display = 'none';
+      if (journeyCelebrationCard) journeyCelebrationCard.style.display = 'none';
+    }
+  }
+
+  if (resetJourneyCycleBtn) {
+    resetJourneyCycleBtn.addEventListener('click', () => {
+      setCalmGoalSeconds(0);
+      updateCalmJourneyDisplay();
+      playCuteBabySound();
+      updateSpeech("Beginning a new 30-minute calm journey together! Let us take it one breath at a time.");
+      if (typeof broadcastSyncState === 'function') {
+        broadcastSyncState();
+      }
+    });
+  }
+
+  updateCalmJourneyDisplay();
 
   // Affirmation Ledger (Non-Toxic, Research-Backed Reframings - Strict Zero Emojis)
   const affirmationsList = [
@@ -3494,6 +3640,7 @@
       deviceId: getDeviceId(),
       timestamp: new Date().toISOString(),
       streak: getStreak(),
+      calmGoalSeconds: typeof getCalmGoalSeconds === 'function' ? getCalmGoalSeconds() : 0,
       progressLedger: getArchiveEntries(),
       notesToMeha: getNotesToMeha(),
       cbtProgress: getCbtProgress()
@@ -3526,6 +3673,18 @@
       const currentStreak = getStreak();
       if (remote.streak > currentStreak) {
         setStreak(remote.streak);
+        hasChanges = true;
+      }
+    }
+
+    // 2. Merge 30-Minute Calm Goal Seconds
+    if (typeof remote.calmGoalSeconds === 'number' && typeof getCalmGoalSeconds === 'function') {
+      const currentCalm = getCalmGoalSeconds();
+      if (remote.calmGoalSeconds > currentCalm) {
+        setCalmGoalSeconds(remote.calmGoalSeconds);
+        if (typeof updateCalmJourneyDisplay === 'function') {
+          updateCalmJourneyDisplay();
+        }
         hasChanges = true;
       }
     }

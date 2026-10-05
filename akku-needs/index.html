@@ -828,6 +828,114 @@
         <span id="calmSavedNotice" class="step-done-notice" style="display: none; margin-top: 0.8rem;">Calming session saved to your progress ledger!</span>
       </div>
 
+      <!-- 30-Minute Calm Goal: The Reunion Journey (Zero Emojis) -->
+      <div class="calm-journey-card" id="calmJourneyCard">
+        <div class="journey-header">
+          <div class="journey-title-group">
+            <span class="journey-overline">30-Minute Calm Goal</span>
+            <h3 class="journey-headline">Every breath brings you closer</h3>
+            <p class="journey-subtext">Akku and Mehu are walking across the line toward each other. Practice 30 cumulative minutes of calming meditation to finally bring them together.</p>
+          </div>
+          <div class="journey-metric-badge">
+            <span class="journey-metric-digits" id="journeyMinsDigits">0 / 30m</span>
+            <span class="journey-metric-sub" id="journeyRemainingSub">30 mins to reunion</span>
+          </div>
+        </div>
+
+        <!-- The Interactive Journey Track -->
+        <div class="journey-track-stage">
+          <!-- Baseline Track Line -->
+          <div class="journey-base-line"></div>
+          <!-- Completed Distance Line (filling from edges toward center) -->
+          <div class="journey-progress-line-left" id="journeyLineLeft"></div>
+          <div class="journey-progress-line-right" id="journeyLineRight"></div>
+
+          <!-- Center Meeting Marker -->
+          <div class="journey-center-marker" id="journeyCenterMarker">
+            <span class="center-marker-dot"></span>
+            <span class="center-marker-label">Reunion</span>
+          </div>
+
+          <!-- Boy (Akku) moving from left toward center -->
+          <div class="journey-character boy-character" id="journeyBoyCharacter" style="left: 0%;">
+            <div class="character-name-tag">Akku</div>
+            <svg class="character-svg" viewBox="0 0 60 80" width="46" height="62" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Akku walking toward Mehu">
+              <ellipse cx="30" cy="76" rx="14" ry="4" fill="#3A3845" opacity="0.18" />
+              <rect x="22" y="52" width="6" height="22" rx="2" fill="#2A2830" />
+              <rect x="32" y="52" width="6" height="22" rx="2" fill="#2A2830" />
+              <path d="M 17 32 C 17 26, 43 26, 43 32 L 45 54 L 15 54 Z" fill="#3E3A42" />
+              <path d="M 15 32 L 10 48 L 15 50 L 19 36 Z" fill="#3E3A42" />
+              <path d="M 45 32 L 50 48 L 45 50 L 41 36 Z" fill="#3E3A42" />
+              <circle cx="10" cy="50" r="3" fill="#F3D0BE" />
+              <circle cx="50" cy="50" r="3" fill="#F3D0BE" />
+              <rect x="27" y="24" width="6" height="6" fill="#F3D0BE" />
+              <ellipse cx="30" cy="18" rx="11" ry="12" fill="#F3D0BE" />
+              <circle cx="21" cy="9" r="6" fill="#241E1F" />
+              <circle cx="28" cy="7" r="6.5" fill="#241E1F" />
+              <circle cx="36" cy="8" r="6" fill="#241E1F" />
+              <circle cx="41" cy="14" r="5.5" fill="#241E1F" />
+              <circle cx="19" cy="15" r="5.5" fill="#241E1F" />
+              <circle cx="33" cy="17" r="1.6" fill="#241E1F" />
+              <circle cx="38" cy="17" r="1.6" fill="#241E1F" />
+              <path d="M 31 22 Q 35 20 39 22 Q 35 24 31 22" fill="#1C1819" />
+              <path d="M 33 25 Q 36 27 39 25" stroke="#7A3D28" stroke-width="1.2" stroke-linecap="round" fill="none" />
+              <ellipse cx="36" cy="20" rx="3" ry="1.8" fill="#FF9A9E" opacity="0.45" />
+            </svg>
+          </div>
+
+          <!-- Girl (Mehu) moving from right toward center -->
+          <div class="journey-character girl-character" id="journeyGirlCharacter" style="right: 0%;">
+            <div class="character-name-tag">Mehu</div>
+            <svg class="character-svg" viewBox="0 0 60 80" width="46" height="62" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mehu walking toward Akku">
+              <ellipse cx="30" cy="76" rx="14" ry="4" fill="#3A3845" opacity="0.18" />
+              <path d="M 21 48 L 13 74 L 47 74 L 39 48 Z" fill="#4A4446" />
+              <path d="M 18 30 C 18 25, 42 25, 42 30 L 40 50 L 20 50 Z" fill="#D47A65" />
+              <path d="M 18 31 L 11 45 L 15 47 L 21 35 Z" fill="#D47A65" />
+              <path d="M 42 31 L 49 45 L 45 47 L 39 35 Z" fill="#D47A65" />
+              <circle cx="11" cy="46" r="3" fill="#F5D3C2" />
+              <circle cx="49" cy="46" r="3" fill="#F5D3C2" />
+              <rect x="27" y="23" width="6" height="6" fill="#F5D3C2" />
+              <ellipse cx="30" cy="18" rx="10.5" ry="11.5" fill="#F5D3C2" />
+              <path d="M 18 16 C 16 8, 44 8, 42 16 C 45 26, 44 40, 42 45 C 40 42, 38 32, 38 25 C 38 14, 22 14, 22 25 C 22 32, 20 42, 18 45 C 16 40, 15 26, 18 16 Z" fill="#201B1C" />
+              <circle cx="29" cy="10" r="10" fill="#201B1C" />
+              <circle cx="23" cy="18" r="1.6" fill="#201B1C" />
+              <circle cx="28" cy="18" r="1.6" fill="#201B1C" />
+              <path d="M 23 24 Q 26 27 29 24" stroke="#8C4430" stroke-width="1.2" stroke-linecap="round" fill="none" />
+              <ellipse cx="23" cy="21" rx="3.2" ry="1.8" fill="#FF9A9E" opacity="0.5" />
+              <ellipse cx="30" cy="21" rx="3.2" ry="1.8" fill="#FF9A9E" opacity="0.5" />
+            </svg>
+          </div>
+
+          <!-- Reunion Glowing Heart (Hidden until 30 mins reached) -->
+          <div class="journey-reunion-heart" id="journeyReunionHeart" style="display: none;">
+            <svg viewBox="0 0 36 36" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Reunited heart">
+              <path d="M 18 31 C 18 31, 4 21.5, 4 12.5 C 4 7.5, 8 4, 12.5 4 C 15.5 4, 17.5 5.5, 18 6.5 C 18.5 5.5, 20.5 4, 23.5 4 C 28 4, 32 7.5, 32 12.5 C 32 21.5, 18 31, 18 31 Z" fill="#D4AF37" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Milestones Ticks along the bottom of the track -->
+        <div class="journey-milestones-row">
+          <span class="milestone-step">0m</span>
+          <span class="milestone-step">7.5m</span>
+          <span class="milestone-step milestone-center">30m Reunion</span>
+          <span class="milestone-step">22.5m</span>
+          <span class="milestone-step">30m</span>
+        </div>
+
+        <!-- Completion Celebration Card (Appears at 30 mins) -->
+        <div class="journey-celebration-card" id="journeyCelebrationCard" style="display: none;">
+          <div class="celebration-badge">Together at Last</div>
+          <h4 class="celebration-headline">You reached 30 minutes of calm</h4>
+          <p class="celebration-letter">"You took 30 gentle minutes to pause, breathe, and protect your mind today. Every wave you surfed brought us closer together. I love you so much, Akku."</p>
+          <div class="celebration-actions">
+            <button id="resetJourneyCycleBtn" class="luxury-action-btn">
+              <span>Begin another 30-minute journey</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
       <!-- Affirmation Ledger -->
       <div class="affirmation-ledger">
         <div class="ledger-header">
